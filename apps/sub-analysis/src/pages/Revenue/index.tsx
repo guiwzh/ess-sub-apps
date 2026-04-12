@@ -1,67 +1,106 @@
-import { Typography } from 'antd'
+import { useCallback, useEffect, useState } from 'react'
+import { Typography, Space, Spin, Empty } from 'antd'
 import { useTranslation } from 'react-i18next'
 import ReactECharts from 'echarts-for-react'
 import ChartCard from '@/components/ChartCard'
+import DateRangePicker, { type RangePreset } from '@/components/DateRangePicker'
 import { useAppStore } from '@/store/appStore'
+import { getRevenue, type RevenueData } from '@/api/analysis'
 
-/** 收益分析 — 饼图 + 折线图 */
+/** 收益分析 — 饼图 + 折线图 + 时间范围筛选 */
 export default function Revenue() {
   const { t } = useTranslation()
   const theme = useAppStore((s) => s.theme)
+  const [dateRange, setDateRange] = useState<[string, string] | null>(null)
+  const [data, setData] = useState<RevenueData | null>(null)
+  const [loading, setLoading] = useState(false)
 
-  const pieOption = {
-    tooltip: { trigger: 'item' as const },
-    series: [
-      {
-        type: 'pie',
-        radius: ['40%', '70%'],
-        data: [
-          { value: 4500, name: '峰时收益' },
-          { value: 2800, name: '平时收益' },
-          { value: 1200, name: '谷时收益' },
-          { value: 600, name: '补贴收入' },
+  const fetchData = useCallback(async () => {
+    setLoading(true)
+    try {
+      const { data: res } = await getRevenue({
+        startDate: dateRange?.[0],
+        endDate: dateRange?.[1],
+      })
+      if (res.code === 0) setData(res.data)
+    } finally {
+      setLoading(false)
+    }
+  }, [dateRange])
+
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
+
+  const pieOption = data
+    ? {
+        tooltip: { trigger: 'item' as const },
+        series: [
+          {
+            type: 'pie',
+            radius: ['40%', '70%'],
+            data: data.composition,
+          },
         ],
-      },
-    ],
-  }
+      }
+    : null
 
-  const lineOption = {
-    tooltip: { trigger: 'axis' as const },
-    xAxis: {
-      type: 'category' as const,
-      data: ['1月', '2月', '3月', '4月', '5月', '6月'],
-    },
-    yAxis: { type: 'value' as const, name: '万元' },
-    series: [
-      {
-        name: '月收益',
-        type: 'line',
-        data: [8.2, 9.1, 7.8, 10.5, 11.2, 10.8],
-        smooth: true,
-        itemStyle: { color: '#fa8c16' },
-      },
-    ],
-  }
+  const lineOption = data
+    ? {
+        tooltip: { trigger: 'axis' as const },
+        xAxis: { type: 'category' as const, data: data.monthly.labels },
+        yAxis: { type: 'value' as const, name: '万元' },
+        series: [
+          {
+            name: '月收益',
+            type: 'line',
+            data: data.monthly.values,
+            smooth: true,
+            itemStyle: { color: '#fa8c16' },
+          },
+        ],
+      }
+    : null
 
   return (
     <div style={{ padding: 24 }}>
       <Typography.Title level={3}>{t('revenue')}</Typography.Title>
-      <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-        <ChartCard title="收益构成" style={{ flex: 1, minWidth: 400 }}>
-          <ReactECharts
-            option={pieOption}
-            theme={theme === 'dark' ? 'dark' : undefined}
-            style={{ height: 350 }}
-          />
-        </ChartCard>
-        <ChartCard title="月度收益趋势" style={{ flex: 1, minWidth: 400 }}>
-          <ReactECharts
-            option={lineOption}
-            theme={theme === 'dark' ? 'dark' : undefined}
-            style={{ height: 350 }}
-          />
-        </ChartCard>
-      </div>
+      <Space style={{ marginBottom: 16 }}>
+        <DateRangePicker
+          defaultPreset="month"
+          onChange={(range: [string, string], _preset: RangePreset) => setDateRange(range)}
+        />
+      </Space>
+      {loading ? (
+        <Spin style={{ display: 'flex', justifyContent: 'center', padding: 80 }} />
+      ) : data ? (
+        <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+          <ChartCard title="收益构成" style={{ flex: 1, minWidth: 400 }}>
+            {pieOption ? (
+              <ReactECharts
+                option={pieOption}
+                theme={theme === 'dark' ? 'dark' : undefined}
+                style={{ height: 350 }}
+              />
+            ) : (
+              <Empty />
+            )}
+          </ChartCard>
+          <ChartCard title="月度收益趋势" style={{ flex: 1, minWidth: 400 }}>
+            {lineOption ? (
+              <ReactECharts
+                option={lineOption}
+                theme={theme === 'dark' ? 'dark' : undefined}
+                style={{ height: 350 }}
+              />
+            ) : (
+              <Empty />
+            )}
+          </ChartCard>
+        </div>
+      ) : (
+        <Empty />
+      )}
     </div>
   )
 }

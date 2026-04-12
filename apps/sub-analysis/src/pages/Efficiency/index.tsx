@@ -1,42 +1,76 @@
-import { Typography } from 'antd'
+import { useCallback, useEffect, useState } from 'react'
+import { Typography, Space, Spin, Empty } from 'antd'
 import { useTranslation } from 'react-i18next'
 import ReactECharts from 'echarts-for-react'
 import ChartCard from '@/components/ChartCard'
+import DateRangePicker, { type RangePreset } from '@/components/DateRangePicker'
 import { useAppStore } from '@/store/appStore'
+import { getEfficiency, type EfficiencyData } from '@/api/analysis'
 
-/** 能量效率分析 — 折线图 */
+/** 能量效率分析 — 折线图 + 时间范围筛选 */
 export default function Efficiency() {
   const { t } = useTranslation()
   const theme = useAppStore((s) => s.theme)
+  const [dateRange, setDateRange] = useState<[string, string] | null>(null)
+  const [data, setData] = useState<EfficiencyData | null>(null)
+  const [loading, setLoading] = useState(false)
 
-  const option = {
-    tooltip: { trigger: 'axis' as const },
-    xAxis: {
-      type: 'category' as const,
-      data: ['1月', '2月', '3月', '4月', '5月', '6月'],
-    },
-    yAxis: { type: 'value' as const, name: '%', max: 100 },
-    series: [
-      {
-        name: t('efficiencyRate'),
-        type: 'line',
-        data: [92.5, 93.1, 91.8, 94.2, 93.6, 94.8],
-        smooth: true,
-        areaStyle: { opacity: 0.2 },
-        itemStyle: { color: '#722ed1' },
-      },
-    ],
-  }
+  const fetchData = useCallback(async () => {
+    setLoading(true)
+    try {
+      const { data: res } = await getEfficiency({
+        startDate: dateRange?.[0],
+        endDate: dateRange?.[1],
+      })
+      if (res.code === 0) setData(res.data)
+    } finally {
+      setLoading(false)
+    }
+  }, [dateRange])
+
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
+
+  const option = data
+    ? {
+        tooltip: { trigger: 'axis' as const },
+        xAxis: { type: 'category' as const, data: data.labels },
+        yAxis: { type: 'value' as const, name: '%', max: 100 },
+        series: [
+          {
+            name: t('efficiencyRate'),
+            type: 'line',
+            data: data.efficiency,
+            smooth: true,
+            areaStyle: { opacity: 0.2 },
+            itemStyle: { color: '#722ed1' },
+          },
+        ],
+      }
+    : null
 
   return (
     <div style={{ padding: 24 }}>
       <Typography.Title level={3}>{t('efficiency')}</Typography.Title>
-      <ChartCard title={t('efficiencyRate')}>
-        <ReactECharts
-          option={option}
-          theme={theme === 'dark' ? 'dark' : undefined}
-          style={{ height: 400 }}
+      <Space style={{ marginBottom: 16 }}>
+        <DateRangePicker
+          defaultPreset="month"
+          onChange={(range: [string, string], _preset: RangePreset) => setDateRange(range)}
         />
+      </Space>
+      <ChartCard title={t('efficiencyRate')}>
+        {loading ? (
+          <Spin style={{ display: 'flex', justifyContent: 'center', padding: 80 }} />
+        ) : option ? (
+          <ReactECharts
+            option={option}
+            theme={theme === 'dark' ? 'dark' : undefined}
+            style={{ height: 400 }}
+          />
+        ) : (
+          <Empty />
+        )}
       </ChartCard>
     </div>
   )
