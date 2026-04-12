@@ -60,11 +60,21 @@ export default function ReportPage() {
     return (
       <>
         <Row gutter={16} style={{ marginBottom: 16 }}>
-          <Col span={4}><Statistic title="总充电量" value={summary.totalCharge} suffix="kWh" /></Col>
-          <Col span={4}><Statistic title="总放电量" value={summary.totalDischarge} suffix="kWh" /></Col>
-          <Col span={4}><Statistic title="峰值功率" value={summary.peakPower} suffix="kW" /></Col>
-          <Col span={4}><Statistic title="平均效率" value={summary.avgEfficiency} suffix="%" /></Col>
-          <Col span={4}><Statistic title="当日收益" value={summary.revenue} suffix="万元" /></Col>
+          <Col span={4}>
+            <Statistic title="总充电量" value={summary.totalCharge} suffix="kWh" />
+          </Col>
+          <Col span={4}>
+            <Statistic title="总放电量" value={summary.totalDischarge} suffix="kWh" />
+          </Col>
+          <Col span={4}>
+            <Statistic title="峰值功率" value={summary.peakPower} suffix="kW" />
+          </Col>
+          <Col span={4}>
+            <Statistic title="平均效率" value={summary.avgEfficiency} suffix="%" />
+          </Col>
+          <Col span={4}>
+            <Statistic title="当日收益" value={summary.revenue} suffix="万元" />
+          </Col>
         </Row>
         <Card title="逐时数据" style={{ marginBottom: 16 }}>
           <ReactECharts
@@ -81,7 +91,13 @@ export default function ReportPage() {
               series: [
                 { name: '充电量', type: 'bar', data: hourly.map((h) => h.charge) },
                 { name: '放电量', type: 'bar', data: hourly.map((h) => h.discharge) },
-                { name: '功率', type: 'line', yAxisIndex: 1, data: hourly.map((h) => h.power), smooth: true },
+                {
+                  name: '功率',
+                  type: 'line',
+                  yAxisIndex: 1,
+                  data: hourly.map((h) => h.power),
+                  smooth: true,
+                },
               ],
             }}
           />

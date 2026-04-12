@@ -1,15 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import {
-  Button,
-  Card,
-  Checkbox,
-  DatePicker,
-  Empty,
-  message,
-  Space,
-  Spin,
-  Table,
-} from 'antd'
+import { Button, Card, Checkbox, DatePicker, Empty, message, Space, Spin, Table } from 'antd'
 import { DownloadOutlined } from '@ant-design/icons'
 import ReactECharts from 'echarts-for-react'
 import dayjs, { type Dayjs } from 'dayjs'
@@ -72,9 +62,7 @@ export default function CustomReport() {
     ? {
         tooltip: { trigger: 'axis' as const },
         legend: {
-          data: selected.map(
-            (k) => indicators.find((i) => i.key === k)?.label ?? k,
-          ),
+          data: selected.map((k) => indicators.find((i) => i.key === k)?.label ?? k),
         },
         xAxis: { type: 'category' as const, data: data.labels },
         yAxis: { type: 'value' as const },
