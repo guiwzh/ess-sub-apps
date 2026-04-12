@@ -81,7 +81,7 @@ export default function DeviceDetail() {
   const s = statusMap[detail.status]
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <Button
         icon={<ArrowLeftOutlined />}
         style={{ marginBottom: 16 }}

@@ -8,7 +8,7 @@ export default function AlarmManagement() {
   const [activeKey, setActiveKey] = useState('realtime')
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <Tabs
         activeKey={activeKey}
         onChange={setActiveKey}

@@ -7,7 +7,7 @@ export default function EnergyOverview() {
   const [activeKey, setActiveKey] = useState('energy')
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <Tabs
         activeKey={activeKey}
         onChange={setActiveKey}

@@ -7,7 +7,7 @@ export default function OperationAnalysis() {
   const [activeKey, setActiveKey] = useState('revenue')
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <Tabs
         activeKey={activeKey}
         onChange={setActiveKey}

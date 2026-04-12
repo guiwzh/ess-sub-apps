@@ -7,7 +7,7 @@ export default function DeviceManagement() {
   const [activeKey, setActiveKey] = useState('list')
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <Tabs
         activeKey={activeKey}
         onChange={setActiveKey}

@@ -7,7 +7,7 @@ export default function Dashboard() {
   const currentStation = useAppStore((s) => s.currentStation)
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <Typography.Title level={3}>{t('dashboard')}</Typography.Title>
       {currentStation && (
         <Typography.Text type="secondary">当前站点: {currentStation}</Typography.Text>

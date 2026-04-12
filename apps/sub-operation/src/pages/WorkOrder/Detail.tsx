@@ -59,7 +59,7 @@ export default function WorkOrderDetail() {
   const p = priorityMap[detail.priority]
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <Button
         icon={<ArrowLeftOutlined />}
         style={{ marginBottom: 16 }}
