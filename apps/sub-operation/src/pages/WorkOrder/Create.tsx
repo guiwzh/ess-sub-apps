@@ -1,32 +1,43 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { message } from 'antd'
+import { message, Modal } from 'antd'
 import { StepsForm, ProFormText, ProFormSelect, ProFormTextArea } from '@ant-design/pro-components'
 import { createWorkOrder, getStaffList, type StaffItem } from '@/api/workorder'
 import { getDevices, type DeviceItem } from '@/api/operation'
 
-export default function WorkOrderCreate() {
-  const navigate = useNavigate()
+interface WorkOrderCreateProps {
+  open: boolean
+  onClose: (created?: boolean) => void
+}
+
+export default function WorkOrderCreate({ open, onClose }: WorkOrderCreateProps) {
   const [staff, setStaff] = useState<StaffItem[]>([])
   const [devices, setDevices] = useState<DeviceItem[]>([])
 
   useEffect(() => {
+    if (!open) return
     getStaffList().then(({ data: res }) => {
       if (res.code === 0) setStaff(res.data)
     })
     getDevices({ current: 1, pageSize: 100 }).then(({ data: res }) => {
       if (res.code === 0) setDevices(res.data.list)
     })
-  }, [])
+  }, [open])
 
   return (
-    <div style={{ padding: 24 }}>
+    <Modal
+      title="创建工单"
+      open={open}
+      onCancel={() => onClose()}
+      footer={null}
+      width={700}
+      destroyOnClose
+    >
       <StepsForm
         onFinish={async (values) => {
           const { data: res } = await createWorkOrder(values)
           if (res.code === 0) {
             message.success('工单创建成功')
-            navigate('/work-orders')
+            onClose(true)
           }
         }}
       >
@@ -92,6 +103,6 @@ export default function WorkOrderCreate() {
           />
         </StepsForm.StepForm>
       </StepsForm>
-    </div>
+    </Modal>
   )
 }

@@ -1,8 +1,10 @@
-import { ProTable, type ProColumns } from '@ant-design/pro-components'
+import { useRef, useState } from 'react'
+import { ProTable, type ProColumns, type ActionType } from '@ant-design/pro-components'
 import { Tag, Button } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { PlusOutlined } from '@ant-design/icons'
 import { getWorkOrders, type WorkOrder } from '@/api/workorder'
+import WorkOrderCreate from './Create'
 
 const statusMap: Record<string, { text: string; color: string }> = {
   pending: { text: '待派发', color: 'default' },
@@ -25,6 +27,8 @@ const priorityMap: Record<string, { text: string; color: string }> = {
 
 export default function WorkOrderList() {
   const navigate = useNavigate()
+  const actionRef = useRef<ActionType>()
+  const [createOpen, setCreateOpen] = useState(false)
 
   const columns: ProColumns<WorkOrder>[] = [
     { title: '工单编号', dataIndex: 'id', width: 110 },
@@ -92,13 +96,14 @@ export default function WorkOrderList() {
       <ProTable<WorkOrder>
         headerTitle="运维工单"
         rowKey="id"
+        actionRef={actionRef}
         columns={columns}
         toolBarRender={() => [
           <Button
             key="create"
             type="primary"
             icon={<PlusOutlined />}
-            onClick={() => navigate('/work-orders/create')}
+            onClick={() => setCreateOpen(true)}
           >
             创建工单
           </Button>,
@@ -118,6 +123,13 @@ export default function WorkOrderList() {
         }}
         search={{ labelWidth: 'auto' }}
         pagination={{ defaultPageSize: 10 }}
+      />
+      <WorkOrderCreate
+        open={createOpen}
+        onClose={(created) => {
+          setCreateOpen(false)
+          if (created) actionRef.current?.reload()
+        }}
       />
     </div>
   )

@@ -8,7 +8,6 @@ const DeviceManagement = lazy(() => import('@/pages/Device/Management'))
 const DeviceDetail = lazy(() => import('@/pages/Device/Detail'))
 const AlarmManagement = lazy(() => import('@/pages/Alarm/Management'))
 const WorkOrderManagement = lazy(() => import('@/pages/WorkOrder/Management'))
-const WorkOrderCreate = lazy(() => import('@/pages/WorkOrder/Create'))
 const WorkOrderDetail = lazy(() => import('@/pages/WorkOrder/Detail'))
 
 function LazyLoad(props: { children: React.ReactNode }) {
@@ -71,14 +70,6 @@ const commonRoutes = [
     element: (
       <LazyLoad>
         <WorkOrderManagement />
-      </LazyLoad>
-    ),
-  },
-  {
-    path: '/work-orders/create',
-    element: (
-      <LazyLoad>
-        <WorkOrderCreate />
       </LazyLoad>
     ),
   },
