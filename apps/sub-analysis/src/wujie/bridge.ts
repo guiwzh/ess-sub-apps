@@ -3,6 +3,7 @@ import { BUS_EVENTS } from '@/constants/bus-events'
 import { onBusEvent } from './bus'
 import { useAppStore } from '@/store/appStore'
 import { useUserStore } from '@/store/userStore'
+import { router } from '@/router'
 import i18n from '@/i18n'
 
 export function useWujieBridge() {
@@ -22,6 +23,10 @@ export function useWujieBridge() {
       }),
       onBusEvent(BUS_EVENTS.TOKEN_REFRESH, (token) => {
         useUserStore.getState().setToken(token as string)
+      }),
+      // 主应用路由变更 → 子应用内部导航
+      onBusEvent(BUS_EVENTS.ROUTE_CHANGE, (path) => {
+        router.navigate(path as string)
       }),
     ]
 
