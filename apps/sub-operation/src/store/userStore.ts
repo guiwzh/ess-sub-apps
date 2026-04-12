@@ -21,7 +21,7 @@ interface UserState {
 
 /** 从主应用 wujie props 读取初始值 */
 function getInitFromWujie(): Partial<UserState> {
-  const props = window.__WUJIE?.props
+  const props = (window as any).$wujie?.props
   if (!props) return {}
   return {
     token: (props.token as string) || null,

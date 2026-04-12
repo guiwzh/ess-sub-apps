@@ -14,6 +14,13 @@ export function useWujieBridge() {
   useEffect(() => {
     if (!window.__POWERED_BY_WUJIE__) return
 
+    // 首次挂载时，从主应用 props 中读取初始路径并导航（解决刷新时路由丢失问题）
+    const wujieContext = (window as any).$wujie
+    const initialPath = wujieContext?.props?.initialPath as string | undefined
+    if (initialPath) {
+      router.navigate(initialPath)
+    }
+
     const offs = [
       // 语言切换
       onBusEvent(BUS_EVENTS.LOCALE_CHANGE, (locale) => {

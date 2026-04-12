@@ -32,7 +32,7 @@ const isWujie = !!window.__POWERED_BY_WUJIE__
 /** 从主应用 props 中读取初始路径，确保刷新时子应用导航到正确页面 */
 function getInitialPath(): string {
   if (isWujie) {
-    const path = window.__WUJIE?.props?.initialPath as string | undefined
+    const path = (window as any).$wujie?.props?.initialPath as string | undefined
     if (path) return path
   }
   return '/energy-stats'

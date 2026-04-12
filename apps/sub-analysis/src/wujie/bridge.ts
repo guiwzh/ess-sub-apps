@@ -10,6 +10,12 @@ export function useWujieBridge() {
   useEffect(() => {
     if (!window.__POWERED_BY_WUJIE__) return
 
+    // 首次挂载时，从主应用 props 中读取初始路径并导航（解决刷新时路由丢失问题）
+    const initialPath = (window as any).$wujie?.props?.initialPath as string | undefined
+    if (initialPath) {
+      router.navigate(initialPath)
+    }
+
     const offs = [
       onBusEvent(BUS_EVENTS.LOCALE_CHANGE, (locale) => {
         useAppStore.getState().setLocale(locale as string)

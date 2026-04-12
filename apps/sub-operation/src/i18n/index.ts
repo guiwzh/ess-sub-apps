@@ -6,7 +6,7 @@ import enCommon from './locales/en/common.json'
 
 const locale =
   (window.__POWERED_BY_WUJIE__
-    ? (window.__WUJIE?.props?.locale as string)
+    ? ((window as any).$wujie?.props?.locale as string)
     : undefined) ?? 'zh'
 
 i18n.use(initReactI18next).init({

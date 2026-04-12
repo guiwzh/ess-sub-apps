@@ -10,7 +10,7 @@ interface AppState {
 }
 
 function getInitFromWujie() {
-  const props = window.__WUJIE?.props
+  const props = (window as any).$wujie?.props
   if (!props) return {}
   return {
     theme: (props.theme as string) || 'light',
