@@ -10,6 +10,10 @@ const DeviceDetail = lazy(() => import('@/pages/Device/Detail'))
 const AlarmRealtime = lazy(() => import('@/pages/Alarm/Realtime'))
 const AlarmHistory = lazy(() => import('@/pages/Alarm/History'))
 const AlarmRules = lazy(() => import('@/pages/Alarm/Rules'))
+const WorkOrderList = lazy(() => import('@/pages/WorkOrder/List'))
+const WorkOrderCreate = lazy(() => import('@/pages/WorkOrder/Create'))
+const WorkOrderDetail = lazy(() => import('@/pages/WorkOrder/Detail'))
+const Inspection = lazy(() => import('@/pages/WorkOrder/Inspection'))
 
 function LazyLoad(props: { children: React.ReactNode }) {
   return (
@@ -87,6 +91,38 @@ const commonRoutes = [
     element: (
       <LazyLoad>
         <AlarmRules />
+      </LazyLoad>
+    ),
+  },
+  {
+    path: '/work-orders',
+    element: (
+      <LazyLoad>
+        <WorkOrderList />
+      </LazyLoad>
+    ),
+  },
+  {
+    path: '/work-orders/create',
+    element: (
+      <LazyLoad>
+        <WorkOrderCreate />
+      </LazyLoad>
+    ),
+  },
+  {
+    path: '/work-orders/:id',
+    element: (
+      <LazyLoad>
+        <WorkOrderDetail />
+      </LazyLoad>
+    ),
+  },
+  {
+    path: '/work-orders/inspection',
+    element: (
+      <LazyLoad>
+        <Inspection />
       </LazyLoad>
     ),
   },

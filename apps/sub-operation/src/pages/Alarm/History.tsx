@@ -58,11 +58,7 @@ export default function AlarmHistory() {
         rowKey="id"
         columns={columns}
         toolBarRender={() => [
-          <Button
-            key="export"
-            icon={<DownloadOutlined />}
-            onClick={handleExport}
-          >
+          <Button key="export" icon={<DownloadOutlined />} onClick={handleExport}>
             导出
           </Button>,
         ]}

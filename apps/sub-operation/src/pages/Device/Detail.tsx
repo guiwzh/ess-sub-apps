@@ -1,16 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import {
-  Card,
-  Descriptions,
-  Table,
-  Tag,
-  Typography,
-  Spin,
-  Button,
-  Row,
-  Col,
-} from 'antd'
+import { Card, Descriptions, Table, Tag, Typography, Spin, Button, Row, Col } from 'antd'
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import ReactECharts from 'echarts-for-react'
 import { getDeviceDetail, type DeviceDetail as DeviceDetailType } from '@/api/operation'
@@ -84,9 +74,7 @@ export default function DeviceDetail() {
       title: '结果',
       dataIndex: 'result',
       key: 'result',
-      render: (val: string) => (
-        <Tag color={val === '正常' ? 'green' : 'orange'}>{val}</Tag>
-      ),
+      render: (val: string) => <Tag color={val === '正常' ? 'green' : 'orange'}>{val}</Tag>,
     },
   ]
 
@@ -133,7 +121,9 @@ export default function DeviceDetail() {
           <Col span={6}>
             <Descriptions column={1} size="small">
               <Descriptions.Item label="功率">{detail.runningParams.power} kW</Descriptions.Item>
-              <Descriptions.Item label="温度">{detail.runningParams.temperature} ℃</Descriptions.Item>
+              <Descriptions.Item label="温度">
+                {detail.runningParams.temperature} ℃
+              </Descriptions.Item>
             </Descriptions>
           </Col>
           {detail.runningParams.soc !== undefined && (

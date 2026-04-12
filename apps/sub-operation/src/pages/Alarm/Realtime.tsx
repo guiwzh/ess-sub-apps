@@ -42,11 +42,7 @@ export default function AlarmRealtime() {
       valueType: 'select',
       fieldProps: { options: statusOptions },
       render: (_, record) =>
-        record.status === 'active' ? (
-          <Tag color="red">活跃</Tag>
-        ) : (
-          <Tag color="green">已恢复</Tag>
-        ),
+        record.status === 'active' ? <Tag color="red">活跃</Tag> : <Tag color="green">已恢复</Tag>,
     },
     {
       title: '操作',
