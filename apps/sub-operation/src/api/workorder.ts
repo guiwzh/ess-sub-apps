@@ -53,35 +53,35 @@ export function getWorkOrders(params: {
   type?: string
 }) {
   return request.get<ApiResponse<PageResult<WorkOrder>>>(
-    '/api/operation/work-orders',
+    '/operation/work-orders',
     { params },
   )
 }
 
 export function createWorkOrder(data: Partial<WorkOrder>) {
-  return request.post<ApiResponse<{ id: string }>>('/api/operation/work-orders', data)
+  return request.post<ApiResponse<{ id: string }>>('/operation/work-orders', data)
 }
 
 export function getWorkOrderDetail(id: string) {
-  return request.get<ApiResponse<WorkOrderDetail>>(`/api/operation/work-orders/${id}`)
+  return request.get<ApiResponse<WorkOrderDetail>>(`/operation/work-orders/${id}`)
 }
 
 export function getStaffList() {
-  return request.get<ApiResponse<StaffItem[]>>('/api/operation/staff')
+  return request.get<ApiResponse<StaffItem[]>>('/operation/staff')
 }
 
 export function getInspectionTemplates() {
-  return request.get<ApiResponse<InspectionTemplate[]>>('/api/operation/inspection-templates')
+  return request.get<ApiResponse<InspectionTemplate[]>>('/operation/inspection-templates')
 }
 
 export function createInspectionTemplate(data: Omit<InspectionTemplate, 'id'>) {
-  return request.post<ApiResponse<{ id: string }>>('/api/operation/inspection-templates', data)
+  return request.post<ApiResponse<{ id: string }>>('/operation/inspection-templates', data)
 }
 
 export function updateInspectionTemplate(id: string, data: Partial<InspectionTemplate>) {
-  return request.put<ApiResponse<null>>(`/api/operation/inspection-templates/${id}`, data)
+  return request.put<ApiResponse<null>>(`/operation/inspection-templates/${id}`, data)
 }
 
 export function deleteInspectionTemplate(id: string) {
-  return request.delete<ApiResponse<null>>(`/api/operation/inspection-templates/${id}`)
+  return request.delete<ApiResponse<null>>(`/operation/inspection-templates/${id}`)
 }

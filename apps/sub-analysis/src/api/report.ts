@@ -51,15 +51,15 @@ export interface CustomReportData {
 }
 
 export function getDailyReport(params: { date?: string }) {
-  return request.get<ApiResponse<DailyReportData>>('/api/analysis/report/daily', { params })
+  return request.get<ApiResponse<DailyReportData>>('/analysis/report/daily', { params })
 }
 
 export function getMonthlyReport(params: { month?: string }) {
-  return request.get<ApiResponse<MonthlyReportData>>('/api/analysis/report/monthly', { params })
+  return request.get<ApiResponse<MonthlyReportData>>('/analysis/report/monthly', { params })
 }
 
 export function getIndicators() {
-  return request.get<ApiResponse<IndicatorItem[]>>('/api/analysis/report/indicators')
+  return request.get<ApiResponse<IndicatorItem[]>>('/analysis/report/indicators')
 }
 
 export function getCustomReport(data: {
@@ -67,5 +67,5 @@ export function getCustomReport(data: {
   startDate: string
   endDate: string
 }) {
-  return request.post<ApiResponse<CustomReportData>>('/api/analysis/report/custom', data)
+  return request.post<ApiResponse<CustomReportData>>('/analysis/report/custom', data)
 }

@@ -62,7 +62,7 @@ export function getDevices(params: {
   type?: string
 }) {
   return request.get<ApiResponse<PageResult<DeviceItem>>>(
-    '/api/operation/devices',
+    '/operation/devices',
     { params },
   )
 }
@@ -70,7 +70,7 @@ export function getDevices(params: {
 /** 设备详情 */
 export function getDeviceDetail(id: string) {
   return request.get<ApiResponse<DeviceDetail>>(
-    `/api/operation/devices/${id}`,
+    `/operation/devices/${id}`,
   )
 }
 
@@ -82,7 +82,7 @@ export function getAlarms(params: {
   status?: string
 }) {
   return request.get<ApiResponse<PageResult<AlarmItem>>>(
-    '/api/operation/alarms',
+    '/operation/alarms',
     { params },
   )
 }
@@ -105,19 +105,19 @@ export function getHistoryAlarms(params: {
   station?: string
 }) {
   return request.get<ApiResponse<PageResult<HistoryAlarmItem>>>(
-    '/api/operation/alarms/history',
+    '/operation/alarms/history',
     { params },
   )
 }
 
 /** 确认告警 */
 export function confirmAlarm(id: string) {
-  return request.post<ApiResponse<null>>(`/api/operation/alarms/${id}/confirm`)
+  return request.post<ApiResponse<null>>(`/operation/alarms/${id}/confirm`)
 }
 
 /** 消除告警 */
 export function clearAlarm(id: string) {
-  return request.post<ApiResponse<null>>(`/api/operation/alarms/${id}/clear`)
+  return request.post<ApiResponse<null>>(`/operation/alarms/${id}/clear`)
 }
 
 export interface AlarmRule {
@@ -134,20 +134,20 @@ export interface AlarmRule {
 
 /** 获取告警规则列表 */
 export function getAlarmRules() {
-  return request.get<ApiResponse<AlarmRule[]>>('/api/operation/alarm-rules')
+  return request.get<ApiResponse<AlarmRule[]>>('/operation/alarm-rules')
 }
 
 /** 创建告警规则 */
 export function createAlarmRule(data: Omit<AlarmRule, 'id'>) {
-  return request.post<ApiResponse<{ id: string }>>('/api/operation/alarm-rules', data)
+  return request.post<ApiResponse<{ id: string }>>('/operation/alarm-rules', data)
 }
 
 /** 更新告警规则 */
 export function updateAlarmRule(id: string, data: Partial<AlarmRule>) {
-  return request.put<ApiResponse<null>>(`/api/operation/alarm-rules/${id}`, data)
+  return request.put<ApiResponse<null>>(`/operation/alarm-rules/${id}`, data)
 }
 
 /** 删除告警规则 */
 export function deleteAlarmRule(id: string) {
-  return request.delete<ApiResponse<null>>(`/api/operation/alarm-rules/${id}`)
+  return request.delete<ApiResponse<null>>(`/operation/alarm-rules/${id}`)
 }

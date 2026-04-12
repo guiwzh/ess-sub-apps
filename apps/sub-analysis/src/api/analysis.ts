@@ -34,17 +34,17 @@ export function getEnergyStats(params: {
   endDate?: string
   station?: string
 }) {
-  return request.get<ApiResponse<EnergyStatsData>>('/api/analysis/energy-stats', { params })
+  return request.get<ApiResponse<EnergyStatsData>>('/analysis/energy-stats', { params })
 }
 
 export function getEfficiency(params: { startDate?: string; endDate?: string }) {
-  return request.get<ApiResponse<EfficiencyData>>('/api/analysis/efficiency', { params })
+  return request.get<ApiResponse<EfficiencyData>>('/analysis/efficiency', { params })
 }
 
 export function getRevenue(params: { startDate?: string; endDate?: string }) {
-  return request.get<ApiResponse<RevenueData>>('/api/analysis/revenue', { params })
+  return request.get<ApiResponse<RevenueData>>('/analysis/revenue', { params })
 }
 
 export function getBatteryHealth(params: { startDate?: string; endDate?: string }) {
-  return request.get<ApiResponse<BatteryHealthData>>('/api/analysis/battery-health', { params })
+  return request.get<ApiResponse<BatteryHealthData>>('/analysis/battery-health', { params })
 }
