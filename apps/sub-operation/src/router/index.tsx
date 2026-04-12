@@ -83,10 +83,23 @@ const commonRoutes = [
   },
 ]
 
+/** 从主应用 props 中读取初始路径，确保刷新时子应用导航到正确页面 */
+function getInitialPath(): string {
+  if (isWujie) {
+    const path = window.__WUJIE?.props?.initialPath as string | undefined
+    if (path) return path
+  }
+  return '/dashboard'
+}
+
+function InitialRedirect() {
+  return <Navigate to={getInitialPath()} replace />
+}
+
 export const router = createBrowserRouter(
   isWujie
     ? [
-        { path: '/', element: <Navigate to="/dashboard" replace /> },
+        { path: '/', element: <InitialRedirect /> },
         ...commonRoutes,
       ]
     : [
