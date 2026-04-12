@@ -86,3 +86,68 @@ export function getAlarms(params: {
     { params },
   )
 }
+
+export interface HistoryAlarmItem {
+  id: string
+  deviceCode: string
+  message: string
+  level: 'critical' | 'warning' | 'info'
+  time: string
+  resolvedTime: string
+  station: string
+}
+
+/** 历史告警 */
+export function getHistoryAlarms(params: {
+  current?: number
+  pageSize?: number
+  level?: string
+  station?: string
+}) {
+  return request.get<ApiResponse<PageResult<HistoryAlarmItem>>>(
+    '/api/operation/alarms/history',
+    { params },
+  )
+}
+
+/** 确认告警 */
+export function confirmAlarm(id: string) {
+  return request.post<ApiResponse<null>>(`/api/operation/alarms/${id}/confirm`)
+}
+
+/** 消除告警 */
+export function clearAlarm(id: string) {
+  return request.post<ApiResponse<null>>(`/api/operation/alarms/${id}/clear`)
+}
+
+export interface AlarmRule {
+  id: string
+  name: string
+  deviceType: string
+  param: string
+  operator: string
+  threshold: number
+  level: string
+  notifyMethod: string
+  enabled: boolean
+}
+
+/** 获取告警规则列表 */
+export function getAlarmRules() {
+  return request.get<ApiResponse<AlarmRule[]>>('/api/operation/alarm-rules')
+}
+
+/** 创建告警规则 */
+export function createAlarmRule(data: Omit<AlarmRule, 'id'>) {
+  return request.post<ApiResponse<{ id: string }>>('/api/operation/alarm-rules', data)
+}
+
+/** 更新告警规则 */
+export function updateAlarmRule(id: string, data: Partial<AlarmRule>) {
+  return request.put<ApiResponse<null>>(`/api/operation/alarm-rules/${id}`, data)
+}
+
+/** 删除告警规则 */
+export function deleteAlarmRule(id: string) {
+  return request.delete<ApiResponse<null>>(`/api/operation/alarm-rules/${id}`)
+}

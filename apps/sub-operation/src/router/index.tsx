@@ -8,6 +8,8 @@ const DeviceIndex = lazy(() => import('@/pages/Device/index'))
 const DeviceCategory = lazy(() => import('@/pages/Device/Category'))
 const DeviceDetail = lazy(() => import('@/pages/Device/Detail'))
 const AlarmRealtime = lazy(() => import('@/pages/Alarm/Realtime'))
+const AlarmHistory = lazy(() => import('@/pages/Alarm/History'))
+const AlarmRules = lazy(() => import('@/pages/Alarm/Rules'))
 
 function LazyLoad(props: { children: React.ReactNode }) {
   return (
@@ -69,6 +71,22 @@ const commonRoutes = [
     element: (
       <LazyLoad>
         <AlarmRealtime />
+      </LazyLoad>
+    ),
+  },
+  {
+    path: '/alarms/history',
+    element: (
+      <LazyLoad>
+        <AlarmHistory />
+      </LazyLoad>
+    ),
+  },
+  {
+    path: '/alarms/rules',
+    element: (
+      <LazyLoad>
+        <AlarmRules />
       </LazyLoad>
     ),
   },
