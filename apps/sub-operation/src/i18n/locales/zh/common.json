@@ -1,0 +1,11 @@
+{
+  "appName": "运维管理",
+  "dashboard": "概览",
+  "deviceList": "设备列表",
+  "alarmList": "告警列表",
+  "login": "登录",
+  "username": "用户名",
+  "password": "密码",
+  "loginBtn": "登 录",
+  "welcome": "欢迎使用运维管理子系统"
+}

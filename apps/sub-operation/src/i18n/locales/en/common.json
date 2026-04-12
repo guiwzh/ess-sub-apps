@@ -1,0 +1,11 @@
+{
+  "appName": "Operation Management",
+  "dashboard": "Dashboard",
+  "deviceList": "Device List",
+  "alarmList": "Alarm List",
+  "login": "Login",
+  "username": "Username",
+  "password": "Password",
+  "loginBtn": "Login",
+  "welcome": "Welcome to Operation Management"
+}
