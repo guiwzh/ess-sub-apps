@@ -4,8 +4,10 @@ import { Spin } from 'antd'
 
 const DevLogin = lazy(() => import('@/pages/DevLogin'))
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
-const DeviceList = lazy(() => import('@/pages/DeviceList'))
-const AlarmList = lazy(() => import('@/pages/AlarmList'))
+const DeviceIndex = lazy(() => import('@/pages/Device/index'))
+const DeviceCategory = lazy(() => import('@/pages/Device/Category'))
+const DeviceDetail = lazy(() => import('@/pages/Device/Detail'))
+const AlarmRealtime = lazy(() => import('@/pages/Alarm/Realtime'))
 
 function LazyLoad(props: { children: React.ReactNode }) {
   return (
@@ -29,45 +31,56 @@ function LazyLoad(props: { children: React.ReactNode }) {
 
 const isWujie = !!window.__POWERED_BY_WUJIE__
 
-/**
- * wujie 模式：主应用控制路由，子应用只展示页面内容
- * 独立模式：有自己的路由（含 DevLogin）
- */
+const commonRoutes = [
+  {
+    path: '/dashboard',
+    element: (
+      <LazyLoad>
+        <Dashboard />
+      </LazyLoad>
+    ),
+  },
+  {
+    path: '/devices',
+    element: (
+      <LazyLoad>
+        <DeviceIndex />
+      </LazyLoad>
+    ),
+  },
+  {
+    path: '/devices/category',
+    element: (
+      <LazyLoad>
+        <DeviceCategory />
+      </LazyLoad>
+    ),
+  },
+  {
+    path: '/devices/:id',
+    element: (
+      <LazyLoad>
+        <DeviceDetail />
+      </LazyLoad>
+    ),
+  },
+  {
+    path: '/alarms',
+    element: (
+      <LazyLoad>
+        <AlarmRealtime />
+      </LazyLoad>
+    ),
+  },
+]
+
 export const router = createBrowserRouter(
   isWujie
     ? [
-        // wujie 模式下由主应用控制路径，子应用直接渲染对应页面
-        {
-          path: '/',
-          element: <Navigate to="/dashboard" replace />,
-        },
-        {
-          path: '/dashboard',
-          element: (
-            <LazyLoad>
-              <Dashboard />
-            </LazyLoad>
-          ),
-        },
-        {
-          path: '/devices',
-          element: (
-            <LazyLoad>
-              <DeviceList />
-            </LazyLoad>
-          ),
-        },
-        {
-          path: '/alarms',
-          element: (
-            <LazyLoad>
-              <AlarmList />
-            </LazyLoad>
-          ),
-        },
+        { path: '/', element: <Navigate to="/dashboard" replace /> },
+        ...commonRoutes,
       ]
     : [
-        // 独立模式
         {
           path: '/login',
           element: (
@@ -76,33 +89,7 @@ export const router = createBrowserRouter(
             </LazyLoad>
           ),
         },
-        {
-          path: '/',
-          element: <Navigate to="/dashboard" replace />,
-        },
-        {
-          path: '/dashboard',
-          element: (
-            <LazyLoad>
-              <Dashboard />
-            </LazyLoad>
-          ),
-        },
-        {
-          path: '/devices',
-          element: (
-            <LazyLoad>
-              <DeviceList />
-            </LazyLoad>
-          ),
-        },
-        {
-          path: '/alarms',
-          element: (
-            <LazyLoad>
-              <AlarmList />
-            </LazyLoad>
-          ),
-        },
+        { path: '/', element: <Navigate to="/dashboard" replace /> },
+        ...commonRoutes,
       ],
 )

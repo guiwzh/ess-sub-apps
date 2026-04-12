@@ -111,6 +111,12 @@ importers:
       axios:
         specifier: ^1.15.0
         version: 1.15.0
+      echarts:
+        specifier: ^6.0.0
+        version: 6.0.0
+      echarts-for-react:
+        specifier: ^3.0.6
+        version: 3.0.6(echarts@6.0.0)(react@19.2.5)
       i18next:
         specifier: ^26.0.4
         version: 26.0.4(typescript@6.0.2)
