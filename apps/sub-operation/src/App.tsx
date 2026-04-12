@@ -22,6 +22,7 @@ export default function App() {
   return (
     <ConfigProvider
       locale={antdLocaleMap[locale] ?? zhCN}
+      form={{ colon: false }}
       theme={{
         algorithm: appTheme === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
       }}
