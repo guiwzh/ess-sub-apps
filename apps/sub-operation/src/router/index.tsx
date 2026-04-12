@@ -101,6 +101,8 @@ export const router = createBrowserRouter(
     ? [
         { path: '/', element: <InitialRedirect /> },
         ...commonRoutes,
+        // 兜底路由：避免 wujie 加载过程中短暂出现 404
+        { path: '*', element: <InitialRedirect /> },
       ]
     : [
         {
