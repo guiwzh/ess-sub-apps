@@ -51,7 +51,7 @@ export default function DeviceCategory() {
   ]
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <Tabs
         activeKey={activeType}
         onChange={setActiveType}

@@ -3,12 +3,9 @@ import { lazy, Suspense } from 'react'
 import { Spin } from 'antd'
 
 const DevLogin = lazy(() => import('@/pages/DevLogin'))
-const EnergyStats = lazy(() => import('@/pages/EnergyStats'))
-const Efficiency = lazy(() => import('@/pages/Efficiency'))
-const Revenue = lazy(() => import('@/pages/Revenue'))
-const BatteryHealth = lazy(() => import('@/pages/BatteryHealth'))
-const ReportDaily = lazy(() => import('@/pages/Report/Daily'))
-const ReportCustom = lazy(() => import('@/pages/Report/Custom'))
+const EnergyOverview = lazy(() => import('@/pages/Merged/EnergyOverview'))
+const OperationAnalysis = lazy(() => import('@/pages/Merged/OperationAnalysis'))
+const ReportCenter = lazy(() => import('@/pages/Merged/ReportCenter'))
 
 function LazyLoad(props: { children: React.ReactNode }) {
   return (
@@ -37,31 +34,15 @@ const commonRoutes = [
     path: '/energy-stats',
     element: (
       <LazyLoad>
-        <EnergyStats />
+        <EnergyOverview />
       </LazyLoad>
     ),
   },
   {
-    path: '/efficiency',
+    path: '/operation-analysis',
     element: (
       <LazyLoad>
-        <Efficiency />
-      </LazyLoad>
-    ),
-  },
-  {
-    path: '/revenue',
-    element: (
-      <LazyLoad>
-        <Revenue />
-      </LazyLoad>
-    ),
-  },
-  {
-    path: '/battery-health',
-    element: (
-      <LazyLoad>
-        <BatteryHealth />
+        <OperationAnalysis />
       </LazyLoad>
     ),
   },
@@ -69,15 +50,7 @@ const commonRoutes = [
     path: '/report',
     element: (
       <LazyLoad>
-        <ReportDaily />
-      </LazyLoad>
-    ),
-  },
-  {
-    path: '/report/custom',
-    element: (
-      <LazyLoad>
-        <ReportCustom />
+        <ReportCenter />
       </LazyLoad>
     ),
   },

@@ -55,7 +55,7 @@ export default function DeviceIndex() {
   ]
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <ProTable<DeviceItem>
         headerTitle="设备台账"
         rowKey="id"

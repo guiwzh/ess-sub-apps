@@ -69,7 +69,7 @@ export default function EnergyStats() {
     : null
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <Typography.Title level={3}>{t('energyStats')}</Typography.Title>
       <Space wrap style={{ marginBottom: 16 }}>
         <Radio.Group

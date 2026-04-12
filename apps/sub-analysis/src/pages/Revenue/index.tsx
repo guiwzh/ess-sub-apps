@@ -63,7 +63,7 @@ export default function Revenue() {
     : null
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <Typography.Title level={3}>{t('revenue')}</Typography.Title>
       <Space style={{ marginBottom: 16 }}>
         <DateRangePicker

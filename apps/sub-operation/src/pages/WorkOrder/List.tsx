@@ -88,7 +88,7 @@ export default function WorkOrderList() {
   ]
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <ProTable<WorkOrder>
         headerTitle="运维工单"
         rowKey="id"

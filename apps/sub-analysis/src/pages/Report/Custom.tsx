@@ -96,7 +96,7 @@ export default function CustomReport() {
     : []
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <Card title="自定义报表" style={{ marginBottom: 16 }}>
         <Space direction="vertical" style={{ width: '100%' }} size="middle">
           <div>

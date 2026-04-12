@@ -52,7 +52,7 @@ export default function AlarmHistory() {
   }
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <ProTable<HistoryAlarmItem>
         headerTitle="历史告警"
         rowKey="id"

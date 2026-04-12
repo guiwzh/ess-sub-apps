@@ -65,7 +65,7 @@ export default function AlarmRealtime() {
   ]
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <ProTable<AlarmItem>
         headerTitle="实时告警"
         rowKey="id"

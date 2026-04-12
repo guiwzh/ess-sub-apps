@@ -173,7 +173,7 @@ export default function AlarmRules() {
   ]
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <Card
         title="告警规则配置"
         extra={

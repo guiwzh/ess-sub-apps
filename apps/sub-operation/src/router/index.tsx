@@ -4,16 +4,12 @@ import { Spin } from 'antd'
 
 const DevLogin = lazy(() => import('@/pages/DevLogin'))
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
-const DeviceIndex = lazy(() => import('@/pages/Device/index'))
-const DeviceCategory = lazy(() => import('@/pages/Device/Category'))
+const DeviceManagement = lazy(() => import('@/pages/Device/Management'))
 const DeviceDetail = lazy(() => import('@/pages/Device/Detail'))
-const AlarmRealtime = lazy(() => import('@/pages/Alarm/Realtime'))
-const AlarmHistory = lazy(() => import('@/pages/Alarm/History'))
-const AlarmRules = lazy(() => import('@/pages/Alarm/Rules'))
-const WorkOrderList = lazy(() => import('@/pages/WorkOrder/List'))
+const AlarmManagement = lazy(() => import('@/pages/Alarm/Management'))
+const WorkOrderManagement = lazy(() => import('@/pages/WorkOrder/Management'))
 const WorkOrderCreate = lazy(() => import('@/pages/WorkOrder/Create'))
 const WorkOrderDetail = lazy(() => import('@/pages/WorkOrder/Detail'))
-const Inspection = lazy(() => import('@/pages/WorkOrder/Inspection'))
 
 function LazyLoad(props: { children: React.ReactNode }) {
   return (
@@ -50,15 +46,7 @@ const commonRoutes = [
     path: '/devices',
     element: (
       <LazyLoad>
-        <DeviceIndex />
-      </LazyLoad>
-    ),
-  },
-  {
-    path: '/devices/category',
-    element: (
-      <LazyLoad>
-        <DeviceCategory />
+        <DeviceManagement />
       </LazyLoad>
     ),
   },
@@ -74,23 +62,7 @@ const commonRoutes = [
     path: '/alarms',
     element: (
       <LazyLoad>
-        <AlarmRealtime />
-      </LazyLoad>
-    ),
-  },
-  {
-    path: '/alarms/history',
-    element: (
-      <LazyLoad>
-        <AlarmHistory />
-      </LazyLoad>
-    ),
-  },
-  {
-    path: '/alarms/rules',
-    element: (
-      <LazyLoad>
-        <AlarmRules />
+        <AlarmManagement />
       </LazyLoad>
     ),
   },
@@ -98,7 +70,7 @@ const commonRoutes = [
     path: '/work-orders',
     element: (
       <LazyLoad>
-        <WorkOrderList />
+        <WorkOrderManagement />
       </LazyLoad>
     ),
   },
@@ -115,14 +87,6 @@ const commonRoutes = [
     element: (
       <LazyLoad>
         <WorkOrderDetail />
-      </LazyLoad>
-    ),
-  },
-  {
-    path: '/work-orders/inspection',
-    element: (
-      <LazyLoad>
-        <Inspection />
       </LazyLoad>
     ),
   },

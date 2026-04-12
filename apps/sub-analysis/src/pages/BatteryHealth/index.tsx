@@ -58,7 +58,7 @@ export default function BatteryHealth() {
     : null
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <Typography.Title level={3}>{t('batteryHealth')}</Typography.Title>
       <Space style={{ marginBottom: 16 }}>
         <DateRangePicker

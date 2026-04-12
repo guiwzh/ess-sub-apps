@@ -133,7 +133,7 @@ export default function Inspection() {
   ]
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <Card
         title="巡检计划管理"
         extra={

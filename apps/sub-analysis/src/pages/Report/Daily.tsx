@@ -138,7 +138,7 @@ export default function ReportPage() {
   }
 
   return (
-    <div style={{ padding: 24 }}>
+    <div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 16 }}>
         <Segmented
           options={['日报', '月报']}
