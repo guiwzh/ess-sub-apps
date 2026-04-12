@@ -20,11 +20,7 @@ let root: ReactDOM.Root | null = null
 function mount() {
   const container = document.getElementById('root')!
   root = ReactDOM.createRoot(container)
-  root.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>,
-  )
+  root.render(<App />)
 }
 
 function unmount() {

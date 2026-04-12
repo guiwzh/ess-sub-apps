@@ -6,4 +6,5 @@ export const BUS_EVENTS = {
   TOKEN_REFRESH: 'token-refresh',
   TOKEN_EXPIRED: 'token-expired',
   NAVIGATE: 'navigate',
+  ROUTE_CHANGE: 'route-change',
 } as const
