@@ -4,6 +4,7 @@ import { DownloadOutlined } from '@ant-design/icons'
 import ReactECharts from 'echarts-for-react'
 import dayjs, { type Dayjs } from 'dayjs'
 import { useAppStore } from '@/store/appStore'
+import { useTranslation } from 'react-i18next'
 import {
   getIndicators,
   getCustomReport,
@@ -16,6 +17,7 @@ const { RangePicker } = DatePicker
 const colorPalette = ['#1890ff', '#52c41a', '#fa8c16', '#722ed1', '#f5222d', '#13c2c2', '#eb2f96']
 
 export default function CustomReport() {
+  const { t } = useTranslation()
   const theme = useAppStore((s) => s.theme)
   const [indicators, setIndicators] = useState<IndicatorItem[]>([])
   const [selected, setSelected] = useState<string[]>([])
@@ -55,7 +57,7 @@ export default function CustomReport() {
   }
 
   const handleExport = () => {
-    message.success('自定义报表导出触发（Mock）')
+    message.success(t('report.exportCustomMock'))
   }
 
   const chartOption = data
@@ -77,7 +79,7 @@ export default function CustomReport() {
     : null
 
   const tableColumns = [
-    { title: '时间', dataIndex: 'label', key: 'label' },
+    { title: t('report.time'), dataIndex: 'label', key: 'label' },
     ...selected.map((k) => ({
       title: indicators.find((i) => i.key === k)?.label ?? k,
       dataIndex: k,
@@ -97,10 +99,10 @@ export default function CustomReport() {
 
   return (
     <div>
-      <Card title="自定义报表" style={{ marginBottom: 16 }}>
+      <Card title={t('report.custom')} style={{ marginBottom: 16 }}>
         <Space direction="vertical" style={{ width: '100%' }} size="middle">
           <div>
-            <div style={{ marginBottom: 8, fontWeight: 500 }}>选择指标：</div>
+            <div style={{ marginBottom: 8, fontWeight: 500 }}>{t('report.selectIndicators')}</div>
             <Checkbox.Group
               value={selected}
               onChange={(vals) => setSelected(vals as string[])}
@@ -108,7 +110,7 @@ export default function CustomReport() {
             />
           </div>
           <div>
-            <div style={{ marginBottom: 8, fontWeight: 500 }}>时间范围：</div>
+            <div style={{ marginBottom: 8, fontWeight: 500 }}>{t('report.timeRange')}</div>
             <RangePicker
               value={dateRange}
               onChange={(dates) => {
@@ -120,10 +122,10 @@ export default function CustomReport() {
           </div>
           <Space>
             <Button type="primary" onClick={handlePreview} disabled={selected.length === 0}>
-              预览
+              {t('report.preview')}
             </Button>
             <Button icon={<DownloadOutlined />} onClick={handleExport} disabled={!data}>
-              导出
+              {t('report.export')}
             </Button>
           </Space>
         </Space>
@@ -133,7 +135,7 @@ export default function CustomReport() {
         <Spin size="large" style={{ display: 'flex', justifyContent: 'center', marginTop: 60 }} />
       ) : data ? (
         <>
-          <Card title="趋势图表" style={{ marginBottom: 16 }}>
+          <Card title={t('report.trendChart')} style={{ marginBottom: 16 }}>
             {chartOption && (
               <ReactECharts
                 option={chartOption}
@@ -142,7 +144,7 @@ export default function CustomReport() {
               />
             )}
           </Card>
-          <Card title="数据表格">
+          <Card title={t('report.dataTable')}>
             <Table
               dataSource={tableData}
               columns={tableColumns}

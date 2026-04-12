@@ -1,10 +1,12 @@
 import { Tabs } from 'antd'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import EnergyStats from '../EnergyStats'
 import Efficiency from '../Efficiency'
 
 export default function EnergyOverview() {
   const [activeKey, setActiveKey] = useState('energy')
+  const { t } = useTranslation()
 
   return (
     <div>
@@ -12,8 +14,8 @@ export default function EnergyOverview() {
         activeKey={activeKey}
         onChange={setActiveKey}
         items={[
-          { key: 'energy', label: '充放电统计', children: <EnergyStats /> },
-          { key: 'efficiency', label: '能量效率', children: <Efficiency /> },
+          { key: 'energy', label: t('tab.energyStats'), children: <EnergyStats /> },
+          { key: 'efficiency', label: t('tab.efficiency'), children: <Efficiency /> },
         ]}
       />
     </div>

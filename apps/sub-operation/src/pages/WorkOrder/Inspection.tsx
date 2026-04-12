@@ -7,6 +7,7 @@ import {
   type ProFormInstance,
 } from '@ant-design/pro-components'
 import { PlusOutlined } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
 import {
   getInspectionTemplates,
   createInspectionTemplate,
@@ -15,14 +16,15 @@ import {
   type InspectionTemplate,
 } from '@/api/workorder'
 
-const frequencyOptions = [
-  { label: '每日', value: 'daily' },
-  { label: '每周', value: 'weekly' },
-  { label: '每月', value: 'monthly' },
-  { label: '每年', value: 'yearly' },
-]
-
 export default function Inspection() {
+  const { t } = useTranslation()
+
+  const frequencyOptions = [
+    { label: t('inspection.frequency.daily'), value: 'daily' },
+    { label: t('inspection.frequency.weekly'), value: 'weekly' },
+    { label: t('inspection.frequency.monthly'), value: 'monthly' },
+    { label: t('inspection.frequency.yearly'), value: 'yearly' },
+  ]
   const [templates, setTemplates] = useState<InspectionTemplate[]>([])
   const [loading, setLoading] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
@@ -55,32 +57,32 @@ export default function Inspection() {
 
   const handleDelete = async (id: string) => {
     await deleteInspectionTemplate(id)
-    message.success('删除成功')
+    message.success(t('deleteSuccess'))
     fetchTemplates()
   }
 
   const handleToggle = async (id: string, enabled: boolean) => {
     await updateInspectionTemplate(id, { enabled })
-    message.success(enabled ? '已启用' : '已禁用')
+    message.success(enabled ? t('enabled') : t('disabled'))
     fetchTemplates()
   }
 
   const handleSubmit = async (values: Record<string, unknown>) => {
     if (editing) {
       await updateInspectionTemplate(editing.id, values)
-      message.success('更新成功')
+      message.success(t('updateSuccess'))
     } else {
       await createInspectionTemplate(values as Omit<InspectionTemplate, 'id'>)
-      message.success('创建成功')
+      message.success(t('createSuccess'))
     }
     setModalOpen(false)
     fetchTemplates()
   }
 
   const columns = [
-    { title: '模板名称', dataIndex: 'name', key: 'name' },
+    { title: t('inspection.name'), dataIndex: 'name', key: 'name' },
     {
-      title: '巡检项',
+      title: t('inspection.items'),
       dataIndex: 'items',
       key: 'items',
       render: (items: string[]) =>
@@ -91,22 +93,22 @@ export default function Inspection() {
         )),
     },
     {
-      title: '频率',
+      title: t('inspection.frequency'),
       dataIndex: 'frequency',
       key: 'frequency',
       width: 80,
       render: (f: string) => {
         const map: Record<string, string> = {
-          daily: '每日',
-          weekly: '每周',
-          monthly: '每月',
-          yearly: '每年',
+          daily: t('inspection.frequency.daily'),
+          weekly: t('inspection.frequency.weekly'),
+          monthly: t('inspection.frequency.monthly'),
+          yearly: t('inspection.frequency.yearly'),
         }
         return map[f] || f
       },
     },
     {
-      title: '启用',
+      title: t('enabled'),
       key: 'enabled',
       width: 80,
       render: (_: unknown, record: InspectionTemplate) => (
@@ -114,17 +116,17 @@ export default function Inspection() {
       ),
     },
     {
-      title: '操作',
+      title: t('operation'),
       key: 'action',
       width: 130,
       render: (_: unknown, record: InspectionTemplate) => (
         <Space>
           <Button type="link" size="small" onClick={() => handleEdit(record)}>
-            编辑
+            {t('edit')}
           </Button>
-          <Popconfirm title="确定删除？" onConfirm={() => handleDelete(record.id)}>
+          <Popconfirm title={t('confirmDelete')} onConfirm={() => handleDelete(record.id)}>
             <Button type="link" size="small" danger>
-              删除
+              {t('delete')}
             </Button>
           </Popconfirm>
         </Space>
@@ -135,10 +137,10 @@ export default function Inspection() {
   return (
     <div>
       <Card
-        title="巡检计划管理"
+        title={t('inspection.title')}
         extra={
           <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
-            新增模板
+            {t('inspection.addTemplate')}
           </Button>
         }
       >
@@ -152,7 +154,7 @@ export default function Inspection() {
       </Card>
 
       <Modal
-        title={editing ? '编辑模板' : '新增模板'}
+        title={editing ? t('inspection.editTemplate') : t('inspection.addTemplate')}
         open={modalOpen}
         onCancel={() => setModalOpen(false)}
         footer={null}
@@ -163,20 +165,20 @@ export default function Inspection() {
           initialValues={editing ?? { enabled: true }}
           onFinish={handleSubmit}
           submitter={{
-            searchConfig: { submitText: editing ? '更新' : '创建' },
+            searchConfig: { submitText: editing ? t('update') : t('create') },
           }}
         >
-          <ProFormText name="name" label="模板名称" rules={[{ required: true }]} />
+          <ProFormText name="name" label={t('inspection.name')} rules={[{ required: true }]} />
           <ProFormSelect
             name="items"
-            label="巡检项"
+            label={t('inspection.items')}
             mode="tags"
             rules={[{ required: true }]}
-            fieldProps={{ placeholder: '输入后按回车添加' }}
+            fieldProps={{ placeholder: t('inspection.itemsPlaceholder') }}
           />
           <ProFormSelect
             name="frequency"
-            label="巡检频率"
+            label={t('inspection.frequency')}
             options={frequencyOptions}
             rules={[{ required: true }]}
           />

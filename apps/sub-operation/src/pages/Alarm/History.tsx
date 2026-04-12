@@ -1,28 +1,31 @@
 import { ProTable, type ProColumns } from '@ant-design/pro-components'
 import { Tag, Button, message } from 'antd'
 import { DownloadOutlined } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
 import { getHistoryAlarms, type HistoryAlarmItem } from '@/api/operation'
 
-const levelMap: Record<string, { text: string; color: string }> = {
-  critical: { text: '紧急', color: 'red' },
-  warning: { text: '重要', color: 'orange' },
-  info: { text: '一般', color: 'blue' },
-}
-
 export default function AlarmHistory() {
+  const { t } = useTranslation()
+
+  const levelMap: Record<string, { text: string; color: string }> = {
+    critical: { text: t('alarm.level.critical'), color: 'red' },
+    warning: { text: t('alarm.level.warning'), color: 'orange' },
+    info: { text: t('alarm.level.info'), color: 'blue' },
+  }
+
   const columns: ProColumns<HistoryAlarmItem>[] = [
-    { title: '告警内容', dataIndex: 'message', ellipsis: true },
-    { title: '设备编号', dataIndex: 'deviceCode', width: 110, search: false },
+    { title: t('alarm.content'), dataIndex: 'message', ellipsis: true },
+    { title: t('alarm.deviceCode'), dataIndex: 'deviceCode', width: 110, search: false },
     {
-      title: '级别',
+      title: t('alarm.level'),
       dataIndex: 'level',
       width: 80,
       valueType: 'select',
       fieldProps: {
         options: [
-          { label: '紧急', value: 'critical' },
-          { label: '重要', value: 'warning' },
-          { label: '一般', value: 'info' },
+          { label: t('alarm.level.critical'), value: 'critical' },
+          { label: t('alarm.level.warning'), value: 'warning' },
+          { label: t('alarm.level.info'), value: 'info' },
         ],
       },
       render: (_, record) => {
@@ -31,35 +34,35 @@ export default function AlarmHistory() {
       },
     },
     {
-      title: '站点',
+      title: t('alarm.station'),
       dataIndex: 'station',
       width: 120,
       valueType: 'select',
       fieldProps: {
         options: [
-          { label: '储能站点A', value: '储能站点A' },
-          { label: '储能站点B', value: '储能站点B' },
-          { label: '储能站点C', value: '储能站点C' },
+          { label: t('station.a'), value: '储能站点A' },
+          { label: t('station.b'), value: '储能站点B' },
+          { label: t('station.c'), value: '储能站点C' },
         ],
       },
     },
-    { title: '告警时间', dataIndex: 'time', width: 170, search: false },
-    { title: '恢复时间', dataIndex: 'resolvedTime', width: 170, search: false },
+    { title: t('alarm.alarmTime'), dataIndex: 'time', width: 170, search: false },
+    { title: t('alarm.resolvedTime'), dataIndex: 'resolvedTime', width: 170, search: false },
   ]
 
   const handleExport = () => {
-    message.success('导出功能已触发（Mock）')
+    message.success(t('export') + ' (Mock)')
   }
 
   return (
     <div>
       <ProTable<HistoryAlarmItem>
-        headerTitle="历史告警"
+        headerTitle={t('alarm.history')}
         rowKey="id"
         columns={columns}
         toolBarRender={() => [
           <Button key="export" icon={<DownloadOutlined />} onClick={handleExport}>
-            导出
+            {t('export')}
           </Button>,
         ]}
         request={async (params) => {

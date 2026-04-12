@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { message, Modal } from 'antd'
 import { StepsForm, ProFormText, ProFormSelect, ProFormTextArea } from '@ant-design/pro-components'
+import { useTranslation } from 'react-i18next'
 import { createWorkOrder, getStaffList, type StaffItem } from '@/api/workorder'
 import { getDevices, type DeviceItem } from '@/api/operation'
 
@@ -10,6 +11,7 @@ interface WorkOrderCreateProps {
 }
 
 export default function WorkOrderCreate({ open, onClose }: WorkOrderCreateProps) {
+  const { t } = useTranslation()
   const [staff, setStaff] = useState<StaffItem[]>([])
   const [devices, setDevices] = useState<DeviceItem[]>([])
 
@@ -25,7 +27,7 @@ export default function WorkOrderCreate({ open, onClose }: WorkOrderCreateProps)
 
   return (
     <Modal
-      title="创建工单"
+      title={t('workorder.create')}
       open={open}
       onCancel={() => onClose()}
       footer={null}
@@ -36,52 +38,52 @@ export default function WorkOrderCreate({ open, onClose }: WorkOrderCreateProps)
         onFinish={async (values) => {
           const { data: res } = await createWorkOrder(values)
           if (res.code === 0) {
-            message.success('工单创建成功')
+            message.success(t('workorder.createSuccess'))
             onClose(true)
           }
         }}
       >
-        <StepsForm.StepForm name="type" title="选择类型">
+        <StepsForm.StepForm name="type" title={t('workorder.step.selectType')}>
           <ProFormSelect
             name="type"
-            label="工单类型"
+            label={t('workorder.type')}
             rules={[{ required: true }]}
             options={[
-              { label: '故障维修', value: 'fault' },
-              { label: '维保', value: 'maintenance' },
-              { label: '巡检', value: 'inspection' },
+              { label: t('workorder.type.fault'), value: 'fault' },
+              { label: t('workorder.type.maintenance'), value: 'maintenance' },
+              { label: t('workorder.type.inspection'), value: 'inspection' },
             ]}
           />
           <ProFormSelect
             name="priority"
-            label="优先级"
+            label={t('workorder.priority')}
             rules={[{ required: true }]}
             options={[
-              { label: '高', value: 'high' },
-              { label: '中', value: 'medium' },
-              { label: '低', value: 'low' },
+              { label: t('workorder.priority.high'), value: 'high' },
+              { label: t('workorder.priority.medium'), value: 'medium' },
+              { label: t('workorder.priority.low'), value: 'low' },
             ]}
           />
         </StepsForm.StepForm>
 
-        <StepsForm.StepForm name="info" title="填写信息">
-          <ProFormText name="title" label="工单标题" rules={[{ required: true }]} />
-          <ProFormTextArea name="description" label="问题描述" />
+        <StepsForm.StepForm name="info" title={t('workorder.step.fillInfo')}>
+          <ProFormText name="title" label={t('workorder.subject')} rules={[{ required: true }]} />
+          <ProFormTextArea name="description" label={t('workorder.description')} />
           <ProFormSelect
             name="station"
-            label="站点"
+            label={t('workorder.station')}
             options={[
-              { label: '储能站点A', value: '储能站点A' },
-              { label: '储能站点B', value: '储能站点B' },
-              { label: '储能站点C', value: '储能站点C' },
+              { label: `${t('station.nameA')}`, value: '储能站点A' },
+              { label: `${t('station.nameB')}`, value: '储能站点B' },
+              { label: `${t('station.nameC')}`, value: '储能站点C' },
             ]}
           />
         </StepsForm.StepForm>
 
-        <StepsForm.StepForm name="device" title="关联设备">
+        <StepsForm.StepForm name="device" title={t('workorder.step.bindDevice')}>
           <ProFormSelect
             name="deviceCode"
-            label="关联设备"
+            label={t('workorder.device')}
             options={devices.map((d) => ({
               label: `${d.code} - ${d.name}`,
               value: d.code,
@@ -91,10 +93,10 @@ export default function WorkOrderCreate({ open, onClose }: WorkOrderCreateProps)
           />
         </StepsForm.StepForm>
 
-        <StepsForm.StepForm name="assign" title="指派人员">
+        <StepsForm.StepForm name="assign" title={t('workorder.step.assign')}>
           <ProFormSelect
             name="assignee"
-            label="负责人"
+            label={t('workorder.assignee')}
             rules={[{ required: true }]}
             options={staff.map((s) => ({
               label: `${s.name} (${s.role})`,

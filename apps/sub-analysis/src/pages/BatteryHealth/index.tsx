@@ -66,7 +66,7 @@ export default function BatteryHealth() {
           onChange={(range: [string, string], _preset: RangePreset) => setDateRange(range)}
         />
       </Space>
-      <ChartCard title="SOC / SOH 趋势">
+      <ChartCard title={t('battery.socSohTrend')}>
         {loading ? (
           <Spin style={{ display: 'flex', justifyContent: 'center', padding: 80 }} />
         ) : option ? (

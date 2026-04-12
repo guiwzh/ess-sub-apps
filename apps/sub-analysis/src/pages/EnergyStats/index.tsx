@@ -9,16 +9,16 @@ import { getEnergyStats, type EnergyStatsData } from '@/api/analysis'
 
 type Dimension = 'day' | 'month' | 'year'
 
-const stationOptions = [
-  { label: '全部站点', value: '' },
-  { label: '储能站点A', value: '储能站点A' },
-  { label: '储能站点B', value: '储能站点B' },
-  { label: '储能站点C', value: '储能站点C' },
-]
-
 /** 充放电统计 — 可切换维度 + 时间范围 + 站点 */
 export default function EnergyStats() {
   const { t } = useTranslation()
+
+  const stationOptions = [
+    { label: t('station.all'), value: '' },
+    { label: t('station.nameA'), value: '储能站点A' },
+    { label: t('station.nameB'), value: '储能站点B' },
+    { label: t('station.nameC'), value: '储能站点C' },
+  ]
   const theme = useAppStore((s) => s.theme)
   const [dimension, setDimension] = useState<Dimension>('month')
   const [station, setStation] = useState('')
@@ -79,9 +79,9 @@ export default function EnergyStats() {
           value={dimension}
           onChange={(e) => setDimension(e.target.value)}
           options={[
-            { label: '日', value: 'day' },
-            { label: '月', value: 'month' },
-            { label: '年', value: 'year' },
+            { label: t('dimension.day'), value: 'day' },
+            { label: t('dimension.month'), value: 'month' },
+            { label: t('dimension.year'), value: 'year' },
           ]}
         />
         <Select

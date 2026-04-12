@@ -3,52 +3,54 @@ import { ProTable, type ProColumns, type ActionType } from '@ant-design/pro-comp
 import { Tag, Button } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { PlusOutlined } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
 import { getWorkOrders, type WorkOrder } from '@/api/workorder'
 import WorkOrderCreate from './Create'
 
-const statusMap: Record<string, { text: string; color: string }> = {
-  pending: { text: '待派发', color: 'default' },
-  processing: { text: '处理中', color: 'processing' },
-  completed: { text: '已完成', color: 'success' },
-  closed: { text: '已关闭', color: 'default' },
-}
-
-const typeMap: Record<string, string> = {
-  fault: '故障维修',
-  maintenance: '维保',
-  inspection: '巡检',
-}
-
-const priorityMap: Record<string, { text: string; color: string }> = {
-  high: { text: '高', color: 'red' },
-  medium: { text: '中', color: 'orange' },
-  low: { text: '低', color: 'blue' },
-}
-
 export default function WorkOrderList() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const actionRef = useRef<ActionType>()
   const [createOpen, setCreateOpen] = useState(false)
 
+  const statusMap: Record<string, { text: string; color: string }> = {
+    pending: { text: t('workorder.status.pending'), color: 'default' },
+    processing: { text: t('workorder.status.processing'), color: 'processing' },
+    completed: { text: t('workorder.status.completed'), color: 'success' },
+    closed: { text: t('workorder.status.closed'), color: 'default' },
+  }
+
+  const typeMap: Record<string, string> = {
+    fault: t('workorder.type.fault'),
+    maintenance: t('workorder.type.maintenance'),
+    inspection: t('workorder.type.inspection'),
+  }
+
+  const priorityMap: Record<string, { text: string; color: string }> = {
+    high: { text: t('workorder.priority.high'), color: 'red' },
+    medium: { text: t('workorder.priority.medium'), color: 'orange' },
+    low: { text: t('workorder.priority.low'), color: 'blue' },
+  }
+
   const columns: ProColumns<WorkOrder>[] = [
-    { title: '工单编号', dataIndex: 'id', width: 110 },
-    { title: '标题', dataIndex: 'title', ellipsis: true },
+    { title: t('workorder.id'), dataIndex: 'id', width: 110 },
+    { title: t('workorder.subject'), dataIndex: 'title', ellipsis: true },
     {
-      title: '类型',
+      title: t('workorder.type'),
       dataIndex: 'type',
       width: 90,
       valueType: 'select',
       fieldProps: {
         options: [
-          { label: '故障维修', value: 'fault' },
-          { label: '维保', value: 'maintenance' },
-          { label: '巡检', value: 'inspection' },
+          { label: t('workorder.type.fault'), value: 'fault' },
+          { label: t('workorder.type.maintenance'), value: 'maintenance' },
+          { label: t('workorder.type.inspection'), value: 'inspection' },
         ],
       },
       render: (_, r) => typeMap[r.type] || r.type,
     },
     {
-      title: '优先级',
+      title: t('workorder.priority'),
       dataIndex: 'priority',
       width: 80,
       search: false,
@@ -58,16 +60,16 @@ export default function WorkOrderList() {
       },
     },
     {
-      title: '状态',
+      title: t('workorder.status'),
       dataIndex: 'status',
       width: 90,
       valueType: 'select',
       fieldProps: {
         options: [
-          { label: '待派发', value: 'pending' },
-          { label: '处理中', value: 'processing' },
-          { label: '已完成', value: 'completed' },
-          { label: '已关闭', value: 'closed' },
+          { label: t('workorder.status.pending'), value: 'pending' },
+          { label: t('workorder.status.processing'), value: 'processing' },
+          { label: t('workorder.status.completed'), value: 'completed' },
+          { label: t('workorder.status.closed'), value: 'closed' },
         ],
       },
       render: (_, r) => {
@@ -75,17 +77,17 @@ export default function WorkOrderList() {
         return s ? <Tag color={s.color}>{s.text}</Tag> : r.status
       },
     },
-    { title: '关联设备', dataIndex: 'deviceCode', width: 100, search: false },
-    { title: '站点', dataIndex: 'station', width: 110, search: false },
-    { title: '负责人', dataIndex: 'assignee', width: 80, search: false },
-    { title: '创建时间', dataIndex: 'createdAt', width: 170, search: false },
+    { title: t('workorder.device'), dataIndex: 'deviceCode', width: 100, search: false },
+    { title: t('workorder.station'), dataIndex: 'station', width: 110, search: false },
+    { title: t('workorder.assignee'), dataIndex: 'assignee', width: 80, search: false },
+    { title: t('workorder.createdAt'), dataIndex: 'createdAt', width: 170, search: false },
     {
-      title: '操作',
+      title: t('operation'),
       width: 80,
       search: false,
       render: (_, r) => (
         <Button type="link" size="small" onClick={() => navigate(`/work-orders/${r.id}`)}>
-          详情
+          {t('detail')}
         </Button>
       ),
     },
@@ -94,7 +96,7 @@ export default function WorkOrderList() {
   return (
     <div>
       <ProTable<WorkOrder>
-        headerTitle="运维工单"
+        headerTitle={t('workorder.title')}
         rowKey="id"
         actionRef={actionRef}
         columns={columns}
@@ -105,7 +107,7 @@ export default function WorkOrderList() {
             icon={<PlusOutlined />}
             onClick={() => setCreateOpen(true)}
           >
-            创建工单
+            {t('workorder.create')}
           </Button>,
         ]}
         request={async (params) => {

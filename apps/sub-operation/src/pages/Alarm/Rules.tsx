@@ -18,6 +18,7 @@ import {
   type ProFormInstance,
 } from '@ant-design/pro-components'
 import { PlusOutlined } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
 import {
   getAlarmRules,
   createAlarmRule,
@@ -26,49 +27,50 @@ import {
   type AlarmRule,
 } from '@/api/operation'
 
-const levelOptions = [
-  { label: '紧急', value: 'critical' },
-  { label: '重要', value: 'warning' },
-  { label: '一般', value: 'info' },
-]
-
-const deviceTypeOptions = [
-  { label: 'PCS', value: 'PCS' },
-  { label: 'BMS', value: 'BMS' },
-  { label: '空调 (HVAC)', value: 'HVAC' },
-  { label: '消防 (FIRE)', value: 'FIRE' },
-  { label: '变压器 (TRANS)', value: 'TRANS' },
-]
-
-const paramOptions = [
-  { label: '温度', value: 'temperature' },
-  { label: '电压', value: 'voltage' },
-  { label: '电流', value: 'current' },
-  { label: '功率', value: 'power' },
-  { label: 'SOC', value: 'soc' },
-  { label: 'SOH', value: 'soh' },
-]
-
-const operatorOptions = [
-  { label: '>', value: '>' },
-  { label: '<', value: '<' },
-  { label: '>=', value: '>=' },
-  { label: '<=', value: '<=' },
-  { label: '==', value: '==' },
-]
-
-const notifyOptions = [
-  { label: '短信', value: 'sms' },
-  { label: '邮件', value: 'email' },
-  { label: '站内消息', value: 'push' },
-]
-
 export default function AlarmRules() {
+  const { t } = useTranslation()
   const [rules, setRules] = useState<AlarmRule[]>([])
   const [loading, setLoading] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [editingRule, setEditingRule] = useState<AlarmRule | null>(null)
   const formRef = useRef<ProFormInstance>(null)
+
+  const levelOptions = [
+    { label: t('alarm.level.critical'), value: 'critical' },
+    { label: t('alarm.level.warning'), value: 'warning' },
+    { label: t('alarm.level.info'), value: 'info' },
+  ]
+
+  const deviceTypeOptions = [
+    { label: t('device.type.pcs'), value: 'PCS' },
+    { label: t('device.type.bms'), value: 'BMS' },
+    { label: t('device.type.hvac'), value: 'HVAC' },
+    { label: t('device.type.fire'), value: 'FIRE' },
+    { label: t('device.type.trans'), value: 'TRANS' },
+  ]
+
+  const paramOptions = [
+    { label: t('alarm.rules.param.temp'), value: 'temperature' },
+    { label: t('alarm.rules.param.voltage'), value: 'voltage' },
+    { label: t('alarm.rules.param.current'), value: 'current' },
+    { label: t('alarm.rules.param.power'), value: 'power' },
+    { label: t('alarm.rules.param.soc'), value: 'soc' },
+    { label: t('alarm.rules.param.soh'), value: 'soh' },
+  ]
+
+  const operatorOptions = [
+    { label: '>', value: '>' },
+    { label: '<', value: '<' },
+    { label: '>=', value: '>=' },
+    { label: '<=', value: '<=' },
+    { label: '==', value: '==' },
+  ]
+
+  const notifyOptions = [
+    { label: t('alarm.rules.notify.sms'), value: 'sms' },
+    { label: t('alarm.rules.notify.email'), value: 'email' },
+    { label: t('alarm.rules.notify.message'), value: 'push' },
+  ]
 
   const fetchRules = async () => {
     setLoading(true)
@@ -96,39 +98,39 @@ export default function AlarmRules() {
 
   const handleDelete = async (id: string) => {
     await deleteAlarmRule(id)
-    message.success('删除成功')
+    message.success(t('alarm.rules.deleteSuccess'))
     fetchRules()
   }
 
   const handleToggle = async (id: string, enabled: boolean) => {
     await updateAlarmRule(id, { enabled })
-    message.success(enabled ? '已启用' : '已禁用')
+    message.success(enabled ? t('enabled') : t('disabled'))
     fetchRules()
   }
 
   const handleSubmit = async (values: Record<string, unknown>) => {
     if (editingRule) {
       await updateAlarmRule(editingRule.id, values)
-      message.success('更新成功')
+      message.success(t('alarm.rules.updateSuccess'))
     } else {
       await createAlarmRule(values as Omit<AlarmRule, 'id'>)
-      message.success('创建成功')
+      message.success(t('alarm.rules.createSuccess'))
     }
     setModalOpen(false)
     fetchRules()
   }
 
   const columns = [
-    { title: '规则名称', dataIndex: 'name', key: 'name' },
-    { title: '设备类型', dataIndex: 'deviceType', key: 'deviceType', width: 100 },
+    { title: t('alarm.rules.name'), dataIndex: 'name', key: 'name' },
+    { title: t('alarm.rules.deviceType'), dataIndex: 'deviceType', key: 'deviceType', width: 100 },
     {
-      title: '条件',
+      title: t('alarm.rules.condition'),
       key: 'condition',
       render: (_: unknown, record: AlarmRule) =>
         `${record.param} ${record.operator} ${record.threshold}`,
     },
     {
-      title: '级别',
+      title: t('alarm.level'),
       dataIndex: 'level',
       key: 'level',
       width: 80,
@@ -141,9 +143,9 @@ export default function AlarmRules() {
         return <Tag color={colorMap[level]}>{level}</Tag>
       },
     },
-    { title: '通知方式', dataIndex: 'notifyMethod', key: 'notifyMethod', width: 100 },
+    { title: t('alarm.rules.notifyMethod'), dataIndex: 'notifyMethod', key: 'notifyMethod', width: 100 },
     {
-      title: '启用',
+      title: t('alarm.rules.enabled'),
       key: 'enabled',
       width: 80,
       render: (_: unknown, record: AlarmRule) => (
@@ -154,17 +156,17 @@ export default function AlarmRules() {
       ),
     },
     {
-      title: '操作',
+      title: t('operation'),
       key: 'action',
       width: 130,
       render: (_: unknown, record: AlarmRule) => (
         <Space>
           <Button type="link" size="small" onClick={() => handleEdit(record)}>
-            编辑
+            {t('edit')}
           </Button>
-          <Popconfirm title="确定删除？" onConfirm={() => handleDelete(record.id)}>
+          <Popconfirm title={t('confirmDelete')} onConfirm={() => handleDelete(record.id)}>
             <Button type="link" size="small" danger>
-              删除
+              {t('delete')}
             </Button>
           </Popconfirm>
         </Space>
@@ -175,10 +177,10 @@ export default function AlarmRules() {
   return (
     <div>
       <Card
-        title="告警规则配置"
+        title={t('alarm.rules.title')}
         extra={
           <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
-            新增规则
+            {t('alarm.rules.add')}
           </Button>
         }
       >
@@ -192,7 +194,7 @@ export default function AlarmRules() {
       </Card>
 
       <Modal
-        title={editingRule ? '编辑规则' : '新增规则'}
+        title={editingRule ? t('alarm.rules.edit') : t('alarm.rules.add')}
         open={modalOpen}
         onCancel={() => setModalOpen(false)}
         footer={null}
@@ -203,16 +205,16 @@ export default function AlarmRules() {
           initialValues={editingRule ?? { enabled: true }}
           onFinish={handleSubmit}
           submitter={{
-            searchConfig: { submitText: editingRule ? '更新' : '创建' },
+            searchConfig: { submitText: editingRule ? t('update') : t('create') },
           }}
         >
-          <ProFormText name="name" label="规则名称" rules={[{ required: true }]} />
-          <ProFormSelect name="deviceType" label="设备类型" options={deviceTypeOptions} rules={[{ required: true }]} />
-          <ProFormSelect name="param" label="监控参数" options={paramOptions} rules={[{ required: true }]} />
-          <ProFormSelect name="operator" label="运算符" options={operatorOptions} rules={[{ required: true }]} />
-          <ProFormDigit name="threshold" label="阈值" rules={[{ required: true }]} />
-          <ProFormSelect name="level" label="告警级别" options={levelOptions} rules={[{ required: true }]} />
-          <ProFormSelect name="notifyMethod" label="通知方式" options={notifyOptions} rules={[{ required: true }]} />
+          <ProFormText name="name" label={t('alarm.rules.name')} rules={[{ required: true }]} />
+          <ProFormSelect name="deviceType" label={t('alarm.rules.deviceType')} options={deviceTypeOptions} rules={[{ required: true }]} />
+          <ProFormSelect name="param" label={t('alarm.rules.param')} options={paramOptions} rules={[{ required: true }]} />
+          <ProFormSelect name="operator" label={t('alarm.rules.operator')} options={operatorOptions} rules={[{ required: true }]} />
+          <ProFormDigit name="threshold" label={t('alarm.rules.threshold')} rules={[{ required: true }]} />
+          <ProFormSelect name="level" label={t('alarm.rules.alarmLevel')} options={levelOptions} rules={[{ required: true }]} />
+          <ProFormSelect name="notifyMethod" label={t('alarm.rules.notifyMethod')} options={notifyOptions} rules={[{ required: true }]} />
         </ProForm>
       </Modal>
     </div>

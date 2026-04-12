@@ -13,24 +13,13 @@ import {
   Upload,
 } from 'antd'
 import { ArrowLeftOutlined, UploadOutlined } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
 import { getWorkOrderDetail, type WorkOrderDetail as WODetailType } from '@/api/workorder'
-
-const statusMap: Record<string, { text: string; color: string }> = {
-  pending: { text: '待派发', color: 'default' },
-  processing: { text: '处理中', color: 'processing' },
-  completed: { text: '已完成', color: 'success' },
-  closed: { text: '已关闭', color: 'default' },
-}
-
-const priorityMap: Record<string, { text: string; color: string }> = {
-  high: { text: '高', color: 'red' },
-  medium: { text: '中', color: 'orange' },
-  low: { text: '低', color: 'blue' },
-}
 
 export default function WorkOrderDetail() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const [detail, setDetail] = useState<WODetailType | null>(null)
   const [loading, setLoading] = useState(true)
   const [remark, setRemark] = useState('')
@@ -52,7 +41,20 @@ export default function WorkOrderDetail() {
   }
 
   if (!detail) {
-    return <Typography.Text type="danger">工单不存在</Typography.Text>
+    return <Typography.Text type="danger">{t('workorder.notFound')}</Typography.Text>
+  }
+
+  const statusMap: Record<string, { text: string; color: string }> = {
+    pending: { text: t('workorder.status.pending'), color: 'default' },
+    processing: { text: t('workorder.status.processing'), color: 'processing' },
+    completed: { text: t('workorder.status.completed'), color: 'success' },
+    closed: { text: t('workorder.status.closed'), color: 'default' },
+  }
+
+  const priorityMap: Record<string, { text: string; color: string }> = {
+    high: { text: t('workorder.priority.high'), color: 'red' },
+    medium: { text: t('workorder.priority.medium'), color: 'orange' },
+    low: { text: t('workorder.priority.low'), color: 'blue' },
   }
 
   const s = statusMap[detail.status]
@@ -65,29 +67,29 @@ export default function WorkOrderDetail() {
         style={{ marginBottom: 16 }}
         onClick={() => navigate(-1)}
       >
-        返回
+        {t('back')}
       </Button>
 
       <Typography.Title level={4}>{detail.title}</Typography.Title>
 
-      <Card title="工单信息" style={{ marginBottom: 16 }}>
+      <Card title={t('workorder.info')} style={{ marginBottom: 16 }}>
         <Descriptions column={3}>
-          <Descriptions.Item label="工单编号">{detail.id}</Descriptions.Item>
-          <Descriptions.Item label="状态">
+          <Descriptions.Item label={t('workorder.id')}>{detail.id}</Descriptions.Item>
+          <Descriptions.Item label={t('workorder.status')}>
             {s ? <Tag color={s.color}>{s.text}</Tag> : detail.status}
           </Descriptions.Item>
-          <Descriptions.Item label="优先级">
+          <Descriptions.Item label={t('workorder.priority')}>
             {p ? <Tag color={p.color}>{p.text}</Tag> : detail.priority}
           </Descriptions.Item>
-          <Descriptions.Item label="类型">{detail.type}</Descriptions.Item>
-          <Descriptions.Item label="关联设备">{detail.deviceCode}</Descriptions.Item>
-          <Descriptions.Item label="站点">{detail.station}</Descriptions.Item>
-          <Descriptions.Item label="负责人">{detail.assignee}</Descriptions.Item>
-          <Descriptions.Item label="创建时间">{detail.createdAt}</Descriptions.Item>
+          <Descriptions.Item label={t('workorder.type')}>{detail.type}</Descriptions.Item>
+          <Descriptions.Item label={t('workorder.device')}>{detail.deviceCode}</Descriptions.Item>
+          <Descriptions.Item label={t('workorder.station')}>{detail.station}</Descriptions.Item>
+          <Descriptions.Item label={t('workorder.assignee')}>{detail.assignee}</Descriptions.Item>
+          <Descriptions.Item label={t('workorder.createdAt')}>{detail.createdAt}</Descriptions.Item>
         </Descriptions>
       </Card>
 
-      <Card title="处理流程" style={{ marginBottom: 16 }}>
+      <Card title={t('workorder.timeline')} style={{ marginBottom: 16 }}>
         <Timeline
           items={detail.timeline.map((item) => ({
             children: (
@@ -105,34 +107,34 @@ export default function WorkOrderDetail() {
         />
       </Card>
 
-      <Card title="添加备注" style={{ marginBottom: 16 }}>
+      <Card title={t('workorder.addRemark')} style={{ marginBottom: 16 }}>
         <Input.TextArea
           rows={3}
           value={remark}
           onChange={(e) => setRemark(e.target.value)}
-          placeholder="输入处理备注..."
+          placeholder={t('workorder.remarkPlaceholder')}
         />
         <Button
           type="primary"
           style={{ marginTop: 8 }}
           onClick={() => {
-            message.success('备注已提交')
+            message.success(t('workorder.remarkSubmitted'))
             setRemark('')
           }}
         >
-          提交备注
+          {t('workorder.submitRemark')}
         </Button>
       </Card>
 
-      <Card title="附件">
+      <Card title={t('workorder.attachments')}>
         <Upload
           action=""
           beforeUpload={() => {
-            message.info('附件上传功能（Mock）')
+            message.info(t('workorder.uploadMock'))
             return false
           }}
         >
-          <Button icon={<UploadOutlined />}>上传附件</Button>
+          <Button icon={<UploadOutlined />}>{t('workorder.upload')}</Button>
         </Upload>
       </Card>
     </div>

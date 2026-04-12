@@ -1,37 +1,39 @@
 import { ProTable, type ProColumns } from '@ant-design/pro-components'
 import { Tag, Button } from 'antd'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { getDevices, type DeviceItem } from '@/api/operation'
-
-const statusMap: Record<string, { text: string; color: string }> = {
-  running: { text: '运行中', color: 'green' },
-  standby: { text: '待机', color: 'blue' },
-  offline: { text: '离线', color: 'red' },
-}
-
-const typeOptions = [
-  { label: 'PCS', value: 'PCS' },
-  { label: 'BMS', value: 'BMS' },
-  { label: '空调 (HVAC)', value: 'HVAC' },
-  { label: '消防 (FIRE)', value: 'FIRE' },
-  { label: '变压器 (TRANS)', value: 'TRANS' },
-]
 
 export default function DeviceIndex() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
+
+  const statusMap: Record<string, { text: string; color: string }> = {
+    running: { text: t('device.status.running'), color: 'green' },
+    standby: { text: t('device.status.standby'), color: 'blue' },
+    offline: { text: t('device.status.offline'), color: 'red' },
+  }
+
+  const typeOptions = [
+    { label: t('device.type.pcs'), value: 'PCS' },
+    { label: t('device.type.bms'), value: 'BMS' },
+    { label: t('device.type.hvac'), value: 'HVAC' },
+    { label: t('device.type.fire'), value: 'FIRE' },
+    { label: t('device.type.trans'), value: 'TRANS' },
+  ]
 
   const columns: ProColumns<DeviceItem>[] = [
-    { title: '设备编号', dataIndex: 'code', width: 120 },
-    { title: '设备名称', dataIndex: 'name', ellipsis: true },
+    { title: t('device.code'), dataIndex: 'code', width: 120 },
+    { title: t('device.name'), dataIndex: 'name', ellipsis: true },
     {
-      title: '设备类型',
+      title: t('device.type'),
       dataIndex: 'type',
       width: 100,
       valueType: 'select',
       fieldProps: { options: typeOptions },
     },
     {
-      title: '状态',
+      title: t('device.status'),
       dataIndex: 'status',
       width: 90,
       render: (_, record) => {
@@ -39,16 +41,16 @@ export default function DeviceIndex() {
         return s ? <Tag color={s.color}>{s.text}</Tag> : record.status
       },
     },
-    { title: '额定功率', dataIndex: 'ratedPower', width: 100, search: false },
-    { title: '所属站点', dataIndex: 'station', width: 120, search: false },
-    { title: '安装日期', dataIndex: 'installDate', width: 110, search: false },
+    { title: t('device.ratedPower'), dataIndex: 'ratedPower', width: 100, search: false },
+    { title: t('device.station'), dataIndex: 'station', width: 120, search: false },
+    { title: t('device.installDate'), dataIndex: 'installDate', width: 110, search: false },
     {
-      title: '操作',
+      title: t('operation'),
       width: 80,
       search: false,
       render: (_, record) => (
         <Button type="link" size="small" onClick={() => navigate(`/devices/${record.id}`)}>
-          详情
+          {t('detail')}
         </Button>
       ),
     },
@@ -57,7 +59,7 @@ export default function DeviceIndex() {
   return (
     <div>
       <ProTable<DeviceItem>
-        headerTitle="设备台账"
+        headerTitle={t('device.title')}
         rowKey="id"
         columns={columns}
         request={async (params) => {

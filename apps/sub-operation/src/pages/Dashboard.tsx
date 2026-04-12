@@ -10,7 +10,7 @@ export default function Dashboard() {
     <div>
       <Typography.Title level={3}>{t('dashboard')}</Typography.Title>
       {currentStation && (
-        <Typography.Text type="secondary">当前站点: {currentStation}</Typography.Text>
+        <Typography.Text type="secondary">{t('currentStation')}: {currentStation}</Typography.Text>
       )}
       <Card style={{ marginTop: 16 }}>
         <p>{t('welcome')}</p>

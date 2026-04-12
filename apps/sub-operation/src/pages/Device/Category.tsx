@@ -3,33 +3,35 @@ import { ProTable, type ProColumns } from '@ant-design/pro-components'
 import { Tag, Button } from 'antd'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { getDevices, type DeviceItem } from '@/api/operation'
-
-const statusMap: Record<string, { text: string; color: string }> = {
-  running: { text: '运行中', color: 'green' },
-  standby: { text: '待机', color: 'blue' },
-  offline: { text: '离线', color: 'red' },
-}
-
-const categories = [
-  { key: '', label: '全部' },
-  { key: 'PCS', label: 'PCS' },
-  { key: 'BMS', label: 'BMS' },
-  { key: 'HVAC', label: '空调' },
-  { key: 'FIRE', label: '消防' },
-  { key: 'TRANS', label: '变压器' },
-]
 
 export default function DeviceCategory() {
   const [activeType, setActiveType] = useState('')
   const navigate = useNavigate()
+  const { t } = useTranslation()
+
+  const statusMap: Record<string, { text: string; color: string }> = {
+    running: { text: t('device.status.running'), color: 'green' },
+    standby: { text: t('device.status.standby'), color: 'blue' },
+    offline: { text: t('device.status.offline'), color: 'red' },
+  }
+
+  const categories = [
+    { key: '', label: t('device.all') },
+    { key: 'PCS', label: t('device.type.pcs') },
+    { key: 'BMS', label: t('device.type.bms') },
+    { key: 'HVAC', label: t('device.type.hvacShort') },
+    { key: 'FIRE', label: t('device.type.fireShort') },
+    { key: 'TRANS', label: t('device.type.transShort') },
+  ]
 
   const columns: ProColumns<DeviceItem>[] = [
-    { title: '设备编号', dataIndex: 'code', width: 120 },
-    { title: '设备名称', dataIndex: 'name', ellipsis: true },
-    { title: '设备类型', dataIndex: 'type', width: 100 },
+    { title: t('device.code'), dataIndex: 'code', width: 120 },
+    { title: t('device.name'), dataIndex: 'name', ellipsis: true },
+    { title: t('device.type'), dataIndex: 'type', width: 100 },
     {
-      title: '状态',
+      title: t('device.status'),
       dataIndex: 'status',
       width: 90,
       render: (_, record) => {
@@ -37,14 +39,14 @@ export default function DeviceCategory() {
         return s ? <Tag color={s.color}>{s.text}</Tag> : record.status
       },
     },
-    { title: '额定功率', dataIndex: 'ratedPower', width: 100 },
-    { title: '所属站点', dataIndex: 'station', width: 120 },
+    { title: t('device.ratedPower'), dataIndex: 'ratedPower', width: 100 },
+    { title: t('device.station'), dataIndex: 'station', width: 120 },
     {
-      title: '操作',
+      title: t('operation'),
       width: 80,
       render: (_, record) => (
         <Button type="link" size="small" onClick={() => navigate(`/devices/${record.id}`)}>
-          详情
+          {t('detail')}
         </Button>
       ),
     },

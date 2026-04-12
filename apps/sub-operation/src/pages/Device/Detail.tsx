@@ -3,21 +3,23 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { Card, Descriptions, Table, Tag, Typography, Spin, Button, Row, Col } from 'antd'
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import ReactECharts from 'echarts-for-react'
+import { useTranslation } from 'react-i18next'
 import { getDeviceDetail, type DeviceDetail as DeviceDetailType } from '@/api/operation'
 import { useAppStore } from '@/store/appStore'
-
-const statusMap: Record<string, { text: string; color: string }> = {
-  running: { text: '运行中', color: 'green' },
-  standby: { text: '待机', color: 'blue' },
-  offline: { text: '离线', color: 'red' },
-}
 
 export default function DeviceDetail() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const theme = useAppStore((s) => s.theme)
   const [detail, setDetail] = useState<DeviceDetailType | null>(null)
   const [loading, setLoading] = useState(true)
+
+  const statusMap: Record<string, { text: string; color: string }> = {
+    running: { text: t('device.status.running'), color: 'green' },
+    standby: { text: t('device.status.standby'), color: 'blue' },
+    offline: { text: t('device.status.offline'), color: 'red' },
+  }
 
   useEffect(() => {
     if (!id) return
@@ -36,12 +38,12 @@ export default function DeviceDetail() {
   }
 
   if (!detail) {
-    return <Typography.Text type="danger">设备不存在</Typography.Text>
+    return <Typography.Text type="danger">{t('device.notFound')}</Typography.Text>
   }
 
   const chartOption = {
     tooltip: { trigger: 'axis' as const },
-    legend: { data: ['功率 (kW)', '温度 (℃)'] },
+    legend: { data: [t('device.powerKw'), t('device.tempC')] },
     xAxis: { type: 'category' as const, data: detail.historyData.timestamps },
     yAxis: [
       { type: 'value' as const, name: 'kW' },
@@ -49,14 +51,14 @@ export default function DeviceDetail() {
     ],
     series: [
       {
-        name: '功率 (kW)',
+        name: t('device.powerKw'),
         type: 'line',
         data: detail.historyData.power,
         smooth: true,
         itemStyle: { color: '#1890ff' },
       },
       {
-        name: '温度 (℃)',
+        name: t('device.tempC'),
         type: 'line',
         yAxisIndex: 1,
         data: detail.historyData.temperature,
@@ -67,11 +69,11 @@ export default function DeviceDetail() {
   }
 
   const maintenanceColumns = [
-    { title: '日期', dataIndex: 'date', key: 'date' },
-    { title: '类型', dataIndex: 'type', key: 'type' },
-    { title: '操作人', dataIndex: 'operator', key: 'operator' },
+    { title: t('device.date'), dataIndex: 'date', key: 'date' },
+    { title: t('device.maintType'), dataIndex: 'type', key: 'type' },
+    { title: t('device.operator'), dataIndex: 'operator', key: 'operator' },
     {
-      title: '结果',
+      title: t('device.result'),
       dataIndex: 'result',
       key: 'result',
       render: (val: string) => <Tag color={val === '正常' ? 'green' : 'orange'}>{val}</Tag>,
@@ -87,7 +89,7 @@ export default function DeviceDetail() {
         style={{ marginBottom: 16 }}
         onClick={() => navigate(-1)}
       >
-        返回
+        {t('back')}
       </Button>
 
       <Typography.Title level={4}>
@@ -95,33 +97,33 @@ export default function DeviceDetail() {
       </Typography.Title>
 
       {/* 基本信息 */}
-      <Card title="基本信息" style={{ marginBottom: 16 }}>
+      <Card title={t('device.basicInfo')} style={{ marginBottom: 16 }}>
         <Descriptions column={3}>
-          <Descriptions.Item label="设备编号">{detail.code}</Descriptions.Item>
-          <Descriptions.Item label="设备名称">{detail.name}</Descriptions.Item>
-          <Descriptions.Item label="设备类型">{detail.type}</Descriptions.Item>
-          <Descriptions.Item label="状态">
+          <Descriptions.Item label={t('device.code')}>{detail.code}</Descriptions.Item>
+          <Descriptions.Item label={t('device.name')}>{detail.name}</Descriptions.Item>
+          <Descriptions.Item label={t('device.type')}>{detail.type}</Descriptions.Item>
+          <Descriptions.Item label={t('device.status')}>
             {s ? <Tag color={s.color}>{s.text}</Tag> : detail.status}
           </Descriptions.Item>
-          <Descriptions.Item label="额定功率">{detail.ratedPower}</Descriptions.Item>
-          <Descriptions.Item label="所属站点">{detail.station}</Descriptions.Item>
-          <Descriptions.Item label="安装日期">{detail.installDate}</Descriptions.Item>
+          <Descriptions.Item label={t('device.ratedPower')}>{detail.ratedPower}</Descriptions.Item>
+          <Descriptions.Item label={t('device.station')}>{detail.station}</Descriptions.Item>
+          <Descriptions.Item label={t('device.installDate')}>{detail.installDate}</Descriptions.Item>
         </Descriptions>
       </Card>
 
       {/* 运行参数 */}
-      <Card title="实时运行参数" style={{ marginBottom: 16 }}>
+      <Card title={t('device.runningParams')} style={{ marginBottom: 16 }}>
         <Row gutter={16}>
           <Col span={6}>
             <Descriptions column={1} size="small">
-              <Descriptions.Item label="电压">{detail.runningParams.voltage} V</Descriptions.Item>
-              <Descriptions.Item label="电流">{detail.runningParams.current} A</Descriptions.Item>
+              <Descriptions.Item label={t('device.voltage')}>{detail.runningParams.voltage} V</Descriptions.Item>
+              <Descriptions.Item label={t('device.current')}>{detail.runningParams.current} A</Descriptions.Item>
             </Descriptions>
           </Col>
           <Col span={6}>
             <Descriptions column={1} size="small">
-              <Descriptions.Item label="功率">{detail.runningParams.power} kW</Descriptions.Item>
-              <Descriptions.Item label="温度">
+              <Descriptions.Item label={t('device.power')}>{detail.runningParams.power} kW</Descriptions.Item>
+              <Descriptions.Item label={t('device.temperature')}>
                 {detail.runningParams.temperature} ℃
               </Descriptions.Item>
             </Descriptions>
@@ -138,7 +140,7 @@ export default function DeviceDetail() {
       </Card>
 
       {/* 历史数据曲线 */}
-      <Card title="历史数据曲线" style={{ marginBottom: 16 }}>
+      <Card title={t('device.historyCurve')} style={{ marginBottom: 16 }}>
         <ReactECharts
           option={chartOption}
           theme={theme === 'dark' ? 'dark' : undefined}
@@ -147,7 +149,7 @@ export default function DeviceDetail() {
       </Card>
 
       {/* 维保记录 */}
-      <Card title="维保记录">
+      <Card title={t('device.maintenance')}>
         <Table
           columns={maintenanceColumns}
           dataSource={detail.maintenanceRecords}

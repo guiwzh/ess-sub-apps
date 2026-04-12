@@ -49,10 +49,10 @@ export default function Revenue() {
     ? {
         tooltip: { trigger: 'axis' as const },
         xAxis: { type: 'category' as const, data: data.monthly.labels },
-        yAxis: { type: 'value' as const, name: '万元' },
+        yAxis: { type: 'value' as const, name: t('revenue.unit') },
         series: [
           {
-            name: '月收益',
+            name: t('revenue.monthly'),
             type: 'line',
             data: data.monthly.values,
             smooth: true,
@@ -75,7 +75,7 @@ export default function Revenue() {
         <Spin style={{ display: 'flex', justifyContent: 'center', padding: 80 }} />
       ) : data ? (
         <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-          <ChartCard title="收益构成" style={{ flex: 1, minWidth: 400 }}>
+          <ChartCard title={t('revenue.composition')} style={{ flex: 1, minWidth: 400 }}>
             {pieOption ? (
               <ReactECharts
                 option={pieOption}
@@ -86,7 +86,7 @@ export default function Revenue() {
               <Empty />
             )}
           </ChartCard>
-          <ChartCard title="月度收益趋势" style={{ flex: 1, minWidth: 400 }}>
+          <ChartCard title={t('revenue.monthlyTrend')} style={{ flex: 1, minWidth: 400 }}>
             {lineOption ? (
               <ReactECharts
                 option={lineOption}

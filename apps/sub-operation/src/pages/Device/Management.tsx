@@ -1,10 +1,12 @@
 import { Tabs } from 'antd'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import DeviceIndex from './index'
 import DeviceCategory from './Category'
 
 export default function DeviceManagement() {
   const [activeKey, setActiveKey] = useState('list')
+  const { t } = useTranslation()
 
   return (
     <div>
@@ -12,8 +14,8 @@ export default function DeviceManagement() {
         activeKey={activeKey}
         onChange={setActiveKey}
         items={[
-          { key: 'list', label: '设备列表', children: <DeviceIndex /> },
-          { key: 'category', label: '设备分类', children: <DeviceCategory /> },
+          { key: 'list', label: t('device.list'), children: <DeviceIndex /> },
+          { key: 'category', label: t('device.category'), children: <DeviceCategory /> },
         ]}
       />
     </div>
