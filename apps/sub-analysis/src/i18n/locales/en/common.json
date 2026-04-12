@@ -1,0 +1,18 @@
+{
+  "appName": "Data Analysis",
+  "energyStats": "Charge/Discharge Stats",
+  "efficiency": "Energy Efficiency",
+  "revenue": "Revenue Analysis",
+  "batteryHealth": "SOC/SOH Trends",
+  "reportDaily": "Daily Report",
+  "reportMonthly": "Monthly Report",
+  "reportCustom": "Custom Report",
+  "login": "Login",
+  "username": "Username",
+  "password": "Password",
+  "loginBtn": "Login",
+  "welcome": "Welcome to Data Analysis",
+  "chargeEnergy": "Charge Energy (kWh)",
+  "dischargeEnergy": "Discharge Energy (kWh)",
+  "efficiencyRate": "Efficiency (%)"
+}

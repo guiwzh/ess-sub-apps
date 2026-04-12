@@ -16,7 +16,6 @@ export default function App() {
   const appTheme = useAppStore((s) => s.theme)
   const locale = useAppStore((s) => s.locale)
 
-  // 监听主应用 bus 事件（wujie 模式下）
   useWujieBridge()
 
   return (

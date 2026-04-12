@@ -9,10 +9,6 @@ interface LoginValues {
   password: string
 }
 
-/**
- * 独立运行时的开发登录页
- * wujie 模式下不会用到这个页面（Token 由主应用传入）
- */
 export default function DevLogin() {
   const { t } = useTranslation()
   const navigate = useNavigate()

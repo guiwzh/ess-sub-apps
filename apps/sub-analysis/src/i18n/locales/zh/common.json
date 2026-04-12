@@ -1,0 +1,18 @@
+{
+  "appName": "数据分析",
+  "energyStats": "充放电统计",
+  "efficiency": "能量效率分析",
+  "revenue": "收益分析",
+  "batteryHealth": "SOC/SOH 趋势",
+  "reportDaily": "日报",
+  "reportMonthly": "月报",
+  "reportCustom": "自定义报表",
+  "login": "登录",
+  "username": "用户名",
+  "password": "密码",
+  "loginBtn": "登 录",
+  "welcome": "欢迎使用数据分析子系统",
+  "chargeEnergy": "充电量 (kWh)",
+  "dischargeEnergy": "放电量 (kWh)",
+  "efficiencyRate": "效率 (%)"
+}
