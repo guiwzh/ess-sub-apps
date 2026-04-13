@@ -1,6 +1,5 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
-import { Spin } from 'antd'
 
 const DevLogin = lazy(() => import('@/pages/DevLogin'))
 const Dashboard = lazy(() => import('@/pages/Dashboard'))
@@ -11,23 +10,7 @@ const WorkOrderManagement = lazy(() => import('@/pages/WorkOrder/Management'))
 const WorkOrderDetail = lazy(() => import('@/pages/WorkOrder/Detail'))
 
 function LazyLoad(props: { children: React.ReactNode }) {
-  return (
-    <Suspense
-      fallback={
-        <Spin
-          size="large"
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100%',
-          }}
-        />
-      }
-    >
-      {props.children}
-    </Suspense>
-  )
+  return <Suspense fallback={null}>{props.children}</Suspense>
 }
 
 const isWujie = !!window.__POWERED_BY_WUJIE__
