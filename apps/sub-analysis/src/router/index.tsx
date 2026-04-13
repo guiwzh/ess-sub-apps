@@ -1,14 +1,4 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
-import { lazy, Suspense } from 'react'
-
-const DevLogin = lazy(() => import('@/pages/DevLogin'))
-const EnergyOverview = lazy(() => import('@/pages/Merged/EnergyOverview'))
-const OperationAnalysis = lazy(() => import('@/pages/Merged/OperationAnalysis'))
-const ReportCenter = lazy(() => import('@/pages/Merged/ReportCenter'))
-
-function LazyLoad(props: { children: React.ReactNode }) {
-  return <Suspense fallback={null}>{props.children}</Suspense>
-}
 
 const isWujie = !!window.__POWERED_BY_WUJIE__
 
@@ -19,27 +9,16 @@ function InitialRedirect() {
 const commonRoutes = [
   {
     path: '/energy-stats',
-    element: (
-      <LazyLoad>
-        <EnergyOverview />
-      </LazyLoad>
-    ),
+    lazy: () => import('@/pages/Merged/EnergyOverview').then((m) => ({ Component: m.default })),
   },
   {
     path: '/operation-analysis',
-    element: (
-      <LazyLoad>
-        <OperationAnalysis />
-      </LazyLoad>
-    ),
+    lazy: () =>
+      import('@/pages/Merged/OperationAnalysis').then((m) => ({ Component: m.default })),
   },
   {
     path: '/report',
-    element: (
-      <LazyLoad>
-        <ReportCenter />
-      </LazyLoad>
-    ),
+    lazy: () => import('@/pages/Merged/ReportCenter').then((m) => ({ Component: m.default })),
   },
 ]
 
@@ -50,11 +29,7 @@ export function createRouter() {
       : [
           {
             path: '/login',
-            element: (
-              <LazyLoad>
-                <DevLogin />
-              </LazyLoad>
-            ),
+            lazy: () => import('@/pages/DevLogin').then((m) => ({ Component: m.default })),
           },
           { path: '/', element: <Navigate to="/energy-stats" replace /> },
           ...commonRoutes,

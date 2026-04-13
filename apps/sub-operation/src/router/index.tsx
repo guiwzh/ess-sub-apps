@@ -1,56 +1,25 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom'
-import { lazy, Suspense } from 'react'
-
-const DeviceManagement = lazy(() => import('@/pages/Device/Management'))
-const DeviceDetail = lazy(() => import('@/pages/Device/Detail'))
-const AlarmManagement = lazy(() => import('@/pages/Alarm/Management'))
-const WorkOrderManagement = lazy(() => import('@/pages/WorkOrder/Management'))
-const WorkOrderDetail = lazy(() => import('@/pages/WorkOrder/Detail'))
-
-function LazyLoad(props: { children: React.ReactNode }) {
-  return <Suspense fallback={null}>{props.children}</Suspense>
-}
+import { createBrowserRouter } from 'react-router-dom'
 
 const commonRoutes = [
   {
     path: '/devices',
-    element: (
-      <LazyLoad>
-        <DeviceManagement />
-      </LazyLoad>
-    ),
+    lazy: () => import('@/pages/Device/Management').then((m) => ({ Component: m.default })),
   },
   {
     path: '/devices/:id',
-    element: (
-      <LazyLoad>
-        <DeviceDetail />
-      </LazyLoad>
-    ),
+    lazy: () => import('@/pages/Device/Detail').then((m) => ({ Component: m.default })),
   },
   {
     path: '/alarms',
-    element: (
-      <LazyLoad>
-        <AlarmManagement />
-      </LazyLoad>
-    ),
+    lazy: () => import('@/pages/Alarm/Management').then((m) => ({ Component: m.default })),
   },
   {
     path: '/work-orders',
-    element: (
-      <LazyLoad>
-        <WorkOrderManagement />
-      </LazyLoad>
-    ),
+    lazy: () => import('@/pages/WorkOrder/Management').then((m) => ({ Component: m.default })),
   },
   {
     path: '/work-orders/:id',
-    element: (
-      <LazyLoad>
-        <WorkOrderDetail />
-      </LazyLoad>
-    ),
+    lazy: () => import('@/pages/WorkOrder/Detail').then((m) => ({ Component: m.default })),
   },
 ]
 
