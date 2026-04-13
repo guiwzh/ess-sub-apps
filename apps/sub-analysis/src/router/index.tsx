@@ -29,17 +29,8 @@ function LazyLoad(props: { children: React.ReactNode }) {
 
 const isWujie = !!window.__POWERED_BY_WUJIE__
 
-/** 从主应用 props 中读取初始路径，确保刷新时子应用导航到正确页面 */
-function getInitialPath(): string {
-  if (isWujie) {
-    const path = (window as any).$wujie?.props?.initialPath as string | undefined
-    if (path) return path
-  }
-  return '/energy-stats'
-}
-
 function InitialRedirect() {
-  return <Navigate to={getInitialPath()} replace />
+  return <Navigate to="/energy-stats" replace />
 }
 
 const commonRoutes = [
@@ -69,24 +60,26 @@ const commonRoutes = [
   },
 ]
 
-export const router = createBrowserRouter(
-  isWujie
-    ? [
-        { path: '/', element: <InitialRedirect /> },
-        ...commonRoutes,
-        // 兜底路由：避免 wujie 加载过程中短暂出现 404
-        { path: '*', element: <InitialRedirect /> },
-      ]
-    : [
-        {
-          path: '/login',
-          element: (
-            <LazyLoad>
-              <DevLogin />
-            </LazyLoad>
-          ),
-        },
-        { path: '/', element: <Navigate to="/energy-stats" replace /> },
-        ...commonRoutes,
-      ],
-)
+export function createRouter() {
+  return createBrowserRouter(
+    isWujie
+      ? [
+          { path: '/', element: <InitialRedirect /> },
+          ...commonRoutes,
+          // 兜底路由：避免 wujie 加载过程中短暂出现 404
+          { path: '*', element: <InitialRedirect /> },
+        ]
+      : [
+          {
+            path: '/login',
+            element: (
+              <LazyLoad>
+                <DevLogin />
+              </LazyLoad>
+            ),
+          },
+          { path: '/', element: <Navigate to="/energy-stats" replace /> },
+          ...commonRoutes,
+        ],
+  )
+}
