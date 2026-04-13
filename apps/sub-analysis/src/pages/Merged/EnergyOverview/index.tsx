@@ -1,8 +1,8 @@
 import { Tabs } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import EnergyStats from '../EnergyStats'
-import Efficiency from '../Efficiency'
+import EnergyStats from '../../EnergyStats'
+import Efficiency from '../../Efficiency'
 
 export default function EnergyOverview() {
   const [activeKey, setActiveKey] = useState('energy')

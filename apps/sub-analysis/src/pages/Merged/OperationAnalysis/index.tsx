@@ -1,8 +1,8 @@
 import { Tabs } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Revenue from '../Revenue'
-import BatteryHealth from '../BatteryHealth'
+import Revenue from '../../Revenue'
+import BatteryHealth from '../../BatteryHealth'
 
 export default function OperationAnalysis() {
   const [activeKey, setActiveKey] = useState('revenue')

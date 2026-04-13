@@ -23,6 +23,11 @@ import {
   type DailyReportData,
   type MonthlyReportData,
 } from '@/api/report'
+import {
+  getMonthlyDescriptionItems,
+  getDailySummaryColumns,
+  getHourlyChartOption,
+} from './config'
 
 type ReportType = 'daily' | 'monthly'
 
@@ -66,42 +71,35 @@ export default function ReportPage() {
             <Statistic title={t('report.totalCharge')} value={summary.totalCharge} suffix="kWh" />
           </Col>
           <Col span={4}>
-            <Statistic title={t('report.totalDischarge')} value={summary.totalDischarge} suffix="kWh" />
+            <Statistic
+              title={t('report.totalDischarge')}
+              value={summary.totalDischarge}
+              suffix="kWh"
+            />
           </Col>
           <Col span={4}>
             <Statistic title={t('report.peakPower')} value={summary.peakPower} suffix="kW" />
           </Col>
           <Col span={4}>
-            <Statistic title={t('report.avgEfficiency')} value={summary.avgEfficiency} suffix="%" />
+            <Statistic
+              title={t('report.avgEfficiency')}
+              value={summary.avgEfficiency}
+              suffix="%"
+            />
           </Col>
           <Col span={4}>
-            <Statistic title={t('report.dailyRevenue')} value={summary.revenue} suffix={t('revenue.unit')} />
+            <Statistic
+              title={t('report.dailyRevenue')}
+              value={summary.revenue}
+              suffix={t('revenue.unit')}
+            />
           </Col>
         </Row>
         <Card title={t('report.hourlyData')} style={{ marginBottom: 16 }}>
           <ReactECharts
             theme={theme === 'dark' ? 'dark' : undefined}
             style={{ height: 350 }}
-            option={{
-              tooltip: { trigger: 'axis' },
-              legend: { data: [t('report.charge'), t('report.discharge'), t('report.power')] },
-              xAxis: { type: 'category', data: hourly.map((h) => h.hour) },
-              yAxis: [
-                { type: 'value', name: 'kWh' },
-                { type: 'value', name: 'kW' },
-              ],
-              series: [
-                { name: t('report.charge'), type: 'bar', data: hourly.map((h) => h.charge) },
-                { name: t('report.discharge'), type: 'bar', data: hourly.map((h) => h.discharge) },
-                {
-                  name: t('report.power'),
-                  type: 'line',
-                  yAxisIndex: 1,
-                  data: hourly.map((h) => h.power),
-                  smooth: true,
-                },
-              ],
-            }}
+            option={getHourlyChartOption(t, hourly)}
           />
         </Card>
       </>
@@ -113,13 +111,12 @@ export default function ReportPage() {
     const { summary, daily } = monthlyData
     return (
       <>
-        <Descriptions bordered column={5} style={{ marginBottom: 16 }}>
-          <Descriptions.Item label={t('report.totalCharge')}>{summary.totalCharge} kWh</Descriptions.Item>
-          <Descriptions.Item label={t('report.totalDischarge')}>{summary.totalDischarge} kWh</Descriptions.Item>
-          <Descriptions.Item label={t('report.peakPower')}>{summary.peakPower} kW</Descriptions.Item>
-          <Descriptions.Item label={t('report.avgEfficiency')}>{summary.avgEfficiency}%</Descriptions.Item>
-          <Descriptions.Item label={t('report.monthlyRevenue')}>{summary.revenue} {t('revenue.unit')}</Descriptions.Item>
-        </Descriptions>
+        <Descriptions
+          bordered
+          column={5}
+          style={{ marginBottom: 16 }}
+          items={getMonthlyDescriptionItems(t, summary)}
+        />
         <Card title={t('report.dailySummary')} style={{ marginBottom: 16 }}>
           <Table
             dataSource={daily}
@@ -127,12 +124,7 @@ export default function ReportPage() {
             size="small"
             pagination={false}
             scroll={{ y: 400 }}
-            columns={[
-              { title: t('report.date'), dataIndex: 'date', width: 100 },
-              { title: t('report.chargeKwh'), dataIndex: 'charge', width: 120 },
-              { title: t('report.dischargeKwh'), dataIndex: 'discharge', width: 120 },
-              { title: t('report.revenueWan'), dataIndex: 'revenue', width: 120 },
-            ]}
+            columns={getDailySummaryColumns(t)}
           />
         </Card>
       </>

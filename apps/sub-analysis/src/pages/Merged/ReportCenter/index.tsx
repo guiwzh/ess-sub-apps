@@ -1,8 +1,8 @@
 import { Tabs } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import ReportDaily from '../Report/Daily'
-import ReportCustom from '../Report/Custom'
+import ReportDaily from '../../Report/Daily'
+import ReportCustom from '../../Report/Custom'
 
 export default function ReportCenter() {
   const [activeKey, setActiveKey] = useState('daily')

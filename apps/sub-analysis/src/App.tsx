@@ -29,7 +29,7 @@ export default function App({ router }: { router: AppRouter }) {
       }}
     >
       <AntdApp>
-        <Suspense fallback={null}>
+        <Suspense fallback={'Loading...'}>
           <RouterProvider router={router} />
         </Suspense>
       </AntdApp>

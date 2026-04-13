@@ -11,10 +11,9 @@ import {
   type IndicatorItem,
   type CustomReportData,
 } from '@/api/report'
+import { getChartOption, getTableColumns } from './config'
 
 const { RangePicker } = DatePicker
-
-const colorPalette = ['#1890ff', '#52c41a', '#fa8c16', '#722ed1', '#f5222d', '#13c2c2', '#eb2f96']
 
 export default function CustomReport() {
   const { t } = useTranslation()
@@ -59,33 +58,6 @@ export default function CustomReport() {
   const handleExport = () => {
     message.success(t('report.exportCustomMock'))
   }
-
-  const chartOption = data
-    ? {
-        tooltip: { trigger: 'axis' as const },
-        legend: {
-          data: selected.map((k) => indicators.find((i) => i.key === k)?.label ?? k),
-        },
-        xAxis: { type: 'category' as const, data: data.labels },
-        yAxis: { type: 'value' as const },
-        series: selected.map((k, idx) => ({
-          name: indicators.find((i) => i.key === k)?.label ?? k,
-          type: 'line' as const,
-          data: data.series[k] ?? [],
-          smooth: true,
-          itemStyle: { color: colorPalette[idx % colorPalette.length] },
-        })),
-      }
-    : null
-
-  const tableColumns = [
-    { title: t('report.time'), dataIndex: 'label', key: 'label' },
-    ...selected.map((k) => ({
-      title: indicators.find((i) => i.key === k)?.label ?? k,
-      dataIndex: k,
-      key: k,
-    })),
-  ]
 
   const tableData = data
     ? data.labels.map((label, idx) => {
@@ -136,18 +108,16 @@ export default function CustomReport() {
       ) : data ? (
         <>
           <Card title={t('report.trendChart')} style={{ marginBottom: 16 }}>
-            {chartOption && (
-              <ReactECharts
-                option={chartOption}
-                theme={theme === 'dark' ? 'dark' : undefined}
-                style={{ height: 400 }}
-              />
-            )}
+            <ReactECharts
+              option={getChartOption(t, indicators, selected, data)}
+              theme={theme === 'dark' ? 'dark' : undefined}
+              style={{ height: 400 }}
+            />
           </Card>
           <Card title={t('report.dataTable')}>
             <Table
               dataSource={tableData}
-              columns={tableColumns}
+              columns={getTableColumns(t, indicators, selected)}
               size="small"
               pagination={false}
               scroll={{ y: 300 }}

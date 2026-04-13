@@ -1,9 +1,9 @@
 import { Tabs } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import AlarmRealtime from './Realtime'
-import AlarmHistory from './History'
-import AlarmRules from './Rules'
+import AlarmRealtime from '../Realtime'
+import AlarmHistory from '../History'
+import AlarmRules from '../Rules'
 
 export default function AlarmManagement() {
   const [activeKey, setActiveKey] = useState('realtime')

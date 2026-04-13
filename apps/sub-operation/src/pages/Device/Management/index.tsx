@@ -1,10 +1,10 @@
 import { Tabs } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import WorkOrderList from './List'
-import Inspection from './Inspection'
+import DeviceList from '../List'
+import DeviceCategory from '../Category'
 
-export default function WorkOrderManagement() {
+export default function DeviceManagement() {
   const [activeKey, setActiveKey] = useState('list')
   const { t } = useTranslation()
 
@@ -14,8 +14,8 @@ export default function WorkOrderManagement() {
         activeKey={activeKey}
         onChange={setActiveKey}
         items={[
-          { key: 'list', label: t('workorder.list'), children: <WorkOrderList /> },
-          { key: 'inspection', label: t('inspection.plan'), children: <Inspection /> },
+          { key: 'list', label: t('device.list'), children: <DeviceList /> },
+          { key: 'category', label: t('device.category'), children: <DeviceCategory /> },
         ]}
       />
     </div>

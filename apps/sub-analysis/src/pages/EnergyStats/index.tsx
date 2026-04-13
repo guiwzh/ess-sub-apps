@@ -6,19 +6,14 @@ import ChartCard from '@/components/ChartCard'
 import DateRangePicker, { type RangePreset } from '@/components/DateRangePicker'
 import { useAppStore } from '@/store/appStore'
 import { getEnergyStats, type EnergyStatsData } from '@/api/analysis'
+import { getStationOptions, getChartOption } from './config'
 
 type Dimension = 'day' | 'month' | 'year'
 
 /** 充放电统计 — 可切换维度 + 时间范围 + 站点 */
 export default function EnergyStats() {
   const { t } = useTranslation()
-
-  const stationOptions = [
-    { label: t('station.all'), value: '' },
-    { label: t('station.nameA'), value: '储能站点A' },
-    { label: t('station.nameB'), value: '储能站点B' },
-    { label: t('station.nameC'), value: '储能站点C' },
-  ]
+  const stationOptions = getStationOptions(t)
   const theme = useAppStore((s) => s.theme)
   const [dimension, setDimension] = useState<Dimension>('month')
   const [station, setStation] = useState('')
@@ -45,28 +40,7 @@ export default function EnergyStats() {
     fetchData()
   }, [fetchData])
 
-  const option = data
-    ? {
-        tooltip: { trigger: 'axis' as const },
-        legend: { data: [t('chargeEnergy'), t('dischargeEnergy')] },
-        xAxis: { type: 'category' as const, data: data.labels },
-        yAxis: { type: 'value' as const, name: 'kWh' },
-        series: [
-          {
-            name: t('chargeEnergy'),
-            type: 'bar',
-            data: data.charge,
-            itemStyle: { color: '#1890ff' },
-          },
-          {
-            name: t('dischargeEnergy'),
-            type: 'bar',
-            data: data.discharge,
-            itemStyle: { color: '#52c41a' },
-          },
-        ],
-      }
-    : null
+  const option = data ? getChartOption(t, data) : null
 
   return (
     <div>

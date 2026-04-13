@@ -1,7 +1,5 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import { createRouter } from '@/router'
 
 // wujie 子应用生命周期
 declare global {

@@ -1,12 +1,12 @@
 import { ConfigProvider, theme as antdTheme, App as AntdApp } from 'antd'
 import zhCN from 'antd/locale/zh_CN'
 import enUS from 'antd/locale/en_US'
-import { RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Suspense } from 'react'
 import { useAppStore } from '@/store/appStore'
 import { useWujieBridge } from '@/wujie/bridge'
 import '@/i18n'
-import { createRouter } from './router'
+import { routes } from './router'
 
 const antdLocaleMap: Record<string, typeof zhCN> = {
   zh: zhCN,
@@ -29,8 +29,8 @@ export default function App() {
       }}
     >
       <AntdApp>
-        <Suspense fallback={null}>
-          <RouterProvider router={createRouter()} />
+        <Suspense fallback={'Loading...'}>
+          <RouterProvider router={createBrowserRouter(routes)} />
         </Suspense>
       </AntdApp>
     </ConfigProvider>

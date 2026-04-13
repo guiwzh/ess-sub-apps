@@ -4,6 +4,7 @@ import { StepsForm, ProFormText, ProFormSelect, ProFormTextArea } from '@ant-des
 import { useTranslation } from 'react-i18next'
 import { createWorkOrder, getStaffList, type StaffItem } from '@/api/workorder'
 import { getDevices, type DeviceItem } from '@/api/operation'
+import { getTypeOptions, getPriorityOptions, getStationOptions } from './config'
 
 interface WorkOrderCreateProps {
   open: boolean
@@ -48,21 +49,13 @@ export default function WorkOrderCreate({ open, onClose }: WorkOrderCreateProps)
             name="type"
             label={t('workorder.type')}
             rules={[{ required: true }]}
-            options={[
-              { label: t('workorder.type.fault'), value: 'fault' },
-              { label: t('workorder.type.maintenance'), value: 'maintenance' },
-              { label: t('workorder.type.inspection'), value: 'inspection' },
-            ]}
+            options={getTypeOptions(t)}
           />
           <ProFormSelect
             name="priority"
             label={t('workorder.priority')}
             rules={[{ required: true }]}
-            options={[
-              { label: t('workorder.priority.high'), value: 'high' },
-              { label: t('workorder.priority.medium'), value: 'medium' },
-              { label: t('workorder.priority.low'), value: 'low' },
-            ]}
+            options={getPriorityOptions(t)}
           />
         </StepsForm.StepForm>
 
@@ -72,11 +65,7 @@ export default function WorkOrderCreate({ open, onClose }: WorkOrderCreateProps)
           <ProFormSelect
             name="station"
             label={t('workorder.station')}
-            options={[
-              { label: `${t('station.nameA')}`, value: '储能站点A' },
-              { label: `${t('station.nameB')}`, value: '储能站点B' },
-              { label: `${t('station.nameC')}`, value: '储能站点C' },
-            ]}
+            options={getStationOptions(t)}
           />
         </StepsForm.StepForm>
 

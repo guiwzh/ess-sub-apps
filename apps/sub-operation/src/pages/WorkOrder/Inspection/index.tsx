@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Button, Card, Modal, Switch, Table, Tag, message, Space, Popconfirm } from 'antd'
+import { Button, Card, Modal, Table, message } from 'antd'
 import {
   ProForm,
   ProFormText,
@@ -15,16 +15,10 @@ import {
   deleteInspectionTemplate,
   type InspectionTemplate,
 } from '@/api/workorder'
+import { getFrequencyOptions, getColumns } from './config'
 
 export default function Inspection() {
   const { t } = useTranslation()
-
-  const frequencyOptions = [
-    { label: t('inspection.frequency.daily'), value: 'daily' },
-    { label: t('inspection.frequency.weekly'), value: 'weekly' },
-    { label: t('inspection.frequency.monthly'), value: 'monthly' },
-    { label: t('inspection.frequency.yearly'), value: 'yearly' },
-  ]
   const [templates, setTemplates] = useState<InspectionTemplate[]>([])
   const [loading, setLoading] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
@@ -79,60 +73,11 @@ export default function Inspection() {
     fetchTemplates()
   }
 
-  const columns = [
-    { title: t('inspection.name'), dataIndex: 'name', key: 'name' },
-    {
-      title: t('inspection.items'),
-      dataIndex: 'items',
-      key: 'items',
-      render: (items: string[]) =>
-        items.map((item) => (
-          <Tag key={item} style={{ marginBottom: 4 }}>
-            {item}
-          </Tag>
-        )),
-    },
-    {
-      title: t('inspection.frequency'),
-      dataIndex: 'frequency',
-      key: 'frequency',
-      width: 80,
-      render: (f: string) => {
-        const map: Record<string, string> = {
-          daily: t('inspection.frequency.daily'),
-          weekly: t('inspection.frequency.weekly'),
-          monthly: t('inspection.frequency.monthly'),
-          yearly: t('inspection.frequency.yearly'),
-        }
-        return map[f] || f
-      },
-    },
-    {
-      title: t('enabled'),
-      key: 'enabled',
-      width: 80,
-      render: (_: unknown, record: InspectionTemplate) => (
-        <Switch checked={record.enabled} onChange={(checked) => handleToggle(record.id, checked)} />
-      ),
-    },
-    {
-      title: t('operation'),
-      key: 'action',
-      width: 130,
-      render: (_: unknown, record: InspectionTemplate) => (
-        <Space>
-          <Button type="link" size="small" onClick={() => handleEdit(record)}>
-            {t('edit')}
-          </Button>
-          <Popconfirm title={t('confirmDelete')} onConfirm={() => handleDelete(record.id)}>
-            <Button type="link" size="small" danger>
-              {t('delete')}
-            </Button>
-          </Popconfirm>
-        </Space>
-      ),
-    },
-  ]
+  const columns = getColumns(t, {
+    onEdit: handleEdit,
+    onDelete: handleDelete,
+    onToggle: handleToggle,
+  })
 
   return (
     <div>
@@ -179,7 +124,7 @@ export default function Inspection() {
           <ProFormSelect
             name="frequency"
             label={t('inspection.frequency')}
-            options={frequencyOptions}
+            options={getFrequencyOptions(t)}
             rules={[{ required: true }]}
           />
         </ProForm>
