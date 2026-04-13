@@ -1,6 +1,7 @@
 import { Tabs } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSearchParams } from 'react-router-dom'
 import AlarmRealtime from '../Realtime'
 import AlarmHistory from '../History'
 import AlarmRules from '../Rules'
@@ -8,6 +9,8 @@ import AlarmRules from '../Rules'
 export default function AlarmManagement() {
   const [activeKey, setActiveKey] = useState('realtime')
   const { t } = useTranslation()
+  const [searchParams] = useSearchParams()
+  const deviceCode = searchParams.get('deviceCode') ?? undefined
 
   return (
     <div>
@@ -15,8 +18,8 @@ export default function AlarmManagement() {
         activeKey={activeKey}
         onChange={setActiveKey}
         items={[
-          { key: 'realtime', label: t('alarm.realtime'), children: <AlarmRealtime /> },
-          { key: 'history', label: t('alarm.history'), children: <AlarmHistory /> },
+          { key: 'realtime', label: t('alarm.realtime'), children: <AlarmRealtime deviceCode={deviceCode} /> },
+          { key: 'history', label: t('alarm.history'), children: <AlarmHistory deviceCode={deviceCode} /> },
           { key: 'rules', label: t('alarm.rules'), children: <AlarmRules /> },
         ]}
       />

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { getAlarms, type AlarmItem } from '@/api/operation'
 import { getColumns } from './config'
 
-export default function AlarmRealtime() {
+export default function AlarmRealtime({ deviceCode }: { deviceCode?: string }) {
   const { t } = useTranslation()
   const columns = getColumns(t)
 
@@ -13,12 +13,14 @@ export default function AlarmRealtime() {
         headerTitle={t('alarm.realtime')}
         rowKey="id"
         columns={columns}
+        params={{ deviceCode }}
         request={async (params) => {
           const { data: res } = await getAlarms({
             current: params.current,
             pageSize: params.pageSize,
             level: params.level,
             status: params.status,
+            deviceCode: params.deviceCode,
           })
           return {
             data: res.data.list,

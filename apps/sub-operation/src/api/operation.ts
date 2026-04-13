@@ -80,6 +80,7 @@ export function getAlarms(params: {
   pageSize?: number
   level?: string
   status?: string
+  deviceCode?: string
 }) {
   return request.get<ApiResponse<PageResult<AlarmItem>>>(
     '/operation/alarms',
@@ -103,6 +104,7 @@ export function getHistoryAlarms(params: {
   pageSize?: number
   level?: string
   station?: string
+  deviceCode?: string
 }) {
   return request.get<ApiResponse<PageResult<HistoryAlarmItem>>>(
     '/operation/alarms/history',

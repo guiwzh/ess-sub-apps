@@ -1,5 +1,5 @@
 import type { ProColumns } from '@ant-design/pro-components'
-import { Tag, Button } from 'antd'
+import { Tag, Button, Space } from 'antd'
 import type { TFunction } from 'react-i18next'
 import type { NavigateFunction } from 'react-router-dom'
 import type { DeviceItem } from '@/api/operation'
@@ -39,11 +39,16 @@ export const getColumns = (t: TFunction, navigate: NavigateFunction): ProColumns
     { title: t('device.station'), dataIndex: 'station', width: 120 },
     {
       title: t('operation'),
-      width: 80,
+      width: 150,
       render: (_, record) => (
-        <Button type="link" size="small" onClick={() => navigate(`/devices/${record.id}`)}>
-          {t('detail')}
-        </Button>
+        <Space>
+          <Button type="link" size="small" onClick={() => navigate(`/devices/${record.id}`)}>
+            {t('detail')}
+          </Button>
+          <Button type="link" size="small" onClick={() => navigate(`/alarms?deviceCode=${record.code}`)}>
+            {t('viewAlarms')}
+          </Button>
+        </Space>
       ),
     },
   ]

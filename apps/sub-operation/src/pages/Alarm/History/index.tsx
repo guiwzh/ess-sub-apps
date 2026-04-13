@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { getHistoryAlarms, type HistoryAlarmItem } from '@/api/operation'
 import { getColumns } from './config'
 
-export default function AlarmHistory() {
+export default function AlarmHistory({ deviceCode }: { deviceCode?: string }) {
   const { t } = useTranslation()
   const columns = getColumns(t)
 
@@ -19,6 +19,7 @@ export default function AlarmHistory() {
         headerTitle={t('alarm.history')}
         rowKey="id"
         columns={columns}
+        params={{ deviceCode }}
         toolBarRender={() => [
           <Button key="export" icon={<DownloadOutlined />} onClick={handleExport}>
             {t('export')}
@@ -30,6 +31,7 @@ export default function AlarmHistory() {
             pageSize: params.pageSize,
             level: params.level,
             station: params.station,
+            deviceCode: params.deviceCode,
           })
           return {
             data: res.data.list,
