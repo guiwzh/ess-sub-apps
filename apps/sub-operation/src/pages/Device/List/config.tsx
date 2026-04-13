@@ -3,6 +3,7 @@ import { Tag, Button, Space } from 'antd'
 import type { TFunction } from 'react-i18next'
 import type { NavigateFunction } from 'react-router-dom'
 import type { DeviceItem } from '@/api/operation'
+import { appNavigate } from '@/wujie/navigate'
 
 export const getStatusMap = (t: TFunction) => ({
   running: { text: t('device.status.running'), color: 'green' },
@@ -53,7 +54,11 @@ export const getColumns = (t: TFunction, navigate: NavigateFunction): ProColumns
           <Button type="link" size="small" onClick={() => navigate(`/devices/${record.id}`)}>
             {t('detail')}
           </Button>
-          <Button type="link" size="small" onClick={() => navigate(`/alarms?deviceCode=${record.code}`)}>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => appNavigate(`/alarms?deviceCode=${record.code}`)}
+          >
             {t('viewAlarms')}
           </Button>
         </Space>
