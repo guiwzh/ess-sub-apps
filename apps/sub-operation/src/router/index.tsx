@@ -1,8 +1,6 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 
-const DevLogin = lazy(() => import('@/pages/DevLogin'))
-const Dashboard = lazy(() => import('@/pages/Dashboard'))
 const DeviceManagement = lazy(() => import('@/pages/Device/Management'))
 const DeviceDetail = lazy(() => import('@/pages/Device/Detail'))
 const AlarmManagement = lazy(() => import('@/pages/Alarm/Management'))
@@ -13,17 +11,7 @@ function LazyLoad(props: { children: React.ReactNode }) {
   return <Suspense fallback={null}>{props.children}</Suspense>
 }
 
-const isWujie = !!window.__POWERED_BY_WUJIE__
-
 const commonRoutes = [
-  {
-    path: '/dashboard',
-    element: (
-      <LazyLoad>
-        <Dashboard />
-      </LazyLoad>
-    ),
-  },
   {
     path: '/devices',
     element: (
@@ -66,30 +54,6 @@ const commonRoutes = [
   },
 ]
 
-function InitialRedirect() {
-  return <Navigate to="/dashboard" replace />
-}
-
 export function createRouter() {
-  return createBrowserRouter(
-    isWujie
-      ? [
-          { path: '/', element: <InitialRedirect /> },
-          ...commonRoutes,
-          // 兜底路由：避免 wujie 加载过程中短暂出现 404
-          { path: '*', element: <InitialRedirect /> },
-        ]
-      : [
-          {
-            path: '/login',
-            element: (
-              <LazyLoad>
-                <DevLogin />
-              </LazyLoad>
-            ),
-          },
-          { path: '/', element: <Navigate to="/dashboard" replace /> },
-          ...commonRoutes,
-        ],
-  )
+  return createBrowserRouter(commonRoutes)
 }

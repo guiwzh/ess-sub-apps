@@ -46,12 +46,7 @@ const commonRoutes = [
 export function createRouter() {
   return createBrowserRouter(
     isWujie
-      ? [
-          { path: '/', element: <InitialRedirect /> },
-          ...commonRoutes,
-          // 兜底路由：避免 wujie 加载过程中短暂出现 404
-          { path: '*', element: <InitialRedirect /> },
-        ]
+      ? [{ path: '/', element: <InitialRedirect /> }, ...commonRoutes]
       : [
           {
             path: '/login',
