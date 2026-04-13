@@ -2,6 +2,7 @@ import { ConfigProvider, theme as antdTheme, App as AntdApp } from 'antd'
 import zhCN from 'antd/locale/zh_CN'
 import enUS from 'antd/locale/en_US'
 import { RouterProvider, type createBrowserRouter } from 'react-router-dom'
+import { Suspense } from 'react'
 import { useAppStore } from '@/store/appStore'
 import { useWujieBridge } from '@/wujie/bridge'
 import '@/i18n'
@@ -28,7 +29,9 @@ export default function App({ router }: { router: AppRouter }) {
       }}
     >
       <AntdApp>
-        <RouterProvider router={router} />
+        <Suspense fallback={null}>
+          <RouterProvider router={router} />
+        </Suspense>
       </AntdApp>
     </ConfigProvider>
   )

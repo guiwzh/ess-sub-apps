@@ -1,26 +1,18 @@
 import { createBrowserRouter } from 'react-router-dom'
+import { lazy } from 'react'
+
+const DeviceManagement = lazy(() => import('@/pages/Device/Management'))
+const DeviceDetail = lazy(() => import('@/pages/Device/Detail'))
+const AlarmManagement = lazy(() => import('@/pages/Alarm/Management'))
+const WorkOrderManagement = lazy(() => import('@/pages/WorkOrder/Management'))
+const WorkOrderDetail = lazy(() => import('@/pages/WorkOrder/Detail'))
 
 const commonRoutes = [
-  {
-    path: '/devices',
-    lazy: () => import('@/pages/Device/Management').then((m) => ({ Component: m.default })),
-  },
-  {
-    path: '/devices/:id',
-    lazy: () => import('@/pages/Device/Detail').then((m) => ({ Component: m.default })),
-  },
-  {
-    path: '/alarms',
-    lazy: () => import('@/pages/Alarm/Management').then((m) => ({ Component: m.default })),
-  },
-  {
-    path: '/work-orders',
-    lazy: () => import('@/pages/WorkOrder/Management').then((m) => ({ Component: m.default })),
-  },
-  {
-    path: '/work-orders/:id',
-    lazy: () => import('@/pages/WorkOrder/Detail').then((m) => ({ Component: m.default })),
-  },
+  { path: '/devices', element: <DeviceManagement /> },
+  { path: '/devices/:id', element: <DeviceDetail /> },
+  { path: '/alarms', element: <AlarmManagement /> },
+  { path: '/work-orders', element: <WorkOrderManagement /> },
+  { path: '/work-orders/:id', element: <WorkOrderDetail /> },
 ]
 
 export function createRouter() {
