@@ -12,10 +12,6 @@ export default defineConfig({
   },
   server: {
     port: 5175,
-    // 允许被主应用 wujie 嵌入
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-    },
     proxy: {
       '^/api': {
         target: 'http://localhost:8080',
@@ -29,6 +25,4 @@ export default defineConfig({
       },
     },
   },
-  // wujie 子应用需要 umd 格式（alive 模式不需要，但保留兼容）
-  base: './',
 })

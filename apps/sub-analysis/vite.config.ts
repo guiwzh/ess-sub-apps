@@ -12,9 +12,6 @@ export default defineConfig({
   },
   server: {
     port: 5176,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-    },
     proxy: {
       '^/api': {
         target: 'http://localhost:8080',
@@ -28,5 +25,4 @@ export default defineConfig({
       },
     },
   },
-  base: './',
 })

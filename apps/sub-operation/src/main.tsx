@@ -33,7 +33,7 @@ function unmount() {
 if (window.__POWERED_BY_WUJIE__) {
   window.__WUJIE_MOUNT = mount
   window.__WUJIE_UNMOUNT = unmount
-  // Vite 异步加载必须主动调用 mount
+  //   Vite 异步加载必须主动调用 mount
   window.__WUJIE?.mount()
 } else {
   mount()
