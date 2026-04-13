@@ -19,10 +19,7 @@ export const getCategories = (t: TFunction) => [
   { key: 'TRANS', label: t('device.type.transShort') },
 ]
 
-export const getColumns = (
-  t: TFunction,
-  navigate: NavigateFunction,
-): ProColumns<DeviceItem>[] => {
+export const getColumns = (t: TFunction, navigate: NavigateFunction): ProColumns<DeviceItem>[] => {
   const statusMap = getStatusMap(t)
 
   return [

@@ -80,7 +80,10 @@ export const getColumns = (
     key: 'enabled',
     width: 80,
     render: (_: unknown, record: AlarmRule) => (
-      <Switch checked={record.enabled} onChange={(checked) => handlers.onToggle(record.id, checked)} />
+      <Switch
+        checked={record.enabled}
+        onChange={(checked) => handlers.onToggle(record.id, checked)}
+      />
     ),
   },
   {

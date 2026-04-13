@@ -18,10 +18,7 @@ export const getTypeOptions = (t: TFunction) => [
   { label: t('device.type.trans'), value: 'TRANS' },
 ]
 
-export const getColumns = (
-  t: TFunction,
-  navigate: NavigateFunction,
-): ProColumns<DeviceItem>[] => {
+export const getColumns = (t: TFunction, navigate: NavigateFunction): ProColumns<DeviceItem>[] => {
   const statusMap = getStatusMap(t)
   const typeOptions = getTypeOptions(t)
 

@@ -23,10 +23,7 @@ export const getPriorityMap = (t: TFunction) => ({
   low: { text: t('workorder.priority.low'), color: 'blue' },
 })
 
-export const getColumns = (
-  t: TFunction,
-  navigate: NavigateFunction,
-): ProColumns<WorkOrder>[] => {
+export const getColumns = (t: TFunction, navigate: NavigateFunction): ProColumns<WorkOrder>[] => {
   const statusMap = getStatusMap(t)
   const typeMap = getTypeMap(t)
   const priorityMap = getPriorityMap(t)
