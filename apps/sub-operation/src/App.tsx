@@ -5,6 +5,7 @@ import { RouterProvider, type createBrowserRouter } from 'react-router-dom'
 import { useAppStore } from '@/store/appStore'
 import { useWujieBridge } from '@/wujie/bridge'
 import '@/i18n'
+import { createRouter } from './router'
 
 type AppRouter = ReturnType<typeof createBrowserRouter>
 
@@ -13,7 +14,7 @@ const antdLocaleMap: Record<string, typeof zhCN> = {
   en: enUS,
 }
 
-export default function App({ router }: { router: AppRouter }) {
+export default function App() {
   const appTheme = useAppStore((s) => s.theme)
   const locale = useAppStore((s) => s.locale)
 
@@ -29,7 +30,7 @@ export default function App({ router }: { router: AppRouter }) {
       }}
     >
       <AntdApp>
-        <RouterProvider router={router} />
+        <RouterProvider router={createRouter()} />
       </AntdApp>
     </ConfigProvider>
   )

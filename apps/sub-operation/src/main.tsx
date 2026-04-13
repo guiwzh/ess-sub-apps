@@ -22,7 +22,7 @@ let root: ReactDOM.Root | null = null
 function mount() {
   const container = document.getElementById('root')!
   root = ReactDOM.createRoot(container)
-  root.render(<App router={createRouter()} />)
+  root.render(<App />)
 }
 
 function unmount() {
