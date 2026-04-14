@@ -33,7 +33,7 @@ export default function WorkOrderCreate({ open, onClose }: WorkOrderCreateProps)
       onCancel={() => onClose()}
       footer={null}
       width={700}
-      destroyOnClose
+      destroyOnHidden
     >
       <StepsForm
         onFinish={async (values) => {

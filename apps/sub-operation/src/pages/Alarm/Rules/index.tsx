@@ -111,7 +111,7 @@ export default function AlarmRules() {
         open={modalOpen}
         onCancel={() => setModalOpen(false)}
         footer={null}
-        destroyOnClose
+        destroyOnHidden
       >
         <ProForm
           formRef={formRef}
