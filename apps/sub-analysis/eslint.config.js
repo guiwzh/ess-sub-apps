@@ -27,6 +27,7 @@ export default defineConfig([
       'unused-imports': unusedImports,
     },
     rules: {
+      'react-hooks/set-state-in-effect': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
       'unused-imports/no-unused-imports': 'error',
       'unused-imports/no-unused-vars': [

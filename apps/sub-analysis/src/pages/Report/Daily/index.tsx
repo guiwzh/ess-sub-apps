@@ -23,11 +23,7 @@ import {
   type DailyReportData,
   type MonthlyReportData,
 } from '@/api/report'
-import {
-  getMonthlyDescriptionItems,
-  getDailySummaryColumns,
-  getHourlyChartOption,
-} from './config'
+import { getMonthlyDescriptionItems, getDailySummaryColumns, getHourlyChartOption } from './config'
 
 type ReportType = 'daily' | 'monthly'
 
@@ -81,11 +77,7 @@ export default function ReportPage() {
             <Statistic title={t('report.peakPower')} value={summary.peakPower} suffix="kW" />
           </Col>
           <Col span={4}>
-            <Statistic
-              title={t('report.avgEfficiency')}
-              value={summary.avgEfficiency}
-              suffix="%"
-            />
+            <Statistic title={t('report.avgEfficiency')} value={summary.avgEfficiency} suffix="%" />
           </Col>
           <Col span={4}>
             <Statistic
