@@ -46,7 +46,11 @@ export const getColumns = (t: TFunction, navigate: NavigateFunction): ProColumns
           <Button type="link" size="small" onClick={() => navigate(`/devices/${record.id}`)}>
             {t('detail')}
           </Button>
-          <Button type="link" size="small" onClick={() => appNavigate(`/alarms?deviceCode=${record.code}`)}>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => appNavigate('/alarms', { state: { deviceCode: record.code } })}
+          >
             {t('viewAlarms')}
           </Button>
         </Space>
