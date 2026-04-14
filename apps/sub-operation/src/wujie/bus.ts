@@ -19,11 +19,6 @@ export function emitTokenExpired() {
   getBus()?.$emit(BUS_EVENTS.TOKEN_EXPIRED)
 }
 
-/** 通知主应用路由跳转 */
-export function emitNavigate(path: string) {
-  getBus()?.$emit(BUS_EVENTS.NAVIGATE, path)
-}
-
 /** 监听主应用事件 */
 export function onBusEvent(event: string, handler: (...args: unknown[]) => void) {
   const bus = getBus()

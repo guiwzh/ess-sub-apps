@@ -16,10 +16,6 @@ export function emitTokenExpired() {
   getBus()?.$emit(BUS_EVENTS.TOKEN_EXPIRED)
 }
 
-export function emitNavigate(path: string) {
-  getBus()?.$emit(BUS_EVENTS.NAVIGATE, path)
-}
-
 export function onBusEvent(event: string, handler: (...args: unknown[]) => void) {
   const bus = getBus()
   bus?.$on(event, handler)
