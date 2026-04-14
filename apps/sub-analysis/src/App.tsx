@@ -1,15 +1,14 @@
 import { ConfigProvider, theme as antdTheme, App as AntdApp, Spin } from 'antd'
 import zhCN from 'antd/locale/zh_CN'
 import enUS from 'antd/locale/en_US'
-import { RouterProvider, type createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Suspense } from 'react'
 import { ProConfigProvider, zhCNIntl, enUSIntl } from '@ant-design/pro-components'
 import type { IntlType } from '@ant-design/pro-components'
 import { useAppStore } from '@/store/appStore'
 import { useWujieBridge } from '@/wujie/bridge'
 import '@/i18n'
-
-type AppRouter = ReturnType<typeof createBrowserRouter>
+import { routes } from './router'
 
 const antdLocaleMap: Record<string, typeof zhCN> = {
   zh: zhCN,
@@ -21,7 +20,7 @@ const proIntlMap: Record<string, IntlType> = {
   en: enUSIntl,
 }
 
-export default function App({ router }: { router: AppRouter }) {
+export default function App() {
   const appTheme = useAppStore((s) => s.theme)
   const locale = useAppStore((s) => s.locale)
 
@@ -37,8 +36,12 @@ export default function App({ router }: { router: AppRouter }) {
     >
       <ProConfigProvider intl={proIntlMap[locale] ?? zhCNIntl}>
         <AntdApp>
-          <Suspense fallback={<Spin style={{ display: 'flex', justifyContent: 'center', paddingTop: 200 }} />}>
-            <RouterProvider router={router} />
+          <Suspense
+            fallback={
+              <Spin style={{ display: 'flex', justifyContent: 'center', paddingTop: 200 }} />
+            }
+          >
+            <RouterProvider router={createBrowserRouter(routes)} />
           </Suspense>
         </AntdApp>
       </ProConfigProvider>

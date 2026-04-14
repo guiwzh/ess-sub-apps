@@ -1,7 +1,5 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
-import { createRouter } from '@/router'
 
 declare global {
   interface Window {
@@ -21,7 +19,7 @@ let root: ReactDOM.Root | null = null
 function mount() {
   const container = document.getElementById('root')!
   root = ReactDOM.createRoot(container)
-  root.render(<App router={createRouter()} />)
+  root.render(<App />)
 }
 
 function unmount() {
