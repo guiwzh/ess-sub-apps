@@ -1,4 +1,4 @@
-import { ConfigProvider, theme as antdTheme, App as AntdApp } from 'antd'
+import { ConfigProvider, theme as antdTheme, App as AntdApp, Spin } from 'antd'
 import zhCN from 'antd/locale/zh_CN'
 import enUS from 'antd/locale/en_US'
 import { RouterProvider, type createBrowserRouter } from 'react-router-dom'
@@ -37,7 +37,7 @@ export default function App({ router }: { router: AppRouter }) {
     >
       <ProConfigProvider intl={proIntlMap[locale] ?? zhCNIntl}>
         <AntdApp>
-          <Suspense fallback={'Loading...'}>
+          <Suspense fallback={<Spin style={{ display: 'flex', justifyContent: 'center', paddingTop: 200 }} />}>
             <RouterProvider router={router} />
           </Suspense>
         </AntdApp>
