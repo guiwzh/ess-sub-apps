@@ -17,8 +17,10 @@
   "efficiencyRate": "Efficiency (%)",
 
   "dimension.day": "Day",
+  "dimension.week": "Week",
   "dimension.month": "Month",
   "dimension.year": "Year",
+  "dimension.custom": "Custom",
   "station.all": "All Stations",
   "station.nameA": "Station A",
   "station.nameB": "Station B",

@@ -17,8 +17,10 @@
   "efficiencyRate": "效率 (%)",
 
   "dimension.day": "日",
+  "dimension.week": "周",
   "dimension.month": "月",
   "dimension.year": "年",
+  "dimension.custom": "自定义",
   "station.all": "全部站点",
   "station.nameA": "储能站点A",
   "station.nameB": "储能站点B",

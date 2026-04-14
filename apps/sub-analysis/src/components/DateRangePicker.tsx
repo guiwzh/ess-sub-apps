@@ -2,6 +2,7 @@ import { DatePicker, Radio, Space } from 'antd'
 import type { Dayjs } from 'dayjs'
 import dayjs from 'dayjs'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const { RangePicker } = DatePicker
 
@@ -12,12 +13,12 @@ interface DateRangePickerProps {
   defaultPreset?: RangePreset
 }
 
-const presetOptions = [
-  { label: '日', value: 'day' },
-  { label: '周', value: 'week' },
-  { label: '月', value: 'month' },
-  { label: '年', value: 'year' },
-  { label: '自定义', value: 'custom' },
+const presetKeys: { key: string; value: RangePreset }[] = [
+  { key: 'dimension.day', value: 'day' },
+  { key: 'dimension.week', value: 'week' },
+  { key: 'dimension.month', value: 'month' },
+  { key: 'dimension.year', value: 'year' },
+  { key: 'dimension.custom', value: 'custom' },
 ]
 
 function getPresetRange(preset: RangePreset): [Dayjs, Dayjs] {
@@ -40,8 +41,11 @@ export default function DateRangePicker({
   onChange,
   defaultPreset = 'month',
 }: DateRangePickerProps) {
+  const { t } = useTranslation()
   const [preset, setPreset] = useState<RangePreset>(defaultPreset)
   const [range, setRange] = useState<[Dayjs, Dayjs]>(getPresetRange(defaultPreset))
+
+  const presetOptions = presetKeys.map(({ key, value }) => ({ label: t(key), value }))
 
   const emitChange = (r: [Dayjs, Dayjs], p: RangePreset) => {
     onChange?.([r[0].format('YYYY-MM-DD'), r[1].format('YYYY-MM-DD')], p)
