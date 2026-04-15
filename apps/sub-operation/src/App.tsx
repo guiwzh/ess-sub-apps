@@ -2,7 +2,7 @@ import { ConfigProvider, theme as antdTheme, App as AntdApp, Spin } from 'antd'
 import zhCN from 'antd/locale/zh_CN'
 import enUS from 'antd/locale/en_US'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { Suspense } from 'react'
+import { Suspense, useMemo } from 'react'
 import { ProConfigProvider, zhCNIntl, enUSIntl } from '@ant-design/pro-components'
 import type { IntlType } from '@ant-design/pro-components'
 import { useAppStore } from '@/store/appStore'
@@ -27,6 +27,10 @@ export default function App() {
   // 监听主应用 bus 事件（wujie 模式下）
   useWujieBridge()
 
+  const isWujie = !!window.__POWERED_BY_WUJIE__
+  const basename = isWujie ? (window.$wujie?.props?.basePath as string) : undefined
+  const router = useMemo(() => createBrowserRouter(routes, { basename }), [basename])
+
   return (
     <ConfigProvider
       locale={antdLocaleMap[locale] ?? zhCN}
@@ -37,8 +41,12 @@ export default function App() {
     >
       <ProConfigProvider intl={proIntlMap[locale] ?? zhCNIntl}>
         <AntdApp>
-          <Suspense fallback={<Spin style={{ display: 'flex', justifyContent: 'center', paddingTop: 200 }} />}>
-            <RouterProvider router={createBrowserRouter(routes)} />
+          <Suspense
+            fallback={
+              <Spin style={{ display: 'flex', justifyContent: 'center', paddingTop: 200 }} />
+            }
+          >
+            <RouterProvider router={router} />
           </Suspense>
         </AntdApp>
       </ProConfigProvider>

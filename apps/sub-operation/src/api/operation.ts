@@ -61,17 +61,12 @@ export function getDevices(params: {
   keyword?: string
   type?: string
 }) {
-  return request.get<ApiResponse<PageResult<DeviceItem>>>(
-    '/operation/devices',
-    { params },
-  )
+  return request.get<ApiResponse<PageResult<DeviceItem>>>('/operation/devices', { params })
 }
 
 /** 设备详情 */
 export function getDeviceDetail(id: string) {
-  return request.get<ApiResponse<DeviceDetail>>(
-    `/operation/devices/${id}`,
-  )
+  return request.get<ApiResponse<DeviceDetail>>(`/operation/devices/${id}`)
 }
 
 /** 告警列表（分页 + 筛选） */
@@ -82,10 +77,7 @@ export function getAlarms(params: {
   status?: string
   deviceCode?: string
 }) {
-  return request.get<ApiResponse<PageResult<AlarmItem>>>(
-    '/operation/alarms',
-    { params },
-  )
+  return request.get<ApiResponse<PageResult<AlarmItem>>>('/operation/alarms', { params })
 }
 
 export interface HistoryAlarmItem {
@@ -106,10 +98,9 @@ export function getHistoryAlarms(params: {
   station?: string
   deviceCode?: string
 }) {
-  return request.get<ApiResponse<PageResult<HistoryAlarmItem>>>(
-    '/operation/alarms/history',
-    { params },
-  )
+  return request.get<ApiResponse<PageResult<HistoryAlarmItem>>>('/operation/alarms/history', {
+    params,
+  })
 }
 
 /** 确认告警 */
