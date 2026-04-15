@@ -4,7 +4,7 @@ import { mockDevServerPlugin } from 'vite-plugin-mock-dev-server'
 import path from 'path'
 
 export default defineConfig({
-  plugins: [react(), mockDevServerPlugin()],
+  plugins: [react(), mockDevServerPlugin({ prefix: '^/api' })], //mockDevServerPlugin({ enabled: false })
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
@@ -12,11 +12,6 @@ export default defineConfig({
   },
   server: {
     port: 5175,
-    proxy: {
-      '^/api': {
-        target: 'http://localhost:8080',
-      },
-    },
   },
   css: {
     preprocessorOptions: {
