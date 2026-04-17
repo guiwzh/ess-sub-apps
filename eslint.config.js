@@ -6,7 +6,7 @@ import prettier from 'eslint-plugin-prettier'
 import prettierConfig from 'eslint-config-prettier'
 import unusedImports from 'eslint-plugin-unused-imports'
 
-export default tseslint.config(
+export default tseslint.config([
   { ignores: ['**/dist'] },
   {
     files: ['**/*.{ts,tsx}'],
@@ -37,4 +37,4 @@ export default tseslint.config(
       ],
     },
   },
-)
+])
