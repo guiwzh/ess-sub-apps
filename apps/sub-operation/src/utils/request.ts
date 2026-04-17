@@ -23,7 +23,6 @@ request.interceptors.response.use(
     if (error.response?.status === 401) {
       // wujie 模式下通知主应用 token 过期
       if (window.__POWERED_BY_WUJIE__) {
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
         import('@/wujie/bus').then(({ emitTokenExpired }) => emitTokenExpired())
       } else {
         // 独立模式：清除 token 跳登录

@@ -52,10 +52,7 @@ export function getWorkOrders(params: {
   status?: string
   type?: string
 }) {
-  return request.get<ApiResponse<PageResult<WorkOrder>>>(
-    '/operation/work-orders',
-    { params },
-  )
+  return request.get<ApiResponse<PageResult<WorkOrder>>>('/operation/work-orders', { params })
 }
 
 export function createWorkOrder(data: Partial<WorkOrder>) {

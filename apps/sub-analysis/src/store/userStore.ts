@@ -19,7 +19,7 @@ interface UserState {
 }
 
 function getInitFromWujie(): Partial<UserState> {
-  const props = (window as any).$wujie?.props
+  const props = window.$wujie?.props
   if (!props) return {}
   return {
     token: (props.token as string) || null,

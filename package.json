@@ -1,6 +1,7 @@
 {
   "name": "ess-sub-apps",
   "private": true,
+  "type": "module",
   "version": "1.0.0",
   "description": "储能运维子应用 Monorepo",
   "author": "guiwz",
@@ -8,11 +9,33 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
     "eslint-plugin-unused-imports": "^4.4.1",
-    "turbo": "^2.5.4"
+    "globals": "^17.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.3",
+    "turbo": "^2.5.4",
+    "typescript-eslint": "^8.58.1"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,less,css,md}": [
+      "prettier --write"
+    ]
   },
   "packageManager": "pnpm@10.33.0"
 }

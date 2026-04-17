@@ -33,7 +33,11 @@ export const getBasicInfoItems = (
 export const getRunningParamsItems = (
   t: TFunction,
   params: DeviceDetail['runningParams'],
-): { left: DescriptionsProps['items']; right: DescriptionsProps['items']; battery?: DescriptionsProps['items'] } => ({
+): {
+  left: DescriptionsProps['items']
+  right: DescriptionsProps['items']
+  battery?: DescriptionsProps['items']
+} => ({
   left: [
     { label: t('device.voltage'), children: `${params.voltage} V` },
     { label: t('device.current'), children: `${params.current} A` },

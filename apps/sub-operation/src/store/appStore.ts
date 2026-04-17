@@ -11,7 +11,7 @@ interface AppState {
 
 /** 从主应用 props 读取初始值 */
 function getInitFromWujie() {
-  const props = (window as any).$wujie?.props
+  const props = window.$wujie?.props
   if (!props) return {}
   return {
     theme: (props.theme as string) || 'light',
