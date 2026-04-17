@@ -1,10 +1,10 @@
 import { Tabs } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import DeviceList from '../List'
 import DeviceCategory from '../Category'
+import DeviceList from '../List'
 
-export default function DeviceManagement() {
+const DeviceManagement = () => {
   const [activeKey, setActiveKey] = useState('list')
   const { t } = useTranslation()
 
@@ -21,3 +21,5 @@ export default function DeviceManagement() {
     </div>
   )
 }
+
+export default DeviceManagement

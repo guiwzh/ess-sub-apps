@@ -1,21 +1,21 @@
-import { useCallback, useEffect, useState } from 'react'
-import { Button, Card, Checkbox, DatePicker, Empty, message, Space, Spin, Table } from 'antd'
-import { DownloadOutlined } from '@ant-design/icons'
-import ReactECharts from 'echarts-for-react'
-import dayjs, { type Dayjs } from 'dayjs'
-import { useAppStore } from '@/store/appStore'
-import { useTranslation } from 'react-i18next'
 import {
-  getIndicators,
   getCustomReport,
-  type IndicatorItem,
+  getIndicators,
   type CustomReportData,
+  type IndicatorItem,
 } from '@/api/report'
+import { useAppStore } from '@/store/appStore'
+import { DownloadOutlined } from '@ant-design/icons'
+import { Button, Card, Checkbox, DatePicker, Empty, message, Space, Spin, Table } from 'antd'
+import dayjs, { type Dayjs } from 'dayjs'
+import ReactECharts from 'echarts-for-react'
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { getChartOption, getTableColumns } from './config'
 
 const { RangePicker } = DatePicker
 
-export default function CustomReport() {
+const CustomReport = () => {
   const { t } = useTranslation()
   const theme = useAppStore((s) => s.theme)
   const [indicators, setIndicators] = useState<IndicatorItem[]>([])
@@ -130,3 +130,5 @@ export default function CustomReport() {
     </div>
   )
 }
+
+export default CustomReport

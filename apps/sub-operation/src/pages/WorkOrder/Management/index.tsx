@@ -1,10 +1,10 @@
 import { Tabs } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import WorkOrderList from '../List'
 import Inspection from '../Inspection'
+import WorkOrderList from '../List'
 
-export default function WorkOrderManagement() {
+const WorkOrderManagement = () => {
   const [activeKey, setActiveKey] = useState('list')
   const { t } = useTranslation()
 
@@ -21,3 +21,5 @@ export default function WorkOrderManagement() {
     </div>
   )
 }
+
+export default WorkOrderManagement

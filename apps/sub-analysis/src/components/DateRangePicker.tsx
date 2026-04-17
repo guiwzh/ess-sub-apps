@@ -37,10 +37,7 @@ function getPresetRange(preset: RangePreset): [Dayjs, Dayjs] {
   }
 }
 
-export default function DateRangePicker({
-  onChange,
-  defaultPreset = 'month',
-}: DateRangePickerProps) {
+const DateRangePicker = ({ onChange, defaultPreset = 'month' }: DateRangePickerProps) => {
   const { t } = useTranslation()
   const [preset, setPreset] = useState<RangePreset>(defaultPreset)
   const [range, setRange] = useState<[Dayjs, Dayjs]>(getPresetRange(defaultPreset))
@@ -86,3 +83,5 @@ export default function DateRangePicker({
     </Space>
   )
 }
+
+export default DateRangePicker

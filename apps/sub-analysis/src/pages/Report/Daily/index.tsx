@@ -1,33 +1,33 @@
-import { useEffect, useState } from 'react'
-import {
-  Card,
-  DatePicker,
-  Descriptions,
-  Segmented,
-  Spin,
-  Statistic,
-  Table,
-  Row,
-  Col,
-  Button,
-  message,
-} from 'antd'
-import { DownloadOutlined } from '@ant-design/icons'
-import ReactECharts from 'echarts-for-react'
-import dayjs, { type Dayjs } from 'dayjs'
-import { useAppStore } from '@/store/appStore'
-import { useTranslation } from 'react-i18next'
 import {
   getDailyReport,
   getMonthlyReport,
   type DailyReportData,
   type MonthlyReportData,
 } from '@/api/report'
-import { getMonthlyDescriptionItems, getDailySummaryColumns, getHourlyChartOption } from './config'
+import { useAppStore } from '@/store/appStore'
+import { DownloadOutlined } from '@ant-design/icons'
+import {
+  Button,
+  Card,
+  Col,
+  DatePicker,
+  Descriptions,
+  message,
+  Row,
+  Segmented,
+  Spin,
+  Statistic,
+  Table,
+} from 'antd'
+import dayjs, { type Dayjs } from 'dayjs'
+import ReactECharts from 'echarts-for-react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { getDailySummaryColumns, getHourlyChartOption, getMonthlyDescriptionItems } from './config'
 
 type ReportType = 'daily' | 'monthly'
 
-export default function ReportPage() {
+const ReportPage = () => {
   const { t } = useTranslation()
   const theme = useAppStore((s) => s.theme)
   const [type, setType] = useState<ReportType>('daily')
@@ -156,3 +156,5 @@ export default function ReportPage() {
     </div>
   )
 }
+
+export default ReportPage

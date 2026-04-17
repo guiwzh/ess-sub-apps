@@ -1,9 +1,9 @@
+import { getAlarms, type AlarmItem } from '@/api/operation'
 import { ProTable } from '@ant-design/pro-components'
 import { useTranslation } from 'react-i18next'
-import { getAlarms, type AlarmItem } from '@/api/operation'
 import { getColumns } from './config'
 
-export default function AlarmRealtime({ deviceCode }: { deviceCode?: string }) {
+const AlarmRealtime = ({ deviceCode }: { deviceCode?: string }) => {
   const { t } = useTranslation()
   const columns = getColumns(t)
 
@@ -34,3 +34,5 @@ export default function AlarmRealtime({ deviceCode }: { deviceCode?: string }) {
     </div>
   )
 }
+
+export default AlarmRealtime

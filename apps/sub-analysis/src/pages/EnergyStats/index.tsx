@@ -1,17 +1,17 @@
-import { useCallback, useEffect, useState } from 'react'
-import { Typography, Radio, Select, Space, Spin, Empty } from 'antd'
-import { useTranslation } from 'react-i18next'
-import ReactECharts from 'echarts-for-react'
+import { getEnergyStats, type EnergyStatsData } from '@/api/analysis'
 import ChartCard from '@/components/ChartCard'
 import DateRangePicker, { type RangePreset } from '@/components/DateRangePicker'
 import { useAppStore } from '@/store/appStore'
-import { getEnergyStats, type EnergyStatsData } from '@/api/analysis'
-import { getStationOptions, getChartOption } from './config'
+import { Empty, Radio, Select, Space, Spin, Typography } from 'antd'
+import ReactECharts from 'echarts-for-react'
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { getChartOption, getStationOptions } from './config'
 
 type Dimension = 'day' | 'month' | 'year'
 
 /** 充放电统计 — 可切换维度 + 时间范围 + 站点 */
-export default function EnergyStats() {
+const EnergyStats = () => {
   const { t } = useTranslation()
   const stationOptions = getStationOptions(t)
   const theme = useAppStore((s) => s.theme)
@@ -86,3 +86,5 @@ export default function EnergyStats() {
     </div>
   )
 }
+
+export default EnergyStats

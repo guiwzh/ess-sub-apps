@@ -1,14 +1,14 @@
-import { useCallback, useEffect, useState } from 'react'
-import { Typography, Space, Spin, Empty } from 'antd'
-import { useTranslation } from 'react-i18next'
-import ReactECharts from 'echarts-for-react'
+import { getBatteryHealth, type BatteryHealthData } from '@/api/analysis'
 import ChartCard from '@/components/ChartCard'
 import DateRangePicker, { type RangePreset } from '@/components/DateRangePicker'
 import { useAppStore } from '@/store/appStore'
-import { getBatteryHealth, type BatteryHealthData } from '@/api/analysis'
+import { Empty, Space, Spin, Typography } from 'antd'
+import ReactECharts from 'echarts-for-react'
+import { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 /** SOC/SOH 趋势分析 — 双折线图 + 时间范围筛选 */
-export default function BatteryHealth() {
+const BatteryHealth = () => {
   const { t } = useTranslation()
   const theme = useAppStore((s) => s.theme)
   const [dateRange, setDateRange] = useState<[string, string] | null>(null)
@@ -82,3 +82,5 @@ export default function BatteryHealth() {
     </div>
   )
 }
+
+export default BatteryHealth

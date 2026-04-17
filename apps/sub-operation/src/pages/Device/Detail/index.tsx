@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { Card, Descriptions, Table, Typography, Spin, Button, Row, Col } from 'antd'
-import { ArrowLeftOutlined } from '@ant-design/icons'
-import ReactECharts from 'echarts-for-react'
-import { useTranslation } from 'react-i18next'
 import { getDeviceDetail, type DeviceDetail as DeviceDetailType } from '@/api/operation'
 import { useAppStore } from '@/store/appStore'
+import { ArrowLeftOutlined } from '@ant-design/icons'
+import { Button, Card, Col, Descriptions, Row, Spin, Table, Typography } from 'antd'
+import ReactECharts from 'echarts-for-react'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useNavigate, useParams } from 'react-router-dom'
 import {
   getBasicInfoItems,
-  getRunningParamsItems,
   getChartOption,
   getMaintenanceColumns,
+  getRunningParamsItems,
 } from './config'
 
-export default function DeviceDetail() {
+const DeviceDetail = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { t } = useTranslation()
@@ -97,3 +97,5 @@ export default function DeviceDetail() {
     </div>
   )
 }
+
+export default DeviceDetail

@@ -1,23 +1,23 @@
-import { useEffect, useRef, useState } from 'react'
-import { Button, Card, Modal, Table, message } from 'antd'
 import {
-  ProForm,
-  ProFormText,
-  ProFormSelect,
-  type ProFormInstance,
-} from '@ant-design/pro-components'
-import { PlusOutlined } from '@ant-design/icons'
-import { useTranslation } from 'react-i18next'
-import {
-  getInspectionTemplates,
   createInspectionTemplate,
-  updateInspectionTemplate,
   deleteInspectionTemplate,
+  getInspectionTemplates,
+  updateInspectionTemplate,
   type InspectionTemplate,
 } from '@/api/workorder'
-import { getFrequencyOptions, getColumns } from './config'
+import { PlusOutlined } from '@ant-design/icons'
+import {
+  ProForm,
+  ProFormSelect,
+  ProFormText,
+  type ProFormInstance,
+} from '@ant-design/pro-components'
+import { Button, Card, Modal, Table, message } from 'antd'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { getColumns, getFrequencyOptions } from './config'
 
-export default function Inspection() {
+const Inspection = () => {
   const { t } = useTranslation()
   const [templates, setTemplates] = useState<InspectionTemplate[]>([])
   const [loading, setLoading] = useState(false)
@@ -132,3 +132,5 @@ export default function Inspection() {
     </div>
   )
 }
+
+export default Inspection

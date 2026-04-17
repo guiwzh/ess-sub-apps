@@ -1,12 +1,12 @@
+import { getDevices, type DeviceItem } from '@/api/operation'
 import { ProTable } from '@ant-design/pro-components'
 import { Tabs } from 'antd'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { getDevices, type DeviceItem } from '@/api/operation'
+import { useNavigate } from 'react-router-dom'
 import { getCategories, getColumns } from './config'
 
-export default function DeviceCategory() {
+const DeviceCategory = () => {
   const [activeType, setActiveType] = useState('')
   const navigate = useNavigate()
   const { t } = useTranslation()
@@ -42,3 +42,5 @@ export default function DeviceCategory() {
     </div>
   )
 }
+
+export default DeviceCategory

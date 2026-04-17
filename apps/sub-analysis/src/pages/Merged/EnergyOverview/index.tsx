@@ -1,10 +1,10 @@
 import { Tabs } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import EnergyStats from '../../EnergyStats'
 import Efficiency from '../../Efficiency'
+import EnergyStats from '../../EnergyStats'
 
-export default function EnergyOverview() {
+const EnergyOverview = () => {
   const [activeKey, setActiveKey] = useState('energy')
   const { t } = useTranslation()
 
@@ -21,3 +21,5 @@ export default function EnergyOverview() {
     </div>
   )
 }
+
+export default EnergyOverview

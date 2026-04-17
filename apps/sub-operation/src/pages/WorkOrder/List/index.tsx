@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import WorkOrderCreate from '../Create'
 import { getColumns } from './config'
 
-export default function WorkOrderList() {
+const WorkOrderList = () => {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const actionRef = useRef<ActionType>(null)
@@ -58,3 +58,5 @@ export default function WorkOrderList() {
     </div>
   )
 }
+
+export default WorkOrderList

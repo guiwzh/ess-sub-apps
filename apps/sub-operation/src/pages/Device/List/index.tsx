@@ -1,10 +1,10 @@
-import { ProTable } from '@ant-design/pro-components'
-import { useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 import { getDevices, type DeviceItem } from '@/api/operation'
+import { ProTable } from '@ant-design/pro-components'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import { getColumns } from './config'
 
-export default function DeviceList() {
+const DeviceList = () => {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const columns = getColumns(t, navigate)
@@ -34,3 +34,5 @@ export default function DeviceList() {
     </div>
   )
 }
+
+export default DeviceList

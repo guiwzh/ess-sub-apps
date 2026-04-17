@@ -1,10 +1,10 @@
 import { Tabs } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Revenue from '../../Revenue'
 import BatteryHealth from '../../BatteryHealth'
+import Revenue from '../../Revenue'
 
-export default function OperationAnalysis() {
+const OperationAnalysis = () => {
   const [activeKey, setActiveKey] = useState('revenue')
   const { t } = useTranslation()
 
@@ -21,3 +21,5 @@ export default function OperationAnalysis() {
     </div>
   )
 }
+
+export default OperationAnalysis

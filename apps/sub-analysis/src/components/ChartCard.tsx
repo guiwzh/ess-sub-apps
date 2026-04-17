@@ -8,10 +8,12 @@ interface ChartCardProps {
   extra?: ReactNode
 }
 
-export default function ChartCard({ title, children, style, extra }: ChartCardProps) {
+const ChartCard = ({ title, children, style, extra }: ChartCardProps) => {
   return (
     <Card title={title} extra={extra} style={{ marginBottom: 16, ...style }}>
       {children}
     </Card>
   )
 }
+
+export default ChartCard

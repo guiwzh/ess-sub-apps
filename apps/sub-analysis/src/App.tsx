@@ -1,13 +1,13 @@
-import { ConfigProvider, theme as antdTheme, App as AntdApp, Spin } from 'antd'
-import zhCN from 'antd/locale/zh_CN'
-import enUS from 'antd/locale/en_US'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { Suspense, useMemo } from 'react'
-import { ProConfigProvider, zhCNIntl, enUSIntl } from '@ant-design/pro-components'
-import type { IntlType } from '@ant-design/pro-components'
+import '@/i18n'
 import { useAppStore } from '@/store/appStore'
 import { useWujieBridge } from '@/wujie/bridge'
-import '@/i18n'
+import type { IntlType } from '@ant-design/pro-components'
+import { enUSIntl, ProConfigProvider, zhCNIntl } from '@ant-design/pro-components'
+import { App as AntdApp, theme as antdTheme, ConfigProvider, Spin } from 'antd'
+import enUS from 'antd/locale/en_US'
+import zhCN from 'antd/locale/zh_CN'
+import { Suspense, useMemo } from 'react'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { routes } from './router'
 
 const antdLocaleMap: Record<string, typeof zhCN> = {
@@ -20,7 +20,7 @@ const proIntlMap: Record<string, IntlType> = {
   en: enUSIntl,
 }
 
-export default function App() {
+const App = () => {
   const appTheme = useAppStore((s) => s.theme)
   const locale = useAppStore((s) => s.locale)
 
@@ -52,3 +52,5 @@ export default function App() {
     </ConfigProvider>
   )
 }
+
+export default App

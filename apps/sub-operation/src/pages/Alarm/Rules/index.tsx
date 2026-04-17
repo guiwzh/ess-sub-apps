@@ -1,31 +1,31 @@
-import { useEffect, useRef, useState } from 'react'
-import { Button, Card, Modal, Table, message } from 'antd'
 import {
-  ProForm,
-  ProFormText,
-  ProFormSelect,
-  ProFormDigit,
-  type ProFormInstance,
-} from '@ant-design/pro-components'
-import { PlusOutlined } from '@ant-design/icons'
-import { useTranslation } from 'react-i18next'
-import {
-  getAlarmRules,
   createAlarmRule,
-  updateAlarmRule,
   deleteAlarmRule,
+  getAlarmRules,
+  updateAlarmRule,
   type AlarmRule,
 } from '@/api/operation'
+import { PlusOutlined } from '@ant-design/icons'
 import {
-  getLevelOptions,
+  ProForm,
+  ProFormDigit,
+  ProFormSelect,
+  ProFormText,
+  type ProFormInstance,
+} from '@ant-design/pro-components'
+import { Button, Card, Modal, Table, message } from 'antd'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import {
+  getColumns,
   getDeviceTypeOptions,
+  getLevelOptions,
+  getNotifyOptions,
   getParamOptions,
   operatorOptions,
-  getNotifyOptions,
-  getColumns,
 } from './config'
 
-export default function AlarmRules() {
+const AlarmRules = () => {
   const { t } = useTranslation()
   const [rules, setRules] = useState<AlarmRule[]>([])
   const [loading, setLoading] = useState(false)
@@ -162,3 +162,5 @@ export default function AlarmRules() {
     </div>
   )
 }
+
+export default AlarmRules

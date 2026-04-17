@@ -1,22 +1,22 @@
-import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { getWorkOrderDetail, type WorkOrderDetail as WODetailType } from '@/api/workorder'
+import { ArrowLeftOutlined, UploadOutlined } from '@ant-design/icons'
 import {
+  Button,
   Card,
   Descriptions,
-  Timeline,
-  Typography,
-  Spin,
-  Button,
   Input,
   message,
+  Spin,
+  Timeline,
+  Typography,
   Upload,
 } from 'antd'
-import { ArrowLeftOutlined, UploadOutlined } from '@ant-design/icons'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { getWorkOrderDetail, type WorkOrderDetail as WODetailType } from '@/api/workorder'
+import { useNavigate, useParams } from 'react-router-dom'
 import { getDescriptionItems } from './config'
 
-export default function WorkOrderDetail() {
+const WorkOrderDetail = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { t } = useTranslation()
@@ -111,3 +111,5 @@ export default function WorkOrderDetail() {
     </div>
   )
 }
+
+export default WorkOrderDetail

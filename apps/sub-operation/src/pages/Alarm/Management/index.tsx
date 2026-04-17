@@ -1,12 +1,12 @@
+import { getMainState } from '@/wujie/navigate'
 import { Tabs } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { getMainState } from '@/wujie/navigate'
-import AlarmRealtime from '../Realtime'
 import AlarmHistory from '../History'
+import AlarmRealtime from '../Realtime'
 import AlarmRules from '../Rules'
 
-export default function AlarmManagement() {
+const AlarmManagement = () => {
   const [activeKey, setActiveKey] = useState('realtime')
   const { t } = useTranslation()
   // const [searchParams] = useSearchParams()
@@ -37,3 +37,5 @@ export default function AlarmManagement() {
     </div>
   )
 }
+
+export default AlarmManagement

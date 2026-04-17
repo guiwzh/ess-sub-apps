@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react'
-import { message, Modal } from 'antd'
-import { StepsForm, ProFormText, ProFormSelect, ProFormTextArea } from '@ant-design/pro-components'
-import { useTranslation } from 'react-i18next'
-import { createWorkOrder, getStaffList, type StaffItem } from '@/api/workorder'
 import { getDevices, type DeviceItem } from '@/api/operation'
-import { getTypeOptions, getPriorityOptions, getStationOptions } from './config'
+import { createWorkOrder, getStaffList, type StaffItem } from '@/api/workorder'
+import { ProFormSelect, ProFormText, ProFormTextArea, StepsForm } from '@ant-design/pro-components'
+import { message, Modal } from 'antd'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { getPriorityOptions, getStationOptions, getTypeOptions } from './config'
 
 interface WorkOrderCreateProps {
   open: boolean
   onClose: (created?: boolean) => void
 }
 
-export default function WorkOrderCreate({ open, onClose }: WorkOrderCreateProps) {
+const WorkOrderCreate = ({ open, onClose }: WorkOrderCreateProps) => {
   const { t } = useTranslation()
   const [staff, setStaff] = useState<StaffItem[]>([])
   const [devices, setDevices] = useState<DeviceItem[]>([])
@@ -97,3 +97,5 @@ export default function WorkOrderCreate({ open, onClose }: WorkOrderCreateProps)
     </Modal>
   )
 }
+
+export default WorkOrderCreate

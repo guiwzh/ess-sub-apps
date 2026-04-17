@@ -1,11 +1,11 @@
+import { getHistoryAlarms, type HistoryAlarmItem } from '@/api/operation'
+import { DownloadOutlined } from '@ant-design/icons'
 import { ProTable } from '@ant-design/pro-components'
 import { Button, message } from 'antd'
-import { DownloadOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
-import { getHistoryAlarms, type HistoryAlarmItem } from '@/api/operation'
 import { getColumns } from './config'
 
-export default function AlarmHistory({ deviceCode }: { deviceCode?: string }) {
+const AlarmHistory = ({ deviceCode }: { deviceCode?: string }) => {
   const { t } = useTranslation()
   const columns = getColumns(t)
 
@@ -45,3 +45,5 @@ export default function AlarmHistory({ deviceCode }: { deviceCode?: string }) {
     </div>
   )
 }
+
+export default AlarmHistory
