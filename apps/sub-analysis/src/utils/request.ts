@@ -1,8 +1,15 @@
-import axios from 'axios'
 import { useUserStore } from '@/store/userStore'
+import axios from 'axios'
+
+function getBaseURL() {
+  if (window.__POWERED_BY_WUJIE__) {
+    return (window.$wujie?.props?.apiBaseUrl as string) || '/api'
+  }
+  return import.meta.env.VITE_API_BASE_URL || '/api'
+}
 
 const request = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+  baseURL: getBaseURL(),
   timeout: 15000,
 })
 
