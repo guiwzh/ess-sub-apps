@@ -1,41 +1,24 @@
 import { useUserStore } from '@/store/userStore'
 import axios from 'axios'
 
-function getBaseURL() {
-  if (window.__POWERED_BY_WUJIE__) {
-    return (window.$wujie?.props?.apiBaseUrl as string) || '/api'
-  }
-  return import.meta.env.VITE_API_BASE_URL || '/api'
-}
-
 const request = axios.create({
-  baseURL: getBaseURL(),
+  baseURL: (window.$wujie?.props?.apiBaseUrl as string) || '/api',
   timeout: 15000,
 })
 
-/** 请求拦截器：注入 token */
 request.interceptors.request.use((config) => {
-  // 优先从 store 读取（wujie 模式下由主应用同步），独立模式从 localStorage
-  const token = useUserStore.getState().token ?? localStorage.getItem('token')
+  const token = useUserStore.getState().token
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
   return config
 })
 
-/** 响应拦截器 */
 request.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // wujie 模式下通知主应用 token 过期
-      if (window.__POWERED_BY_WUJIE__) {
-        import('@/wujie/bus').then(({ emitTokenExpired }) => emitTokenExpired())
-      } else {
-        // 独立模式：清除 token 跳登录
-        localStorage.removeItem('token')
-        window.location.href = '/login'
-      }
+      import('@/wujie/bus').then(({ emitTokenExpired }) => emitTokenExpired())
     }
     return Promise.reject(error)
   },
