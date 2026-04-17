@@ -1,12 +1,13 @@
 import { getEnergyStats, type EnergyStatsData } from '@/api/analysis'
 import ChartCard from '@/components/ChartCard'
 import DateRangePicker, { type RangePreset } from '@/components/DateRangePicker'
+import { getStationOptions } from '@/constants/options'
 import { useAppStore } from '@/store/appStore'
-import { Empty, Radio, Select, Space, Spin, Typography } from 'antd'
+import { Empty, message, Radio, Select, Space, Spin, Typography } from 'antd'
 import ReactECharts from 'echarts-for-react'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { getChartOption, getStationOptions } from './config'
+import { getChartOption } from './config'
 
 type Dimension = 'day' | 'month' | 'year'
 
@@ -31,10 +32,12 @@ const EnergyStats = () => {
         endDate: dateRange?.[1],
       })
       if (res.code === 0) setData(res.data)
+    } catch {
+      message.error(t('fetchFailed'))
     } finally {
       setLoading(false)
     }
-  }, [dimension, station, dateRange])
+  }, [dimension, station, dateRange, t])
 
   useEffect(() => {
     fetchData()

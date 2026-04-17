@@ -1,7 +1,7 @@
 import { getWorkOrders, type WorkOrder } from '@/api/workorder'
 import { PlusOutlined } from '@ant-design/icons'
 import { type ActionType, ProTable } from '@ant-design/pro-components'
-import { Button } from 'antd'
+import { Button, message } from 'antd'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -33,16 +33,21 @@ const WorkOrderList = () => {
           </Button>,
         ]}
         request={async (params) => {
-          const { data: res } = await getWorkOrders({
-            current: params.current,
-            pageSize: params.pageSize,
-            status: params.status,
-            type: params.type,
-          })
-          return {
-            data: res.data.list,
-            total: res.data.total,
-            success: res.code === 0,
+          try {
+            const { data: res } = await getWorkOrders({
+              current: params.current,
+              pageSize: params.pageSize,
+              status: params.status,
+              type: params.type,
+            })
+            return {
+              data: res.data.list,
+              total: res.data.total,
+              success: res.code === 0,
+            }
+          } catch {
+            message.error(t('fetchFailed'))
+            return { data: [], total: 0, success: false }
           }
         }}
         search={{ labelWidth: 'auto' }}

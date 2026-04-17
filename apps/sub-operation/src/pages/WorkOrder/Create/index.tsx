@@ -18,13 +18,17 @@ const WorkOrderCreate = ({ open, onClose }: WorkOrderCreateProps) => {
 
   useEffect(() => {
     if (!open) return
-    getStaffList().then(({ data: res }) => {
-      if (res.code === 0) setStaff(res.data)
-    })
-    getDevices({ current: 1, pageSize: 100 }).then(({ data: res }) => {
-      if (res.code === 0) setDevices(res.data.list)
-    })
-  }, [open])
+    getStaffList()
+      .then(({ data: res }) => {
+        if (res.code === 0) setStaff(res.data)
+      })
+      .catch(() => message.error(t('fetchFailed')))
+    getDevices({ current: 1, pageSize: 100 })
+      .then(({ data: res }) => {
+        if (res.code === 0) setDevices(res.data.list)
+      })
+      .catch(() => message.error(t('fetchFailed')))
+  }, [open, t])
 
   return (
     <Modal

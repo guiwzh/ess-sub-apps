@@ -26,13 +26,15 @@ const WorkOrderDetail = () => {
 
   useEffect(() => {
     if (!id) return
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true)
     getWorkOrderDetail(id)
       .then(({ data: res }) => {
         if (res.code === 0) setDetail(res.data)
       })
+      .catch(() => message.error(t('fetchFailed')))
       .finally(() => setLoading(false))
-  }, [id])
+  }, [id, t])
 
   if (loading) {
     return (
@@ -89,7 +91,8 @@ const WorkOrderDetail = () => {
           type="primary"
           style={{ marginTop: 8 }}
           onClick={() => {
-            message.success(t('workorder.remarkSubmitted'))
+            // TODO: 接入真实备注提交接口
+            message.info(t('workorder.remarkTodo'))
             setRemark('')
           }}
         >
@@ -101,6 +104,7 @@ const WorkOrderDetail = () => {
         <Upload
           action=""
           beforeUpload={() => {
+            // TODO: 接入真实文件上传接口
             message.info(t('workorder.uploadMock'))
             return false
           }}

@@ -28,12 +28,15 @@ const CustomReport = () => {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    getIndicators().then(({ data: res }) => {
-      if (res.code === 0) {
-        setIndicators(res.data)
-        setSelected(res.data.slice(0, 2).map((i) => i.key))
-      }
-    })
+    getIndicators()
+      .then(({ data: res }) => {
+        if (res.code === 0) {
+          setIndicators(res.data)
+          setSelected(res.data.slice(0, 2).map((i) => i.key))
+        }
+      })
+      .catch(() => message.error(t('fetchFailed')))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fetchReport = useCallback(async () => {
@@ -46,17 +49,20 @@ const CustomReport = () => {
         endDate: dateRange[1].format('YYYY-MM-DD'),
       })
       if (res.code === 0) setData(res.data)
+    } catch {
+      message.error(t('fetchFailed'))
     } finally {
       setLoading(false)
     }
-  }, [selected, dateRange])
+  }, [selected, dateRange, t])
 
   const handlePreview = () => {
     fetchReport()
   }
 
   const handleExport = () => {
-    message.success(t('report.exportCustomMock'))
+    // TODO: 接入真实导出接口
+    message.info(t('report.exportCustomMock'))
   }
 
   const tableData = data

@@ -10,7 +10,8 @@ const AlarmHistory = ({ deviceCode }: { deviceCode?: string }) => {
   const columns = getColumns(t)
 
   const handleExport = () => {
-    message.success(t('export') + ' (Mock)')
+    // TODO: 接入真实导出接口
+    message.info(t('exportTodo'))
   }
 
   return (
@@ -26,17 +27,22 @@ const AlarmHistory = ({ deviceCode }: { deviceCode?: string }) => {
           </Button>,
         ]}
         request={async (params) => {
-          const { data: res } = await getHistoryAlarms({
-            current: params.current,
-            pageSize: params.pageSize,
-            level: params.level,
-            station: params.station,
-            deviceCode: params.deviceCode,
-          })
-          return {
-            data: res.data.list,
-            total: res.data.total,
-            success: res.code === 0,
+          try {
+            const { data: res } = await getHistoryAlarms({
+              current: params.current,
+              pageSize: params.pageSize,
+              level: params.level,
+              station: params.station,
+              deviceCode: params.deviceCode,
+            })
+            return {
+              data: res.data.list,
+              total: res.data.total,
+              success: res.code === 0,
+            }
+          } catch {
+            message.error(t('fetchFailed'))
+            return { data: [], total: 0, success: false }
           }
         }}
         search={{ labelWidth: 'auto' }}

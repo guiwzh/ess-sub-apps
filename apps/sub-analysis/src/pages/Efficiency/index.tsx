@@ -2,7 +2,7 @@ import { getEfficiency, type EfficiencyData } from '@/api/analysis'
 import ChartCard from '@/components/ChartCard'
 import DateRangePicker, { type RangePreset } from '@/components/DateRangePicker'
 import { useAppStore } from '@/store/appStore'
-import { Empty, Space, Spin, Typography } from 'antd'
+import { Empty, message, Space, Spin, Typography } from 'antd'
 import ReactECharts from 'echarts-for-react'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -23,10 +23,12 @@ const Efficiency = () => {
         endDate: dateRange?.[1],
       })
       if (res.code === 0) setData(res.data)
+    } catch {
+      message.error(t('fetchFailed'))
     } finally {
       setLoading(false)
     }
-  }, [dateRange])
+  }, [dateRange, t])
 
   useEffect(() => {
     fetchData()

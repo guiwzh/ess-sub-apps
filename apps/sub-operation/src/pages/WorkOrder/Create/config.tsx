@@ -1,3 +1,4 @@
+import { getStationOptions as getStationOpts } from '@/constants/options'
 import type { TFunction } from 'i18next'
 
 export const getTypeOptions = (t: TFunction) => [
@@ -12,8 +13,4 @@ export const getPriorityOptions = (t: TFunction) => [
   { label: t('workorder.priority.low'), value: 'low' },
 ]
 
-export const getStationOptions = (t: TFunction) => [
-  { label: t('station.nameA'), value: '储能站点A' },
-  { label: t('station.nameB'), value: '储能站点B' },
-  { label: t('station.nameC'), value: '储能站点C' },
-]
+export const getStationOptions = getStationOpts

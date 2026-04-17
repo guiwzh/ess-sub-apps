@@ -1,7 +1,7 @@
-import type { ProColumns } from '@ant-design/pro-components'
-import { Tag, Button, message } from 'antd'
-import type { TFunction } from 'i18next'
 import type { AlarmItem } from '@/api/operation'
+import type { ProColumns } from '@ant-design/pro-components'
+import { Button, Tag } from 'antd'
+import type { TFunction } from 'i18next'
 
 export const getLevelMap = (t: TFunction) => ({
   critical: { text: t('alarm.level.critical'), color: 'red' },
@@ -15,7 +15,12 @@ export const getLevelOptions = (t: TFunction) => [
   { label: t('alarm.level.info'), value: 'info' },
 ]
 
-export const getColumns = (t: TFunction): ProColumns<AlarmItem>[] => {
+interface ColumnsCallbacks {
+  onConfirm: (id: string) => void
+  onClear: (id: string) => void
+}
+
+export const getColumns = (t: TFunction, callbacks: ColumnsCallbacks): ProColumns<AlarmItem>[] => {
   const levelMap = getLevelMap(t)
 
   return [
@@ -58,10 +63,10 @@ export const getColumns = (t: TFunction): ProColumns<AlarmItem>[] => {
       render: (_, record) =>
         record.status === 'active' ? (
           <>
-            <Button type="link" size="small" onClick={() => message.success(t('alarm.confirm'))}>
+            <Button type="link" size="small" onClick={() => callbacks.onConfirm(record.id)}>
               {t('alarm.confirm')}
             </Button>
-            <Button type="link" size="small" onClick={() => message.success(t('alarm.clear'))}>
+            <Button type="link" size="small" onClick={() => callbacks.onClear(record.id)}>
               {t('alarm.clear')}
             </Button>
           </>

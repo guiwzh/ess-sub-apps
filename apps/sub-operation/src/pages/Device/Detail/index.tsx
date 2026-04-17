@@ -1,7 +1,7 @@
 import { getDeviceDetail, type DeviceDetail as DeviceDetailType } from '@/api/operation'
 import { useAppStore } from '@/store/appStore'
 import { ArrowLeftOutlined } from '@ant-design/icons'
-import { Button, Card, Col, Descriptions, Row, Spin, Table, Typography } from 'antd'
+import { Button, Card, Col, Descriptions, message, Row, Spin, Table, Typography } from 'antd'
 import ReactECharts from 'echarts-for-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -23,13 +23,15 @@ const DeviceDetail = () => {
 
   useEffect(() => {
     if (!id) return
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true)
     getDeviceDetail(id)
       .then(({ data: res }) => {
         if (res.code === 0) setDetail(res.data)
       })
+      .catch(() => message.error(t('fetchFailed')))
       .finally(() => setLoading(false))
-  }, [id])
+  }, [id, t])
 
   if (loading) {
     return (

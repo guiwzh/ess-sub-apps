@@ -1,7 +1,8 @@
+import type { HistoryAlarmItem } from '@/api/operation'
+import { getStationFilterOptions } from '@/constants/options'
 import type { ProColumns } from '@ant-design/pro-components'
 import { Tag } from 'antd'
 import type { TFunction } from 'i18next'
-import type { HistoryAlarmItem } from '@/api/operation'
 
 export const getLevelMap = (t: TFunction) => ({
   critical: { text: t('alarm.level.critical'), color: 'red' },
@@ -38,11 +39,7 @@ export const getColumns = (t: TFunction): ProColumns<HistoryAlarmItem>[] => {
       width: 120,
       valueType: 'select',
       fieldProps: {
-        options: [
-          { label: t('station.a'), value: '储能站点A' },
-          { label: t('station.b'), value: '储能站点B' },
-          { label: t('station.c'), value: '储能站点C' },
-        ],
+        options: getStationFilterOptions(t),
       },
     },
     { title: t('alarm.alarmTime'), dataIndex: 'time', width: 170, search: false },

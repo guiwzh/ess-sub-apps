@@ -1,9 +1,10 @@
+import type { DeviceItem } from '@/api/operation'
+import { getDeviceCategories } from '@/constants/options'
+import { appNavigate } from '@/wujie/navigate'
 import type { ProColumns } from '@ant-design/pro-components'
-import { Tag, Button, Space } from 'antd'
+import { Button, Space, Tag } from 'antd'
 import type { TFunction } from 'i18next'
 import type { NavigateFunction } from 'react-router-dom'
-import type { DeviceItem } from '@/api/operation'
-import { appNavigate } from '@/wujie/navigate'
 
 export const getStatusMap = (t: TFunction) => ({
   running: { text: t('device.status.running'), color: 'green' },
@@ -11,14 +12,7 @@ export const getStatusMap = (t: TFunction) => ({
   offline: { text: t('device.status.offline'), color: 'red' },
 })
 
-export const getCategories = (t: TFunction) => [
-  { key: '', label: t('device.all') },
-  { key: 'PCS', label: t('device.type.pcs') },
-  { key: 'BMS', label: t('device.type.bms') },
-  { key: 'HVAC', label: t('device.type.hvacShort') },
-  { key: 'FIRE', label: t('device.type.fireShort') },
-  { key: 'TRANS', label: t('device.type.transShort') },
-]
+export const getCategories = getDeviceCategories
 
 export const getColumns = (t: TFunction, navigate: NavigateFunction): ProColumns<DeviceItem>[] => {
   const statusMap = getStatusMap(t)

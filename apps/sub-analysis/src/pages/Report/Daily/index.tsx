@@ -37,24 +37,28 @@ const ReportPage = () => {
   const [monthlyData, setMonthlyData] = useState<MonthlyReportData | null>(null)
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true)
     if (type === 'daily') {
       getDailyReport({ date: date.format('YYYY-MM-DD') })
         .then(({ data: res }) => {
           if (res.code === 0) setDailyData(res.data)
         })
+        .catch(() => message.error(t('fetchFailed')))
         .finally(() => setLoading(false))
     } else {
       getMonthlyReport({ month: date.format('YYYY-MM') })
         .then(({ data: res }) => {
           if (res.code === 0) setMonthlyData(res.data)
         })
+        .catch(() => message.error(t('fetchFailed')))
         .finally(() => setLoading(false))
     }
-  }, [type, date])
+  }, [type, date, t])
 
-  const handleExport = (format: 'pdf' | 'excel') => {
-    message.success(t('report.exportMock', { format: format.toUpperCase() }))
+  const handleExport = (_format: 'pdf' | 'excel') => {
+    // TODO: 接入真实导出接口
+    message.info(t('report.exportMock'))
   }
 
   const renderDaily = () => {

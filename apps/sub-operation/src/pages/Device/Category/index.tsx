@@ -1,6 +1,6 @@
 import { getDevices, type DeviceItem } from '@/api/operation'
 import { ProTable } from '@ant-design/pro-components'
-import { Tabs } from 'antd'
+import { message, Tabs } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -26,15 +26,20 @@ const DeviceCategory = () => {
         columns={columns}
         search={false}
         request={async (params) => {
-          const { data: res } = await getDevices({
-            current: params.current,
-            pageSize: params.pageSize,
-            type: activeType || undefined,
-          })
-          return {
-            data: res.data.list,
-            total: res.data.total,
-            success: res.code === 0,
+          try {
+            const { data: res } = await getDevices({
+              current: params.current,
+              pageSize: params.pageSize,
+              type: activeType || undefined,
+            })
+            return {
+              data: res.data.list,
+              total: res.data.total,
+              success: res.code === 0,
+            }
+          } catch {
+            message.error(t('fetchFailed'))
+            return { data: [], total: 0, success: false }
           }
         }}
         pagination={{ defaultPageSize: 10 }}

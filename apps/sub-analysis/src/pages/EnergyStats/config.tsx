@@ -1,12 +1,5 @@
-import type { TFunction } from 'i18next'
 import type { EnergyStatsData } from '@/api/analysis'
-
-export const getStationOptions = (t: TFunction) => [
-  { label: t('station.all'), value: '' },
-  { label: t('station.nameA'), value: '储能站点A' },
-  { label: t('station.nameB'), value: '储能站点B' },
-  { label: t('station.nameC'), value: '储能站点C' },
-]
+import type { TFunction } from 'i18next'
 
 export const getChartOption = (t: TFunction, data: EnergyStatsData) => ({
   tooltip: { trigger: 'axis' as const },
