@@ -11,7 +11,7 @@
       "outputs": ["dist/**"]
     },
     "lint": {
-      "inputs": ["src/**", "../../eslint.config.js"],
+      "inputs": ["src/**", "../../eslint.config.ts"],
       "outputs": []
     },
     "type-check": {
