@@ -1,4 +1,4 @@
-import type { TFunction } from 'react-i18next'
+import type { TFunction } from 'i18next'
 import type { EnergyStatsData } from '@/api/analysis'
 
 export const getStationOptions = (t: TFunction) => [

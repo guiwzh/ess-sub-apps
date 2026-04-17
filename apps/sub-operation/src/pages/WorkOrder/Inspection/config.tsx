@@ -1,4 +1,4 @@
-import type { TFunction } from 'react-i18next'
+import type { TFunction } from 'i18next'
 import { Tag, Button, Switch, Space, Popconfirm } from 'antd'
 import type { InspectionTemplate } from '@/api/workorder'
 

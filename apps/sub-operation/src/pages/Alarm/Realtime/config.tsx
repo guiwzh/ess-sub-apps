@@ -1,6 +1,6 @@
 import type { ProColumns } from '@ant-design/pro-components'
 import { Tag, Button, message } from 'antd'
-import type { TFunction } from 'react-i18next'
+import type { TFunction } from 'i18next'
 import type { AlarmItem } from '@/api/operation'
 
 export const getLevelMap = (t: TFunction) => ({

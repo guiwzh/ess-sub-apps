@@ -1,6 +1,6 @@
 import type { ProColumns } from '@ant-design/pro-components'
 import { Tag, Button, Space } from 'antd'
-import type { TFunction } from 'react-i18next'
+import type { TFunction } from 'i18next'
 import type { NavigateFunction } from 'react-router-dom'
 import type { DeviceItem } from '@/api/operation'
 import { appNavigate } from '@/wujie/navigate'
