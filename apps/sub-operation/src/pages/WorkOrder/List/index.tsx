@@ -1,17 +1,17 @@
-import { useRef, useState } from 'react'
+import { getWorkOrders, type WorkOrder } from '@/api/workorder'
+import { PlusOutlined } from '@ant-design/icons'
 import { type ActionType, ProTable } from '@ant-design/pro-components'
 import { Button } from 'antd'
-import { useNavigate } from 'react-router-dom'
-import { PlusOutlined } from '@ant-design/icons'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { getWorkOrders, type WorkOrder } from '@/api/workorder'
+import { useNavigate } from 'react-router-dom'
 import WorkOrderCreate from '../Create'
 import { getColumns } from './config'
 
 export default function WorkOrderList() {
   const navigate = useNavigate()
   const { t } = useTranslation()
-  const actionRef = useRef<ActionType>()
+  const actionRef = useRef<ActionType>(null)
   const [createOpen, setCreateOpen] = useState(false)
   const columns = getColumns(t, navigate)
 
