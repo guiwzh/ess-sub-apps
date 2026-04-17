@@ -7,10 +7,16 @@
     },
     "build": {
       "dependsOn": ["^build"],
+      "inputs": ["src/**", "*.config.ts", "tsconfig*.json"],
       "outputs": ["dist/**"]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "inputs": ["src/**", "../../eslint.config.js"],
+      "outputs": []
+    },
+    "type-check": {
+      "inputs": ["src/**", "tsconfig*.json", "../../tsconfig.base.json"],
+      "outputs": []
     }
   }
 }
