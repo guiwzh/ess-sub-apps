@@ -1,3 +1,4 @@
+import NotFound from '@/pages/404'
 import { lazy } from 'react'
 
 const DeviceManagement = lazy(() => import('@/pages/Device/Management'))
@@ -12,6 +13,7 @@ const routes = [
   { path: '/alarms', element: <AlarmManagement /> },
   { path: '/work-orders', element: <WorkOrderManagement /> },
   { path: '/work-orders/:id', element: <WorkOrderDetail /> },
+  { path: '*', element: <NotFound /> },
 ]
 
 export { routes }

@@ -1,3 +1,4 @@
+import ErrorBoundary from '@/components/ErrorBoundary'
 import '@/i18n'
 import { useAppStore } from '@/store/appStore'
 import { useWujieBridge } from '@/wujie/bridge'
@@ -32,25 +33,27 @@ const App = () => {
   const router = useMemo(() => createBrowserRouter(routes, { basename }), [basename])
 
   return (
-    <ConfigProvider
-      locale={antdLocaleMap[locale] ?? zhCN}
-      form={{ colon: false }}
-      theme={{
-        algorithm: appTheme === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
-      }}
-    >
-      <ProConfigProvider intl={proIntlMap[locale] ?? zhCNIntl}>
-        <AntdApp>
-          <Suspense
-            fallback={
-              <Spin style={{ display: 'flex', justifyContent: 'center', paddingTop: 200 }} />
-            }
-          >
-            <RouterProvider router={router} />
-          </Suspense>
-        </AntdApp>
-      </ProConfigProvider>
-    </ConfigProvider>
+    <ErrorBoundary>
+      <ConfigProvider
+        locale={antdLocaleMap[locale] ?? zhCN}
+        form={{ colon: false }}
+        theme={{
+          algorithm: appTheme === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
+        }}
+      >
+        <ProConfigProvider intl={proIntlMap[locale] ?? zhCNIntl}>
+          <AntdApp>
+            <Suspense
+              fallback={
+                <Spin style={{ display: 'flex', justifyContent: 'center', paddingTop: 200 }} />
+              }
+            >
+              <RouterProvider router={router} />
+            </Suspense>
+          </AntdApp>
+        </ProConfigProvider>
+      </ConfigProvider>
+    </ErrorBoundary>
   )
 }
 

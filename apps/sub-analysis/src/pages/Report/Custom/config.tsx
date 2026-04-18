@@ -1,5 +1,5 @@
-import type { TFunction } from 'i18next'
 import type { IndicatorItem } from '@/api/report'
+import type { TFunction } from 'i18next'
 
 export const colorPalette = [
   '#1890ff',
@@ -12,7 +12,7 @@ export const colorPalette = [
 ]
 
 export const getChartOption = (
-  t: TFunction,
+  _t: TFunction,
   indicators: IndicatorItem[],
   selected: string[],
   data: { labels: string[]; series: Record<string, number[]> },

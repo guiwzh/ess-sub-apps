@@ -1,5 +1,6 @@
-import { Navigate } from 'react-router-dom'
+import NotFound from '@/pages/404'
 import { lazy } from 'react'
+import { Navigate } from 'react-router-dom'
 
 const EnergyOverview = lazy(() => import('@/pages/Merged/EnergyOverview'))
 const OperationAnalysis = lazy(() => import('@/pages/Merged/OperationAnalysis'))
@@ -14,4 +15,5 @@ const commonRoutes = [
 export const routes = [
   { path: '/', element: <Navigate to="/energy-stats" replace /> },
   ...commonRoutes,
+  { path: '*', element: <NotFound /> },
 ]

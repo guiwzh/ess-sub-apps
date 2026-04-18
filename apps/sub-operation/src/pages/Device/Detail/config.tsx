@@ -1,9 +1,9 @@
-import type { TFunction } from 'i18next'
+import type { DeviceDetail } from '@/api/operation'
 import type { DescriptionsProps } from 'antd'
 import { Tag } from 'antd'
-import type { DeviceDetail } from '@/api/operation'
+import type { TFunction } from 'i18next'
 
-export const getStatusMap = (t: TFunction) => ({
+export const getStatusMap = (t: TFunction): Record<string, { text: string; color: string }> => ({
   running: { text: t('device.status.running'), color: 'green' },
   standby: { text: t('device.status.standby'), color: 'blue' },
   offline: { text: t('device.status.offline'), color: 'red' },

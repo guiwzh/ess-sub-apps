@@ -14,6 +14,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "clean": "turbo run clean --force && rimraf node_modules",
+    "orval": "orval",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -27,6 +28,7 @@
     "globals": "^17.5.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
+    "orval": "^8.8.0",
     "prettier": "^3.8.3",
     "prettier-plugin-organize-imports": "^4.3.0",
     "turbo": "^2.5.4",
