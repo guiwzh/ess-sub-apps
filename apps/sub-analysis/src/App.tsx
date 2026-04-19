@@ -38,6 +38,10 @@ const App = () => {
         form={{ colon: false }}
         theme={{
           algorithm: appTheme === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
+          token: {
+            fontFamily:
+              "AlibabaPuHuiTi, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+          },
         }}
       >
         <ProConfigProvider intl={proIntlMap[locale] ?? zhCNIntl}>

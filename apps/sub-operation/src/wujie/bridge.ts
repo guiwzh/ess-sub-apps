@@ -1,9 +1,9 @@
-import { useEffect } from 'react'
 import { BUS_EVENTS } from '@/constants/bus-events'
-import { onBusEvent } from './bus'
+import i18n from '@/i18n'
 import { useAppStore } from '@/store/appStore'
 import { useUserStore } from '@/store/userStore'
-import i18n from '@/i18n'
+import { useEffect } from 'react'
+import { onBusEvent } from './bus'
 
 /**
  * wujie 桥接 hook — 监听主应用 bus 事件，同步到子应用 store
