@@ -40,7 +40,7 @@ const App = () => {
           algorithm: appTheme === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
           token: {
             fontFamily:
-              "AlibabaPuHuiTi, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+              "AlibabaPuHuiTi, 'AlibabaPuHuiTi Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
           },
         }}
       >
