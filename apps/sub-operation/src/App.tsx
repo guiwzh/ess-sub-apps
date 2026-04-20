@@ -30,6 +30,7 @@ const App = () => {
 
   const isWujie = !!window.__POWERED_BY_WUJIE__
   const basename = isWujie ? (window.$wujie?.props?.basePath as string) : undefined
+  const fontFamily = window.$wujie?.props?.fontFamily as string
   const router = useMemo(() => createBrowserRouter(routes, { basename }), [basename])
 
   return (
@@ -40,8 +41,7 @@ const App = () => {
         theme={{
           algorithm: appTheme === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
           token: {
-            fontFamily:
-              "AlibabaPuHuiTi, 'AlibabaPuHuiTi Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+            fontFamily,
           },
         }}
       >
