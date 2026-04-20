@@ -13,6 +13,7 @@
   "dependencies": {
     "@ant-design/icons": "^6.1.1",
     "@ant-design/pro-components": "^2.8.10",
+    "@ess/shared": "workspace:*",
     "antd": "^5.29.3",
     "axios": "^1.15.0",
     "dayjs": "^1.11.20",

@@ -12,9 +12,7 @@ function getWujieProps(): WujieProps | undefined {
 }
 
 /**
- * 应用级导航：在 wujie 模式下调用主应用注入的 navigate 函数（地址栏同步），独立运行时直接跳转。
- * @param path 子应用内部路径，如 `/some-page?param=xxx`
- * @param options 可选配置，如 `{ state: { id: '123' } }`
+ * 应用级导航：wujie 模式下调用主应用注入的 navigate，独立模式直接跳转。
  */
 export function appNavigate(path: string, options?: NavigateOptions) {
   if (window.__POWERED_BY_WUJIE__) {
@@ -27,8 +25,8 @@ export function appNavigate(path: string, options?: NavigateOptions) {
 }
 
 /**
- * 获取主应用当前路由的 history state（通过 window.parent 同域通信）。
- * 仅在 wujie 环境下有效，独立运行时返回 undefined。
+ * 获取主应用当前路由的 history state。
+ * 仅 wujie 环境下有效，独立运行时返回 undefined。
  */
 export function getMainState<T = Record<string, unknown>>(): T | undefined {
   if (!window.__POWERED_BY_WUJIE__) return undefined

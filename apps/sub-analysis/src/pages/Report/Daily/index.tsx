@@ -4,8 +4,9 @@ import {
   type DailyReportData,
   type MonthlyReportData,
 } from '@/api/report'
-import { useAppStore } from '@/store/appStore'
+import ReactECharts from '@/lib/echarts'
 import { DownloadOutlined } from '@ant-design/icons'
+import { useAppStore } from '@ess/shared/store/appStore'
 import {
   Button,
   Card,
@@ -20,7 +21,6 @@ import {
   Table,
 } from 'antd'
 import dayjs, { type Dayjs } from 'dayjs'
-import ReactECharts from 'echarts-for-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getDailySummaryColumns, getHourlyChartOption, getMonthlyDescriptionItems } from './config'

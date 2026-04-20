@@ -4,11 +4,11 @@ import {
   type CustomReportData,
   type IndicatorItem,
 } from '@/api/report'
-import { useAppStore } from '@/store/appStore'
+import ReactECharts from '@/lib/echarts'
 import { DownloadOutlined } from '@ant-design/icons'
+import { useAppStore } from '@ess/shared/store/appStore'
 import { Button, Card, Checkbox, DatePicker, Empty, message, Space, Spin, Table } from 'antd'
 import dayjs, { type Dayjs } from 'dayjs'
-import ReactECharts from 'echarts-for-react'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getChartOption, getTableColumns } from './config'

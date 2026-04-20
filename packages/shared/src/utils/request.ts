@@ -1,7 +1,7 @@
-import { BUS_EVENTS } from '@/constants/bus-events'
-import { useUserStore } from '@/store/userStore'
-import { emitTokenExpired, onBusEvent } from '@/wujie/bus'
 import axios, { type InternalAxiosRequestConfig } from 'axios'
+import { BUS_EVENTS } from '../constants/bus-events.ts'
+import { useUserStore } from '../store/userStore.ts'
+import { emitTokenExpired, onBusEvent } from '../wujie/bus.ts'
 
 const request = axios.create({
   baseURL: (window.$wujie?.props?.apiBaseUrl as string) || '/api',
@@ -12,7 +12,6 @@ const request = axios.create({
 let isWaitingForRefresh = false
 let pendingRequests: Array<(token: string) => void> = []
 
-// 监听主应用广播的 token-refresh 事件，更新本地 store 并释放排队请求
 if (window.$wujie) {
   onBusEvent(BUS_EVENTS.TOKEN_REFRESH, (...args: unknown[]) => {
     const token = args[0] as string
@@ -48,7 +47,6 @@ request.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean }
 
-    // 401: 通知主应用刷新 → 等待新 token → 重放请求
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
       try {

@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '@ess/shared/utils/request'
 
 export interface DeviceItem {
   id: string

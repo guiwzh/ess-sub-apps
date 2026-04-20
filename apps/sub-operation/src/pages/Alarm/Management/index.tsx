@@ -1,4 +1,4 @@
-import { getMainState } from '@/wujie/navigate'
+import { getMainState } from '@ess/shared/wujie/navigate'
 import { Tabs } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

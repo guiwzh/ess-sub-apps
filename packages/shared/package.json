@@ -1,0 +1,24 @@
+{
+  "name": "@ess/shared",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./constants/bus-events": "./src/constants/bus-events.ts",
+    "./store/appStore": "./src/store/appStore.ts",
+    "./store/userStore": "./src/store/userStore.ts",
+    "./wujie/bus": "./src/wujie/bus.ts",
+    "./wujie/bridge": "./src/wujie/bridge.ts",
+    "./wujie/navigate": "./src/wujie/navigate.ts",
+    "./utils/request": "./src/utils/request.ts"
+  },
+  "peerDependencies": {
+    "axios": "^1.0.0",
+    "react": "^19.0.0",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "typescript": "~6.0.2"
+  }
+}

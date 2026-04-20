@@ -1,4 +1,4 @@
-import { useUserStore } from '@/store/userStore'
+import { useUserStore } from '@ess/shared/store/userStore'
 
 export function usePermission() {
   const permissions = useUserStore((s) => s.permissions)

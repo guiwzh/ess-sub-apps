@@ -1,9 +1,9 @@
 import { getEfficiency, type EfficiencyData } from '@/api/analysis'
 import ChartCard from '@/components/ChartCard'
 import DateRangePicker, { type RangePreset } from '@/components/DateRangePicker'
-import { useAppStore } from '@/store/appStore'
+import ReactECharts from '@/lib/echarts'
+import { useAppStore } from '@ess/shared/store/appStore'
 import { Empty, message, Space, Spin, Typography } from 'antd'
-import ReactECharts from 'echarts-for-react'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 

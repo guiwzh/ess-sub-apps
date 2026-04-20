@@ -1,7 +1,7 @@
 import type { DeviceItem } from '@/api/operation'
 import { getDeviceCategories } from '@/constants/options'
-import { appNavigate } from '@/wujie/navigate'
 import type { ProColumns } from '@ant-design/pro-components'
+import { appNavigate } from '@ess/shared/wujie/navigate'
 import { Button, Space, Tag } from 'antd'
 import type { TFunction } from 'i18next'
 import type { NavigateFunction } from 'react-router-dom'
