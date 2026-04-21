@@ -26,13 +26,20 @@ declare global {
 let root: ReactDOM.Root | null = null
 
 function mount() {
+  // 防重入：wujie alive/切换场景下可能重复回调 __WUJIE_MOUNT，避免 createRoot 触发
+  // "You are calling ReactDOMClient.createRoot() on a container that has already been passed" 警告
+  if (root) {
+    root.render(<App />)
+    return
+  }
   const container = document.getElementById('root')!
   root = ReactDOM.createRoot(container)
   root.render(<App />)
 }
 
 function unmount() {
-  root?.unmount()
+  if (!root) return
+  root.unmount()
   root = null
 }
 

@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { BUS_EVENTS } from '../constants/bus-events.ts'
 import { useAppStore } from '../store/appStore.ts'
 import { useUserStore } from '../store/userStore.ts'
+import { rejectTokenRefresh, resolveTokenRefresh } from '../utils/request.ts'
 import { onBusEvent } from './bus.ts'
 
 interface I18nLike {
@@ -9,8 +10,10 @@ interface I18nLike {
 }
 
 /**
- * 创建 wujie 桥接 hook 工厂 — 监听主应用 bus 事件，同步到子应用 store
+ * 创建 wujie 桥接 hook 工厂 — 监听主应用 bus 事件，同步到子应用 store / i18n / request 等待队列
  * 需要传入子应用自己的 i18n 实例
+ *
+ * 集中订阅：所有 bus 订阅均通过此 hook 管理生命周期，避免模块级订阅 HMR 重复注册问题。
  */
 export function createWujieBridge(i18n: I18nLike) {
   return function useWujieBridge() {
@@ -28,11 +31,14 @@ export function createWujieBridge(i18n: I18nLike) {
         onBusEvent(BUS_EVENTS.STATION_CHANGE, (station) => {
           useAppStore.getState().setCurrentStation(station as string)
         }),
-        onBusEvent(BUS_EVENTS.TOKEN_REFRESH, (token) => {
-          useUserStore.getState().setToken(token as string)
-        }),
         onBusEvent(BUS_EVENTS.USER_CONTEXT_SYNC, () => {
           useUserStore.getState().syncFromProps(window.$wujie?.props)
+        }),
+        onBusEvent(BUS_EVENTS.TOKEN_REFRESH, (token) => {
+          resolveTokenRefresh(token as string)
+        }),
+        onBusEvent(BUS_EVENTS.TOKEN_REFRESH_FAILED, () => {
+          rejectTokenRefresh(new Error('Token refresh failed'))
         }),
       ]
 

@@ -1,7 +1,6 @@
 import axios, { type InternalAxiosRequestConfig } from 'axios'
-import { BUS_EVENTS } from '../constants/bus-events.ts'
 import { useUserStore } from '../store/userStore.ts'
-import { emitTokenExpired, onBusEvent } from '../wujie/bus.ts'
+import { emitTokenExpired } from '../wujie/bus.ts'
 
 const request = axios.create({
   baseURL: (window.$wujie?.props?.apiBaseUrl as string) || '/api',
@@ -40,16 +39,16 @@ function flushReject(err: Error) {
   queue.forEach(({ reject }) => reject(err))
 }
 
-// 无条件订阅（独立模式下也订阅，不会触发，但保证 wujie 环境绝对不漏订阅）
-onBusEvent(BUS_EVENTS.TOKEN_REFRESH, (...args: unknown[]) => {
-  const token = args[0] as string
+// 供 bridge 在收到主应用广播时调用：同步 token + 释放等待队列
+export function resolveTokenRefresh(token: string) {
   useUserStore.getState().setToken(token)
   flushResolve(token)
-})
+}
 
-onBusEvent(BUS_EVENTS.TOKEN_REFRESH_FAILED, () => {
-  flushReject(new Error('Token refresh failed'))
-})
+// 供 bridge 在收到刷新失败广播时调用：reject 等待队列
+export function rejectTokenRefresh(err: Error) {
+  flushReject(err)
+}
 
 function waitForNewToken(): Promise<string> {
   // 独立模式无 bus 通道 → 直接跳登录，避免永久挂起
