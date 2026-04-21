@@ -4,6 +4,8 @@ export const BUS_EVENTS = {
   THEME_CHANGE: 'theme-change',
   STATION_CHANGE: 'station-change',
   TOKEN_REFRESH: 'token-refresh',
+  TOKEN_REFRESH_FAILED: 'token-refresh-failed',
   TOKEN_EXPIRED: 'token-expired',
+  USER_CONTEXT_SYNC: 'user-context-sync',
   NAVIGATE: 'navigate',
 } as const

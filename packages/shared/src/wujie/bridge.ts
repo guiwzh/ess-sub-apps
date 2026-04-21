@@ -31,6 +31,9 @@ export function createWujieBridge(i18n: I18nLike) {
         onBusEvent(BUS_EVENTS.TOKEN_REFRESH, (token) => {
           useUserStore.getState().setToken(token as string)
         }),
+        onBusEvent(BUS_EVENTS.USER_CONTEXT_SYNC, () => {
+          useUserStore.getState().syncFromProps(window.$wujie?.props)
+        }),
       ]
 
       return () => {

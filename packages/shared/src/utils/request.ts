@@ -9,26 +9,65 @@ const request = axios.create({
 })
 
 // ---------- Token 刷新等待机制 ----------
-let isWaitingForRefresh = false
-let pendingRequests: Array<(token: string) => void> = []
+const REFRESH_TIMEOUT = 10_000
 
-if (window.$wujie) {
-  onBusEvent(BUS_EVENTS.TOKEN_REFRESH, (...args: unknown[]) => {
-    const token = args[0] as string
-    useUserStore.getState().setToken(token)
-    isWaitingForRefresh = false
-    pendingRequests.forEach((cb) => cb(token))
-    pendingRequests = []
-  })
+let isWaitingForRefresh = false
+let pendingRequests: Array<{
+  resolve: (token: string) => void
+  reject: (err: Error) => void
+}> = []
+let refreshTimeoutId: ReturnType<typeof setTimeout> | null = null
+
+function clearRefreshState() {
+  isWaitingForRefresh = false
+  if (refreshTimeoutId) {
+    clearTimeout(refreshTimeoutId)
+    refreshTimeoutId = null
+  }
 }
 
+function flushResolve(token: string) {
+  const queue = pendingRequests
+  pendingRequests = []
+  clearRefreshState()
+  queue.forEach(({ resolve }) => resolve(token))
+}
+
+function flushReject(err: Error) {
+  const queue = pendingRequests
+  pendingRequests = []
+  clearRefreshState()
+  queue.forEach(({ reject }) => reject(err))
+}
+
+// 无条件订阅（独立模式下也订阅，不会触发，但保证 wujie 环境绝对不漏订阅）
+onBusEvent(BUS_EVENTS.TOKEN_REFRESH, (...args: unknown[]) => {
+  const token = args[0] as string
+  useUserStore.getState().setToken(token)
+  flushResolve(token)
+})
+
+onBusEvent(BUS_EVENTS.TOKEN_REFRESH_FAILED, () => {
+  flushReject(new Error('Token refresh failed'))
+})
+
 function waitForNewToken(): Promise<string> {
+  // 独立模式无 bus 通道 → 直接跳登录，避免永久挂起
+  if (!window.__POWERED_BY_WUJIE__) {
+    window.location.href = '/login'
+    return Promise.reject(new Error('Standalone mode: re-login required'))
+  }
+
   if (!isWaitingForRefresh) {
     isWaitingForRefresh = true
     emitTokenExpired()
+    // 超时兜底：主应用若因异常未广播 TOKEN_REFRESH(_FAILED)，避免队列永久 pending
+    refreshTimeoutId = setTimeout(() => {
+      flushReject(new Error('Token refresh timeout'))
+    }, REFRESH_TIMEOUT)
   }
-  return new Promise((resolve) => {
-    pendingRequests.push(resolve)
+  return new Promise((resolve, reject) => {
+    pendingRequests.push({ resolve, reject })
   })
 }
 
