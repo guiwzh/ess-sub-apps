@@ -5,19 +5,22 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>sub-operation</title>
-    <!-- CDN External: 浏览器 HTTP 缓存共享，只下载一次。如需替换为自建 CDN，修改下方 URL 即可 -->
+    <!--
+      vendor 来源由 VITE_VENDOR_BASE 控制：
+        - 空值（默认 dev/standalone）：加载子应用自己的 /vendor/*.js
+        - 例如 '/main' 或 'https://main.host'：复用主应用的 vendor（用于 wujie 主子一体部署，三应用共享 HTTP 缓存）
+    -->
     <script type="importmap">
     {
       "imports": {
-        "react": "https://esm.sh/react@19.2.5",
-        "react/": "https://esm.sh/react@19.2.5/",
-        "react-dom": "https://esm.sh/react-dom@19.2.5?external=react",
-        "react-dom/client": "https://esm.sh/react-dom@19.2.5/client?external=react",
-        "react-router-dom": "https://esm.sh/react-router-dom@7.14.0?external=react,react-dom",
-        "react-router": "https://esm.sh/react-router@7.14.0?external=react",
-        "axios": "https://esm.sh/axios@1.15.0",
-        "dayjs": "https://esm.sh/dayjs@1.11.20",
-        "dayjs/": "https://esm.sh/dayjs@1.11.20/"
+        "react": "%VITE_VENDOR_BASE%/vendor/react.js",
+        "react/jsx-runtime": "%VITE_VENDOR_BASE%/vendor/react/jsx-runtime.js",
+        "react/jsx-dev-runtime": "%VITE_VENDOR_BASE%/vendor/react/jsx-dev-runtime.js",
+        "react-dom": "%VITE_VENDOR_BASE%/vendor/react-dom.js",
+        "react-dom/client": "%VITE_VENDOR_BASE%/vendor/react-dom/client.js",
+        "react-router-dom": "%VITE_VENDOR_BASE%/vendor/react-router-dom.js",
+        "axios": "%VITE_VENDOR_BASE%/vendor/axios.js",
+        "dayjs": "%VITE_VENDOR_BASE%/vendor/dayjs.js"
       }
     }
     </script>
