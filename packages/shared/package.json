@@ -10,7 +10,8 @@
     "./wujie/bus": "./src/wujie/bus.ts",
     "./wujie/bridge": "./src/wujie/bridge.ts",
     "./wujie/navigate": "./src/wujie/navigate.ts",
-    "./utils/request": "./src/utils/request.ts"
+    "./utils/request": "./src/utils/request.ts",
+    "./theme/echarts-dark": "./src/theme/echarts-dark.ts"
   },
   "peerDependencies": {
     "axios": "^1.0.0",
