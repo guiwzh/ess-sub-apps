@@ -7,7 +7,7 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**", "*.config.ts", "tsconfig*.json"],
+      "inputs": ["src/**", "*.config.ts", "tsconfig*.json", "index.html"],
       "outputs": ["dist/**"]
     },
     "lint": {

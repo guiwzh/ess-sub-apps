@@ -1,6 +1,6 @@
 import react from '@vitejs/plugin-react'
 import path from 'path'
-import { defineConfig, esmExternalRequirePlugin } from 'vite'
+import { defineConfig } from 'vite'
 import compression from 'vite-plugin-compression2'
 
 export default defineConfig({
@@ -22,23 +22,6 @@ export default defineConfig({
   },
   build: {
     rolldownOptions: {
-      plugins: [
-        esmExternalRequirePlugin({
-          external: [
-            'react',
-            /^react\//,
-            'react-dom',
-            /^react-dom\//,
-            'react-router-dom',
-            /^react-router-dom\//,
-            'react-router',
-            /^react-router\//,
-            'axios',
-            'dayjs',
-            /^dayjs\//,
-          ],
-        }),
-      ],
       output: {
         codeSplitting: {
           groups: [
